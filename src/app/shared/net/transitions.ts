@@ -1,24 +1,22 @@
 import * as joint from 'jointjs';
 
-const pn = joint.shapes.pn;
-
-export function setBaseTransition(transitionModel, base) {
+export function setBaseTransition(transitionModel: joint.shapes.pn.Transition, base: string | number) {
   transitionModel.attr('.label-base/text', `b = ${base}`);
 }
 
-export function getBaseTransition(transitionModel) {
+export function getBaseTransition(transitionModel: joint.shapes.pn.Transition) {
   return +transitionModel.attr('.label-base/text').split(' ')[2];
 }
 
-export function getTimeTransition(transitionModel) {
+export function getTimeTransition(transitionModel: joint.shapes.pn.Transition) {
   return +transitionModel.attr('.label-time/text').split(' ')[2];
 }
 
-export function setTimeTransition(transitionModel, time) {
+export function setTimeTransition(transitionModel: joint.shapes.pn.Transition, time: string | number) {
   transitionModel.attr('.label-time/text', `t = ${time}`);
 }
 
-const transitionBasis = new pn.Transition({
+const transitionBasis = new joint.shapes.pn.Transition({
   markup: `<g class="rotatable"><g class="scalable"><rect class="root"/></g></g>
   <text class="label"/><text class="label-time"/><text class="label-base"/>`,
   position: {

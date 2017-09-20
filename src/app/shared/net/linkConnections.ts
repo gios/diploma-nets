@@ -1,13 +1,15 @@
 import * as joint from 'jointjs';
 import { map, last } from 'lodash';
 
-const pn = joint.shapes.pn;
-
 const defaultLinkOptions = {
   label: ''
 };
 
-export function link(connectFirst, connectSecond, options = defaultLinkOptions) {
+export function link(
+  connectFirst: joint.shapes.pn.Place | joint.shapes.pn.Transition,
+  connectSecond: joint.shapes.pn.Place | joint.shapes.pn.Transition,
+  options = defaultLinkOptions
+) {
   options = Object.assign({}, defaultLinkOptions, options);
   const { label } = options;
   const configLinkOptions = {
@@ -37,19 +39,19 @@ export function link(connectFirst, connectSecond, options = defaultLinkOptions) 
     }]
   };
 
-  return new pn.Link(configLinkOptions);
+  return new joint.shapes.pn.Link(configLinkOptions);
 }
 
-export function getLinkValue(link) {
+export function getLinkValue(link: joint.shapes.pn.Link) {
   const linkValue = link.get('labels')[0].attrs.text.text;
   return parseInt((linkValue) ? linkValue : 1, 10);
 }
 
-function setLinkValue(link, value) {
-  link.label(0, { attrs: { text: { text: value} } });
+function setLinkValue(link: joint.shapes.pn.Link, value: string | number) {
+  link.label(0, { attrs: { text: { text: value} } } as any);
 }
 
-function getLinkByTransition(graph, transition) {
+function getLinkByTransition(graph: joint.dia.Graph, transition: joint.shapes.pn.Transition) {
   const outbound = graph.getConnectedLinks(transition, { outbound: true });
 
   return map(outbound, (link) => {
@@ -57,29 +59,33 @@ function getLinkByTransition(graph, transition) {
   });
 }
 
-export function getConsumerValue(graph, customerTransition) {
+export function getConsumerValue(graph: joint.dia.Graph, customerTransition: joint.shapes.pn.Transition) {
   return last(getLinkByTransition(graph, customerTransition));
 }
 
-export function setConsumerValue(graph, customerTransition, value) {
+export function setConsumerValue(graph: joint.dia.Graph, customerTransition: joint.shapes.pn.Transition, value: string | number) {
   const outbound = graph.getConnectedLinks(customerTransition, { outbound: true });
   setLinkValue(last(outbound), value);
 }
 
-export function getSolarStationValue(graph, solarStationTransition) {
+export function getSolarStationValue(graph: joint.dia.Graph, solarStationTransition: joint.shapes.pn.Transition) {
   return last(getLinkByTransition(graph, solarStationTransition));
 }
 
-export function setSolarStationValue(graph, solarStationTransition, value) {
+export function setSolarStationValue(graph: joint.dia.Graph, solarStationTransition: joint.shapes.pn.Transition, value: string | number) {
   const outbound = graph.getConnectedLinks(solarStationTransition, { outbound: true });
   setLinkValue(last(outbound), value);
 }
 
-export function getElectroStationValue(graph, electroStationTransition) {
+export function getElectroStationValue(graph: joint.dia.Graph, electroStationTransition: joint.shapes.pn.Transition) {
   return last(getLinkByTransition(graph, electroStationTransition));
 }
 
-export function setElectroStationValue(graph, electroStationTransition, value) {
+export function setElectroStationValue(
+  graph: joint.dia.Graph,
+  electroStationTransition: joint.shapes.pn.Transition,
+  value: string | number
+) {
   const outbound = graph.getConnectedLinks(electroStationTransition, { outbound: true });
   setLinkValue(last(outbound), value);
 }

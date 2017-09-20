@@ -1,8 +1,6 @@
 import * as joint from 'jointjs';
 
-const pn = joint.shapes.pn;
-
-const pinnacle = new pn.Place({
+const pinnacle = new joint.shapes.pn.Place({
   position: {
     x: 200,
     y: 50
@@ -29,7 +27,7 @@ export let pinnacleConsumer = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(200, 50)
-.set('tokens', 1);
+.set('tokens', 1) as joint.shapes.pn.Place;
 
 export let pinnacleNeeds = (pinnacle.clone().attr({
   '.label': {
@@ -37,7 +35,7 @@ export let pinnacleNeeds = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(600, 50)
-.set('tokens', 0);
+.set('tokens', 0) as joint.shapes.pn.Place;
 
 export let pinnacleConsumedSolarEnergy = (pinnacle.clone().attr({
   '.label': {
@@ -45,7 +43,7 @@ export let pinnacleConsumedSolarEnergy = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(950, 50)
-.set('tokens', 0);
+.set('tokens', 0) as joint.shapes.pn.Place;
 
 export let pinnacleSolarStation = (pinnacle.clone().attr({
   '.label': {
@@ -53,7 +51,7 @@ export let pinnacleSolarStation = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(150, 150)
-.set('tokens', 1);
+.set('tokens', 1) as joint.shapes.pn.Place;
 
 export let pinnacleElectroStation = (pinnacle.clone().attr({
   '.label': {
@@ -61,7 +59,7 @@ export let pinnacleElectroStation = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(100, 250)
-.set('tokens', 1);
+.set('tokens', 1) as joint.shapes.pn.Place;
 
 export let pinnacleElectroEnergy = (pinnacle.clone().attr({
   '.label': {
@@ -69,7 +67,7 @@ export let pinnacleElectroEnergy = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(500, 250)
-.set('tokens', 0);
+.set('tokens', 0) as joint.shapes.pn.Place;
 
 export let pinnacleConsumedElectroEnergy = (pinnacle.clone().attr({
   '.label': {
@@ -77,7 +75,7 @@ export let pinnacleConsumedElectroEnergy = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(900, 250)
-.set('tokens', 0);
+.set('tokens', 0) as joint.shapes.pn.Place;
 
 export let pinnacleSolarEnergy = (pinnacle.clone().attr({
   '.label': {
@@ -85,7 +83,7 @@ export let pinnacleSolarEnergy = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(550, 350)
-.set('tokens', 0);
+.set('tokens', 0) as joint.shapes.pn.Place;
 
 export let pinnacleSoldSolarEnergy = (pinnacle.clone().attr({
   '.label': {
@@ -93,7 +91,7 @@ export let pinnacleSoldSolarEnergy = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(500, 450)
-.set('tokens', 0);
+.set('tokens', 0) as joint.shapes.pn.Place;
 
 export let pinnacleP7 = (pinnacle.clone().attr({
   '.label': {
@@ -101,7 +99,7 @@ export let pinnacleP7 = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(450, 550)
-.set('tokens', 0);
+.set('tokens', 0) as joint.shapes.pn.Place;
 
 export let pinnacleP5 = (pinnacle.clone().attr({
   '.label': {
@@ -109,7 +107,7 @@ export let pinnacleP5 = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(250, 450)
-.set('tokens', 0);
+.set('tokens', 0) as joint.shapes.pn.Place;
 
 export let pinnacleSellingSolarEnergy = (pinnacle.clone().attr({
   '.label': {
@@ -117,4 +115,4 @@ export let pinnacleSellingSolarEnergy = (pinnacle.clone().attr({
   }
 }) as joint.shapes.pn.Place)
 .position(60, 450)
-.set('tokens', 1);
+.set('tokens', 1) as joint.shapes.pn.Place;
