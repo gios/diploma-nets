@@ -35,6 +35,7 @@ import { fireTransition } from './transitionAnimation';
 })
 export class NetComponent implements OnInit {
   transitions: any[];
+  pinnacles: any[];
   graph: any;
   paper: any;
 
@@ -51,6 +52,21 @@ export class NetComponent implements OnInit {
       transitionT8,
       transitionT6
     ];
+
+    this.pinnacles = [
+      pinnacleConsumer,
+      pinnacleNeeds,
+      pinnacleConsumedSolarEnergy,
+      pinnacleSolarStation,
+      pinnacleElectroStation,
+      pinnacleElectroEnergy,
+      pinnacleConsumedElectroEnergy,
+      pinnacleSolarEnergy,
+      pinnacleSoldSolarEnergy,
+      pinnacleP7,
+      pinnacleP5,
+      pinnacleSellingSolarEnergy
+    ];
   }
 
   ngOnInit() {
@@ -66,18 +82,7 @@ export class NetComponent implements OnInit {
     });
 
     this.graph.addCell([
-      pinnacleConsumer,
-      pinnacleNeeds,
-      pinnacleConsumedSolarEnergy,
-      pinnacleSolarStation,
-      pinnacleElectroStation,
-      pinnacleElectroEnergy,
-      pinnacleConsumedElectroEnergy,
-      pinnacleSolarEnergy,
-      pinnacleSoldSolarEnergy,
-      pinnacleP7,
-      pinnacleP5,
-      pinnacleSellingSolarEnergy,
+      this.pinnacles,
       this.transitions
     ]);
 
