@@ -19,7 +19,8 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "../node_modules/jointjs/dist/joint.min.css"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

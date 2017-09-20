@@ -13,7 +13,7 @@ export function fireTransition(graph, paper, transitions, globalDuration, callba
 
   each(transitions, (transition) => {
     fireTransitionOnce(graph, paper, transition, getTimeTransition(transition), globalDuration, (name) => {
-      if(firableTransition === finishDelay.length) {
+      if (firableTransition === finishDelay.length) {
         transitionFireCount += 1;
         callback(transitionFireCount);
       }
@@ -27,11 +27,11 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
   const inbound = graph.getConnectedLinks(transition, { inbound: true });
   const outbound = graph.getConnectedLinks(transition, { outbound: true });
 
-  const placesBefore = map(inbound, (link) => {
+  const placesBefore = map(inbound, (link: any) => {
     return graph.getCell(link.get('source').id);
   });
 
-  const placesAfter = map(outbound, (link) => {
+  const placesAfter = map(outbound, (link: any) => {
     return graph.getCell(link.get('target').id);
   });
 
@@ -48,14 +48,14 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
 
   if (isFirable) {
     each(placesBefore, (pinnacleModel) => {
-      const linked = find(inbound, (link) => {
+      const linked = find(inbound, (link: any) => {
         return link.get('source').id === pinnacleModel.id;
       });
 
       if (linked.attr('.connection/stroke-dasharray') !== dottedLink) {
         if (pinnacleModel.get('tokens') >= getLinkValue(linked)) {
           setBaseTransition(transition, getBaseTransition(transition) + (inbound.length) ? 1 : 0);
-          paper.findViewByModel(linked).sendToken(V('circle', { r: 5, fill: '#feb662' }).node, (sec * 1000) / (30 / globalDuration));
+          paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#feb662' }).node, (sec * 1000) / (30 / globalDuration));
 
           defer(() => {
             if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
@@ -69,19 +69,20 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
     let differenceTokenValue;
 
     if (getFilteredLinkCount(placesBefore, inbound) > 1) {
-      differenceTokenValue = min(invoke(placesBefore, 'get', 'tokens'));
+      differenceTokenValue = min(invoke(placesBefore, 'get', 'tokens') as any);
       each(placesBefore, (pinnacleModel) => {
         pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
       });
     }
 
     each(placesAfter, (pinnacleModel) => {
-      const linked = find(outbound, (link) => {
+      const linked = find(outbound, (link: any) => {
         return link.get('target').id === pinnacleModel.id;
       });
 
       if (getBaseTransition(transition) > 0 && differenceTokenValue !== 0) {
-        paper.findViewByModel(linked).sendToken(V('circle', { r: 5, fill: '#feb662' }).node, (sec * 1000) / (30 / globalDuration), () => {
+        paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#feb662' }).node, (sec * 1000) / (30 / globalDuration),
+        () => {
           if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
             pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
           } else {
@@ -103,7 +104,7 @@ function getFirableTransitionsCount(graph, paper, transitions) {
   each(transitions, (transition) => {
     const inbound = graph.getConnectedLinks(transition, { inbound: true });
 
-    const placesBefore = map(inbound, (link) => {
+    const placesBefore = map(inbound, (link: any) => {
       return graph.getCell(link.get('source').id);
     });
 
@@ -124,8 +125,8 @@ function getFirableTransitionsCount(graph, paper, transitions) {
 function getFilteredLinkCount(placesBefore, inbound) {
   let linkCount = 0;
 
-  each(placesBefore, (pinnacleModel) => {
-    const linked = find(inbound, (link) => {
+  each(placesBefore, (pinnacleModel: any) => {
+    const linked = find(inbound, (link: any) => {
       return link.get('source').id === pinnacleModel.id;
     });
 

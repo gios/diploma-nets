@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as joint from 'jointjs';
 
 import {
-  pinnacle,
+  pinnacleConsumer,
   pinnacleNeeds,
   pinnacleConsumedSolarEnergy,
   pinnacleSolarStation,
@@ -25,7 +25,7 @@ import {
   transitionT6,
   transitionT7,
   transitionT8
-} from './transitions'
+} from './transitions';
 import { fireTransition } from './transitionAnimation';
 
 @Component({
@@ -38,7 +38,7 @@ export class NetComponent implements OnInit {
   graph: any;
   paper: any;
 
-  @ViewChild('net-selector') netSelector: ElementRef;
+  @ViewChild('netSelector') netSelector: ElementRef;
 
   constructor() {
     this.transitions = [
@@ -66,7 +66,7 @@ export class NetComponent implements OnInit {
     });
 
     this.graph.addCell([
-      pinnacle,
+      pinnacleConsumer,
       pinnacleNeeds,
       pinnacleConsumedSolarEnergy,
       pinnacleSolarStation,
@@ -82,8 +82,8 @@ export class NetComponent implements OnInit {
     ]);
 
     this.graph.addCell([
-      link(pinnacle, transitionT3),
-      link(transitionT3, pinnacle),
+      link(pinnacleConsumer, transitionT3),
+      link(transitionT3, pinnacleConsumer),
       link(transitionT3, pinnacleNeeds, { label: '100' }),
       link(pinnacleNeeds, transitionT5),
       link(pinnacleNeeds, transitionT4),
@@ -107,5 +107,4 @@ export class NetComponent implements OnInit {
       link(transitionT6, pinnacleP5)
     ]);
   }
-
 }
