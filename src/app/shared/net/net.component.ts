@@ -34,10 +34,10 @@ import { fireTransition } from './transitionAnimation';
   styleUrls: ['./net.component.scss']
 })
 export class NetComponent implements OnInit {
-  transitions: any[];
-  pinnacles: any[];
-  graph: any;
-  paper: any;
+  transitions: joint.dia.Cell[];
+  pinnacles: joint.dia.Cell[];
+  graph = new joint.dia.Graph();
+  paper: joint.dia.Paper;
 
   @ViewChild('netSelector') netSelector: ElementRef;
 
@@ -70,7 +70,6 @@ export class NetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.graph = new joint.dia.Graph();
     this.paper = new joint.dia.Paper({
       el: this.netSelector.nativeElement,
       width: 1050,
@@ -82,8 +81,8 @@ export class NetComponent implements OnInit {
     });
 
     this.graph.addCell([
-      this.pinnacles,
-      this.transitions
+      ...this.pinnacles,
+      ...this.transitions
     ]);
 
     this.graph.addCell([

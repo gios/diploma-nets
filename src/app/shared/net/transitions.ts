@@ -55,7 +55,7 @@ const transitionBasis = new joint.shapes.pn.Transition({
   }
 });
 
-export let transitionT3 = (transitionBasis.clone().attr({
+export let transitionT3 = transitionBasis.attr({
   '.label': {
     text: 'T3'
   },
@@ -65,10 +65,10 @@ export let transitionT3 = (transitionBasis.clone().attr({
   '.label-base': {
     text: 'b = 0'
   }
-}) as joint.shapes.pn.Transition).position(400, 50);
+}).position(400, 50).clone();
 
 
-export let transitionT5 = (transitionBasis.clone().attr({
+export let transitionT5 = transitionBasis.attr({
   '.label': {
     text: 'T5'
   },
@@ -78,9 +78,9 @@ export let transitionT5 = (transitionBasis.clone().attr({
   '.label-base': {
     text: 'b = 0'
   }
-}) as joint.shapes.pn.Transition).position(800, 50);
+}).position(800, 50).clone();
 
-export let transitionT1 = (transitionBasis.clone().attr({
+export let transitionT1 = transitionBasis.attr({
   '.label': {
     text: 'T1'
   },
@@ -90,9 +90,9 @@ export let transitionT1 = (transitionBasis.clone().attr({
   '.label-base': {
     text: 'b = 0'
   }
-}) as joint.shapes.pn.Transition).position(350, 150);
+}).position(350, 150).clone();
 
-export let transitionT2 = (transitionBasis.clone().attr({
+export let transitionT2 = transitionBasis.attr({
   '.label': {
     text: 'T2'
   },
@@ -102,9 +102,9 @@ export let transitionT2 = (transitionBasis.clone().attr({
   '.label-base': {
     text: 'b = 0'
   }
-}) as joint.shapes.pn.Transition).position(300, 250);
+}).position(300, 250).clone();
 
-export let transitionT4 = (transitionBasis.clone().attr({
+export let transitionT4 = transitionBasis.attr({
   '.label': {
     text: 'T4'
   },
@@ -114,9 +114,9 @@ export let transitionT4 = (transitionBasis.clone().attr({
   '.label-base': {
     text: 'b = 0'
   }
-}) as joint.shapes.pn.Transition).position(700, 250);
+}).position(700, 250).clone();
 
-export let transitionT7 = (transitionBasis.clone().attr({
+export let transitionT7 = transitionBasis.attr({
   '.label': {
     text: 'T7'
   },
@@ -126,9 +126,9 @@ export let transitionT7 = (transitionBasis.clone().attr({
   '.label-base': {
     text: 'b = 0'
   }
-}) as joint.shapes.pn.Transition).position(350, 350);
+}).position(350, 350).clone();
 
-export let transitionT8 = (transitionBasis.clone().attr({
+export let transitionT8 = transitionBasis.attr({
   '.label': {
     text: 'T8'
   },
@@ -138,9 +138,9 @@ export let transitionT8 = (transitionBasis.clone().attr({
   '.label-base': {
     text: 'b = 0'
   }
-}) as joint.shapes.pn.Transition).position(350, 550);
+}).position(350, 550).clone();
 
-export let transitionT6 = (transitionBasis.clone().attr({
+export let transitionT6 = transitionBasis.attr({
   '.label': {
     text: 'T6'
   },
@@ -150,4 +150,4 @@ export let transitionT6 = (transitionBasis.clone().attr({
   '.label-base': {
     text: 'b = 0'
   }
-}) as joint.shapes.pn.Transition).position(180, 450);
+}).position(180, 450).clone();

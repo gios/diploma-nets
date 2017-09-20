@@ -6,8 +6,8 @@ const defaultLinkOptions = {
 };
 
 export function link(
-  connectFirst: joint.shapes.pn.Place | joint.shapes.pn.Transition,
-  connectSecond: joint.shapes.pn.Place | joint.shapes.pn.Transition,
+  connectFirst: joint.dia.Cell,
+  connectSecond: joint.dia.Cell,
   options = defaultLinkOptions
 ) {
   options = Object.assign({}, defaultLinkOptions, options);
@@ -51,7 +51,7 @@ function setLinkValue(link: joint.shapes.pn.Link, value: string | number) {
   link.label(0, { attrs: { text: { text: value} } } as any);
 }
 
-function getLinkByTransition(graph: joint.dia.Graph, transition: joint.shapes.pn.Transition) {
+function getLinkByTransition(graph: joint.dia.Graph, transition: joint.dia.Cell) {
   const outbound = graph.getConnectedLinks(transition, { outbound: true });
 
   return map(outbound, (link) => {
@@ -59,31 +59,31 @@ function getLinkByTransition(graph: joint.dia.Graph, transition: joint.shapes.pn
   });
 }
 
-export function getConsumerValue(graph: joint.dia.Graph, customerTransition: joint.shapes.pn.Transition) {
+export function getConsumerValue(graph: joint.dia.Graph, customerTransition: joint.dia.Cell) {
   return last(getLinkByTransition(graph, customerTransition));
 }
 
-export function setConsumerValue(graph: joint.dia.Graph, customerTransition: joint.shapes.pn.Transition, value: string | number) {
+export function setConsumerValue(graph: joint.dia.Graph, customerTransition: joint.dia.Cell, value: string | number) {
   const outbound = graph.getConnectedLinks(customerTransition, { outbound: true });
   setLinkValue(last(outbound), value);
 }
 
-export function getSolarStationValue(graph: joint.dia.Graph, solarStationTransition: joint.shapes.pn.Transition) {
+export function getSolarStationValue(graph: joint.dia.Graph, solarStationTransition: joint.dia.Cell) {
   return last(getLinkByTransition(graph, solarStationTransition));
 }
 
-export function setSolarStationValue(graph: joint.dia.Graph, solarStationTransition: joint.shapes.pn.Transition, value: string | number) {
+export function setSolarStationValue(graph: joint.dia.Graph, solarStationTransition: joint.dia.Cell, value: string | number) {
   const outbound = graph.getConnectedLinks(solarStationTransition, { outbound: true });
   setLinkValue(last(outbound), value);
 }
 
-export function getElectroStationValue(graph: joint.dia.Graph, electroStationTransition: joint.shapes.pn.Transition) {
+export function getElectroStationValue(graph: joint.dia.Graph, electroStationTransition: joint.dia.Cell) {
   return last(getLinkByTransition(graph, electroStationTransition));
 }
 
 export function setElectroStationValue(
   graph: joint.dia.Graph,
-  electroStationTransition: joint.shapes.pn.Transition,
+  electroStationTransition: joint.dia.Cell,
   value: string | number
 ) {
   const outbound = graph.getConnectedLinks(electroStationTransition, { outbound: true });
