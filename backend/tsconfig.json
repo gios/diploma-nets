@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "es2015",
+      "es2016",
+      "esnext"
+    ],
+    "outDir": "dist",
+    "module": "commonjs",
+    "declaration": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "inlineSources": true
+  },
+  "include": [
+    "**/*.ts"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "dist",
+    "node_modules"
+  ]
+}

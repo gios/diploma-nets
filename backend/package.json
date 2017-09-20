@@ -1,0 +1,35 @@
+{
+  "name": "diploma-nets-backend",
+  "version": "1.0.0",
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.json --pretty",
+    "watch": "tsc -p tsconfig.json --pretty -w",
+    "start": "npm run build && node dist/index.js",
+    "start-dev": "concurrently \"nodemon --inspect dist/index.js\" \"npm run watch\""
+  },
+  "private": true,
+  "dependencies": {
+    "dotenv": "^4.0.0",
+    "koa": "^2.3.0",
+    "koa-bodyparser": "^4.2.0",
+    "koa-convert": "^1.2.0",
+    "koa-helmet": "^3.2.0",
+    "koa-router": "^7.2.1",
+    "winston": "^2.3.1"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.1",
+    "@types/koa": "^2.0.39",
+    "@types/koa-bodyparser": "^3.0.25",
+    "@types/koa-helmet": "^3.1.1",
+    "@types/koa-router": "^7.0.23",
+    "@types/node": "^8.0.28",
+    "@types/winston": "^2.3.6",
+    "concurrently": "^3.5.0",
+    "nodemon": "^1.12.1",
+    "rimraf": "^2.6.2",
+    "tslint": "^5.7.0",
+    "typescript": "^2.5.2"
+  }
+}
