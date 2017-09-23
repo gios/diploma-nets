@@ -8,123 +8,124 @@ const pinnacle = new joint.shapes.pn.Place({
   attrs: {
     '.label': {
       text: 'Consumer',
-      fill: '#7c68fc'
+      fill: '#be0037',
+      'font-weight': 'bold'
     },
     '.root' : {
-      stroke: '#9586fd',
+      stroke: '#fac200',
       'stroke-width': 3
     },
     '.tokens > circle': {
-      fill : '#7a7e9b'
+      fill : '#fac200'
     }
   },
   tokens: 1
 });
 
-export let pinnacleConsumer = pinnacle.attr({
+export const Ingredient1 = pinnacle.attr({
   '.label': {
-    text: 'Consumer'
+    text: 'Ingredient1'
   }
 })
-.position(200, 50)
+.position(100, 100)
 .set('tokens', 1)
 .clone() as joint.dia.Cell;
 
-export let pinnacleNeeds = pinnacle.attr({
+export const Ingredient2 = pinnacle.attr({
   '.label': {
-    text: 'Needs'
+    text: 'Ingredient2'
   }
 })
-.position(600, 50)
-.set('tokens', 0)
-.clone() as joint.dia.Cell;
-
-export let pinnacleConsumedSolarEnergy = pinnacle.attr({
-  '.label': {
-    text: 'Consumed Solar Energy SE'
-  }
-})
-.position(950, 50)
-.set('tokens', 0)
-.clone() as joint.dia.Cell;
-
-export let pinnacleSolarStation = pinnacle.attr({
-  '.label': {
-    text: 'Solar Station'
-  }
-})
-.position(150, 150)
+.position(100, 200)
 .set('tokens', 1)
 .clone() as joint.dia.Cell;
 
-export let pinnacleElectroStation = pinnacle.attr({
+export const Ingredient3 = pinnacle.attr({
   '.label': {
-    text: 'Electro Station'
+    text: 'Ingredient3'
   }
 })
-.position(100, 250)
+.position(100, 300)
 .set('tokens', 1)
 .clone() as joint.dia.Cell;
 
-export let pinnacleElectroEnergy = pinnacle.attr({
+export const Ingredient4 = pinnacle.attr({
   '.label': {
-    text: 'Electro Energy'
+    text: 'Ingredient4'
   }
 })
-.position(500, 250)
-.set('tokens', 0)
-.clone() as joint.dia.Cell;
-
-export let pinnacleConsumedElectroEnergy = pinnacle.attr({
-  '.label': {
-    text: 'Consumed Electro Energy EE'
-  }
-})
-.position(900, 250)
-.set('tokens', 0)
-.clone() as joint.dia.Cell;
-
-export let pinnacleSolarEnergy = pinnacle.attr({
-  '.label': {
-    text: 'Solar Energy'
-  }
-})
-.position(550, 350)
-.set('tokens', 0)
-.clone() as joint.dia.Cell;
-
-export let pinnacleSoldSolarEnergy = pinnacle.attr({
-  '.label': {
-    text: 'Sold Solar Energy SE'
-  }
-})
-.position(500, 450)
-.set('tokens', 0)
-.clone() as joint.dia.Cell;
-
-export let pinnacleP7 = pinnacle.attr({
-  '.label': {
-    text: 'P7'
-  }
-})
-.position(450, 550)
-.set('tokens', 0)
-.clone() as joint.dia.Cell;
-
-export let pinnacleP5 = pinnacle.attr({
-  '.label': {
-    text: 'P5'
-  }
-})
-.position(250, 450)
-.set('tokens', 0)
-.clone() as joint.dia.Cell;
-
-export let pinnacleSellingSolarEnergy = pinnacle.attr({
-  '.label': {
-    text: 'Selling Solar Energy SE'
-  }
-})
-.position(60, 450)
+.position(100, 400)
 .set('tokens', 1)
+.clone() as joint.dia.Cell;
+
+export const Ingredient5 = pinnacle.attr({
+  '.label': {
+    text: 'Ingredient5'
+  }
+})
+.position(100, 500)
+.set('tokens', 1)
+.clone() as joint.dia.Cell;
+
+export const Ingredient6 = pinnacle.attr({
+  '.label': {
+    text: 'Ingredient6'
+  }
+})
+.position(100, 600)
+.set('tokens', 1)
+.clone() as joint.dia.Cell;
+
+export const Construction1 = pinnacle.attr({
+  '.label': {
+    text: 'Construction1'
+  }
+})
+.position(500, 200)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Construction2 = pinnacle.attr({
+  '.label': {
+    text: 'Construction2'
+  }
+})
+.position(500, 350)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Construction3 = pinnacle.attr({
+  '.label': {
+    text: 'Construction3'
+  }
+})
+.position(500, 500)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Product1 = pinnacle.attr({
+  '.label': {
+    text: 'Product1'
+  }
+})
+.position(850, 200)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Product2 = pinnacle.attr({
+  '.label': {
+    text: 'Product2'
+  }
+})
+.position(850, 350)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Product3 = pinnacle.attr({
+  '.label': {
+    text: 'Product2'
+  }
+})
+.position(850, 500)
+.set('tokens', 0)
 .clone() as joint.dia.Cell;

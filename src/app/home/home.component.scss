@@ -1,3 +1,33 @@
 .sidenav-container {
   height: 100%;
+
+  md-toolbar {
+
+    .fill-remaining-space {
+      flex: 1 1 auto;
+    }
+    position: absolute;
+  }
+
+  .sidenav-action {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 2%;
+
+    > md-icon {
+      font-size: 42px;
+      background-color: rgba(250, 194, 0, 0.3);
+      color: #8a083e;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+  }
 }

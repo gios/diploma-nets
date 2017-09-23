@@ -1,17 +1,17 @@
 <md-sidenav-container class="sidenav-container">
+  <md-toolbar>
+    <span class="fill-remaining-space"></span>
+    <span>Developed by: Pavlo Blazhchuk</span>
+  </md-toolbar>
+
   <md-sidenav #sidenav>
     Jolly good!
   </md-sidenav>
 
-  <div>
-    <button type="button" md-button (click)="sidenav.open()">
-      Open sidenav
-    </button>
+  <div class="sidenav-action">
+    <md-icon (click)="sidenav.open()">keyboard_arrow_right</md-icon>
   </div>
 
-  <p>
-    <app-net></app-net>
-    home works!
-  </p>
+  <app-net></app-net>
 
 </md-sidenav-container>

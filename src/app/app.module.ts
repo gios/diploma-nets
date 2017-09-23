@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
-import { MdSidenavModule, MdButtonModule } from '@angular/material';
+import { MdSidenavModule, MdButtonModule, MdIconModule, MdToolbarModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,6 +18,8 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     MdSidenavModule,
     MdButtonModule,
+    MdIconModule,
+    MdToolbarModule,
     AppRoutingModule,
     SharedModule
   ],

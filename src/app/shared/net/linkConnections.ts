@@ -25,8 +25,12 @@ export function link(
       '.connection': {
         'fill': 'none',
         'stroke-linejoin': 'round',
-        'stroke-width': '2',
-        'stroke': '#4b4a67'
+        'stroke-width': '1',
+        'stroke': '#5d5d5e'
+      },
+      '.marker-target': {
+        'fill': '#5d5d5e',
+        'stroke': '#5d5d5e',
       }
     },
     labels: [{

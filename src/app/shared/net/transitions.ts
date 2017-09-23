@@ -18,7 +18,7 @@ export function setTimeTransition(transitionModel: joint.shapes.pn.Transition, t
 
 const transitionBasis = new joint.shapes.pn.Transition({
   markup: `<g class="rotatable"><g class="scalable"><rect class="root"/></g></g>
-  <text class="label"/><text class="label-time"/><text class="label-base"/>`,
+  <text class="label"/><text class="label-time"/>`,
   position: {
     x: 400,
     y: 50
@@ -26,7 +26,8 @@ const transitionBasis = new joint.shapes.pn.Transition({
   attrs: {
     '.label': {
       text: 'T3',
-      fill: '#fe854f'
+      fill: '#8a083e',
+      'font-weight': 'bold'
     },
     '.label-time': {
       'text-anchor': 'middle',
@@ -35,119 +36,94 @@ const transitionBasis = new joint.shapes.pn.Transition({
       ref: 'rect',
       'font-size': 12,
       text: `t = 30`,
-      fill: '#fe854f',
-      'font-weight': 'bold'
-    },
-    '.label-base': {
-      'text-anchor': 'middle',
-      'ref-x': .5,
-      'ref-y': 70,
-      ref: 'rect',
-      'font-size': 12,
-      text: 'b = 0',
-      fill: '#fe854f',
+      fill: '#8a083e',
       'font-weight': 'bold'
     },
     '.root' : {
-      fill: '#9586fd',
-      stroke: '#9586fd'
+      fill: '#fac200',
+      stroke: '#fac200'
     }
   }
 });
 
-export let transitionT3 = transitionBasis.attr({
+export const IT1 = transitionBasis.attr({
   '.label': {
-    text: 'T3'
+    text: 'IT1'
   },
   '.label-time': {
     text: 't = 30'
-  },
-  '.label-base': {
-    text: 'b = 0'
   }
-}).position(400, 50).clone();
+}).position(300, 100).clone();
 
 
-export let transitionT5 = transitionBasis.attr({
+export const IT2 = transitionBasis.attr({
   '.label': {
-    text: 'T5'
-  },
-  '.label-time': {
-    text: 't = 0'
-  },
-  '.label-base': {
-    text: 'b = 0'
-  }
-}).position(800, 50).clone();
-
-export let transitionT1 = transitionBasis.attr({
-  '.label': {
-    text: 'T1'
+    text: 'IT2'
   },
   '.label-time': {
     text: 't = 30'
-  },
-  '.label-base': {
-    text: 'b = 0'
   }
-}).position(350, 150).clone();
+}).position(300, 200).clone();
 
-export let transitionT2 = transitionBasis.attr({
+export const IT3 = transitionBasis.attr({
   '.label': {
-    text: 'T2'
+    text: 'IT2'
   },
   '.label-time': {
     text: 't = 30'
-  },
-  '.label-base': {
-    text: 'b = 0'
   }
-}).position(300, 250).clone();
+}).position(300, 300).clone();
 
-export let transitionT4 = transitionBasis.attr({
+export const IT4 = transitionBasis.attr({
   '.label': {
-    text: 'T4'
-  },
-  '.label-time': {
-    text: 't = 0'
-  },
-  '.label-base': {
-    text: 'b = 0'
-  }
-}).position(700, 250).clone();
-
-export let transitionT7 = transitionBasis.attr({
-  '.label': {
-    text: 'T7'
+    text: 'IT4'
   },
   '.label-time': {
     text: 't = 30'
-  },
-  '.label-base': {
-    text: 'b = 0'
   }
-}).position(350, 350).clone();
+}).position(300, 400).clone();
 
-export let transitionT8 = transitionBasis.attr({
+export const IT5 = transitionBasis.attr({
   '.label': {
-    text: 'T8'
-  },
-  '.label-time': {
-    text: 't = 1'
-  },
-  '.label-base': {
-    text: 'b = 0'
-  }
-}).position(350, 550).clone();
-
-export let transitionT6 = transitionBasis.attr({
-  '.label': {
-    text: 'T6'
+    text: 'IT5'
   },
   '.label-time': {
     text: 't = 30'
-  },
-  '.label-base': {
-    text: 'b = 0'
   }
-}).position(180, 450).clone();
+}).position(300, 500).clone();
+
+export const IT6 = transitionBasis.attr({
+  '.label': {
+    text: 'IT6'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(300, 600).clone();
+
+export const CT1 = transitionBasis.attr({
+  '.label': {
+    text: 'CT1'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(700, 200).clone();
+
+export const CT2 = transitionBasis.attr({
+  '.label': {
+    text: 'CT2'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(700, 350).clone();
+
+export const CT3 = transitionBasis.attr({
+  '.label': {
+    text: 'CT3'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(700, 500).clone();
