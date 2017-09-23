@@ -129,3 +129,39 @@ export const Product3 = pinnacle.attr({
 .position(850, 500)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
+
+export const Shop1 = pinnacle.attr({
+  '.label': {
+    text: 'Shop 1'
+  }
+})
+.position(1200, 100)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Shop2 = pinnacle.attr({
+  '.label': {
+    text: 'Shop 2'
+  }
+})
+.position(1200, 250)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Shop3 = pinnacle.attr({
+  '.label': {
+    text: 'Shop 3'
+  }
+})
+.position(1200, 400)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Shop4 = pinnacle.attr({
+  '.label': {
+    text: 'Shop 4'
+  }
+})
+.position(1200, 550)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;

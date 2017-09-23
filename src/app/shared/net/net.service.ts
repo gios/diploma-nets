@@ -9,7 +9,11 @@ import {
   IT6,
   CT1,
   CT2,
-  CT3
+  CT3,
+  PT1,
+  PT2,
+  PT3,
+  PT4
 } from './transitions';
 
 import {
@@ -24,7 +28,11 @@ import {
   Construction3,
   Product1,
   Product2,
-  Product3
+  Product3,
+  Shop1,
+  Shop2,
+  Shop3,
+  Shop4
 } from './pinnacles';
 
 import { link } from './linkConnections';
@@ -47,7 +55,11 @@ export class NetService {
       Construction3,
       Product1,
       Product2,
-      Product3
+      Product3,
+      Shop1,
+      Shop2,
+      Shop3,
+      Shop4
     ];
   }
 
@@ -61,7 +73,11 @@ export class NetService {
       IT6,
       CT1,
       CT2,
-      CT3
+      CT3,
+      PT1,
+      PT2,
+      PT3,
+      PT4
     ];
   }
 
@@ -85,7 +101,17 @@ export class NetService {
       link(Construction3, CT3),
       link(CT1, Product1, { label: this.randomNumbers() }),
       link(CT2, Product2, { label: this.randomNumbers() }),
-      link(CT3, Product3, { label: this.randomNumbers() })
+      link(CT3, Product3, { label: this.randomNumbers() }),
+      link(Product1, PT1, { label: this.randomNumbers() }),
+      link(Product2, PT1, { label: this.randomNumbers() }),
+      link(Product2, PT2, { label: this.randomNumbers() }),
+      link(Product2, PT3, { label: this.randomNumbers() }),
+      link(Product3, PT3, { label: this.randomNumbers() }),
+      link(Product3, PT4, { label: this.randomNumbers() }),
+      link(PT1, Shop1),
+      link(PT2, Shop2),
+      link(PT3, Shop3),
+      link(PT4, Shop4)
     ];
   }
 

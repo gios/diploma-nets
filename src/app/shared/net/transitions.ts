@@ -127,3 +127,39 @@ export const CT3 = transitionBasis.attr({
     text: 't = 30'
   }
 }).position(700, 500).clone();
+
+export const PT1 = transitionBasis.attr({
+  '.label': {
+    text: 'PT1'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1100, 100).clone();
+
+export const PT2 = transitionBasis.attr({
+  '.label': {
+    text: 'PT2'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1100, 250).clone();
+
+export const PT3 = transitionBasis.attr({
+  '.label': {
+    text: 'PT3'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1100, 400).clone();
+
+export const PT4 = transitionBasis.attr({
+  '.label': {
+    text: 'PT4'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1100, 550).clone();
