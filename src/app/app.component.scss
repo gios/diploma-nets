@@ -1,0 +1,43 @@
+.sidenav-container {
+  height: 100%;
+
+  md-toolbar {
+
+    .fill-remaining-space {
+      flex: 1 1 auto;
+    }
+    position: absolute;
+  }
+
+  .sidenav-action {
+    position: absolute;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 2%;
+
+    > md-icon {
+      font-size: 42px;
+      color: #f5552a;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      cursor: pointer;
+      transform: translateX(-15%);
+      background-color: rgba(250, 194, 0, 0.3);
+      border-radius: 0 50% 50% 0;
+      height: 70px;
+      width: 2em;
+      transition: 0.3s transform ease-in-out, 0.25s border-radius ease;
+
+      &:hover {
+        color: darken(#f5552a, 15%);
+        transition: 0.3s transform ease-in-out, 0.25s border-radius ease;
+        border-radius: 0;
+        transform: translateX(5%);
+      }
+    }
+  }
+}

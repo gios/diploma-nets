@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  > .intro {
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+    padding: 3em;
+
+    &:after {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      top: 5em;
+      font-family: 'Material Icons';
+      content: 'arrow_downward';
+    }
+  }
+
+  > button {
+    padding: 1em 6em;
+    width: 100%;
+  }
+}
