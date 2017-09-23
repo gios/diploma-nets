@@ -1,3 +1,38 @@
 :host {
   pointer-events: none;
+
+  /deep/ g.joint-viewport {
+
+    g.joint-cell {
+
+      &.joint-type-pn-place {
+
+        circle.root {
+          stroke: #fac200;
+        }
+
+        text.label {
+          fill: #be0037;
+          font-weight: bold;
+        }
+      }
+
+      &.joint-type-pn-transition {
+
+        rect.root {
+          stroke: #fac200;
+          fill: #fac200;
+        }
+
+        text[class^="label"] {
+          fill: #be0037;
+          font-weight: bold;
+        }
+      }
+    }
+
+    circle[id^="v-"][r^="5"] {
+      fill: #f5552a;
+    }
+  }
 }

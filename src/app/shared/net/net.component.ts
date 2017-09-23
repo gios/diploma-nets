@@ -28,6 +28,8 @@ import {
 } from './transitions';
 import { fireTransition } from './transitionAnimation';
 
+const GLOBAL_DURATION = 50;
+
 @Component({
   selector: 'app-net',
   templateUrl: './net.component.html',
@@ -110,5 +112,16 @@ export class NetComponent implements OnInit {
       link(transitionT6, pinnacleSellingSolarEnergy),
       link(transitionT6, pinnacleP5)
     ]);
+    this.startInfinityTransition();
+  }
+
+  startInfinityTransition() {
+    function simulate(graph, paper, transitions) {
+      fireTransition(graph, paper, transitions, GLOBAL_DURATION, (iterations) => {
+        simulate.call(this, graph, paper, transitions);
+      });
+    }
+
+    simulate.call(this, this.graph, this.paper, this.transitions);
   }
 }
