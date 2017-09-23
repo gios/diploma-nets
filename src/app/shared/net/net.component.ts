@@ -4,7 +4,7 @@ import * as joint from 'jointjs';
 import { NetService } from './net.service';
 import { fireTransition } from './transitionAnimation';
 
-const GLOBAL_DURATION = 50;
+const GLOBAL_DURATION = 5;
 
 @Component({
   selector: 'app-net',
@@ -44,7 +44,7 @@ export class NetComponent implements OnInit, OnDestroy {
     ]);
 
     this.graph.addCell(this.netService.getLinkedConnections());
-    // this.startInfinityTransition();
+    this.startInfinityTransition();
   }
 
   ngOnDestroy() {
@@ -53,7 +53,7 @@ export class NetComponent implements OnInit, OnDestroy {
   }
 
   startInfinityTransition() {
-    function simulate(graph, paper, transitions) {
+    function simulate(graph: joint.dia.Graph, paper: joint.dia.Paper, transitions: joint.dia.Cell[]) {
       fireTransition(graph, paper, transitions, GLOBAL_DURATION, (iterations) => {
         simulate.call(this, graph, paper, transitions);
       });

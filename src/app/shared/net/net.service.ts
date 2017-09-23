@@ -13,7 +13,10 @@ import {
   PT1,
   PT2,
   PT3,
-  PT4
+  PT4,
+  RT1,
+  RT2,
+  RT3
 } from './transitions';
 
 import {
@@ -32,7 +35,10 @@ import {
   Shop1,
   Shop2,
   Shop3,
-  Shop4
+  Shop4,
+  Remainder1,
+  Remainder2,
+  Remainder3
 } from './pinnacles';
 
 import { link } from './linkConnections';
@@ -59,7 +65,10 @@ export class NetService {
       Shop1,
       Shop2,
       Shop3,
-      Shop4
+      Shop4,
+      Remainder1,
+      Remainder2,
+      Remainder3
     ];
   }
 
@@ -77,7 +86,10 @@ export class NetService {
       PT1,
       PT2,
       PT3,
-      PT4
+      PT4,
+      RT1,
+      RT2,
+      RT3
     ];
   }
 
@@ -92,6 +104,7 @@ export class NetService {
       link(IT1, Construction1, { label: this.randomNumbers() }),
       link(IT2, Construction2, { label: this.randomNumbers() }),
       link(IT2, Construction3, { label: this.randomNumbers() }),
+      link(IT3, Construction1, { label: this.randomNumbers() }),
       link(IT4, Construction1, { label: this.randomNumbers() }),
       link(IT5, Construction1, { label: this.randomNumbers() }),
       link(IT6, Construction2, { label: this.randomNumbers() }),
@@ -111,11 +124,17 @@ export class NetService {
       link(PT1, Shop1),
       link(PT2, Shop2),
       link(PT3, Shop3),
-      link(PT4, Shop4)
+      link(PT4, Shop4),
+      link(Product1, RT1, { label: this.randomNumbers() }),
+      link(Product2, RT2, { label: this.randomNumbers() }),
+      link(Product3, RT3, { label: this.randomNumbers() }),
+      link(RT1, Remainder1),
+      link(RT2, Remainder2),
+      link(RT3, Remainder3)
     ];
   }
 
   private randomNumbers() {
-    return Math.floor(Math.random() * 1000).toString();
+    return Math.ceil(Math.random() * 1000).toString();
   }
 }

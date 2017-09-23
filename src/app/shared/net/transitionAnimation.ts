@@ -2,7 +2,7 @@ import { V } from 'jointjs';
 import { each, map, uniq, find, defer, invoke, min } from 'lodash';
 
 import { getLinkValue } from './linkConnections';
-import { setBaseTransition, getBaseTransition, getTimeTransition } from './transitions';
+import { getTimeTransition } from './transitions';
 
 let transitionFireCount = 0;
 
@@ -52,7 +52,6 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
       });
 
       if (pinnacleModel.get('tokens') >= getLinkValue(linked)) {
-        setBaseTransition(transition, getBaseTransition(transition) + (inbound.length) ? 1 : 0);
         paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#feb662' }).node, (sec * 1000) / (30 / globalDuration));
 
         defer(() => {
@@ -77,7 +76,7 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
         return link.get('target').id === pinnacleModel.id;
       });
 
-      if (getBaseTransition(transition) > 0 && differenceTokenValue !== 0) {
+      if (differenceTokenValue !== 0) {
         paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#feb662' }).node, (sec * 1000) / (30 / globalDuration),
           () => {
             if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
@@ -85,7 +84,6 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
             } else {
               pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
             }
-            setBaseTransition(transition, (getBaseTransition(transition) === 0) ? 0 : getBaseTransition(transition) - 1);
             callback(transition.attr('.label/text'));
           });
       } else {

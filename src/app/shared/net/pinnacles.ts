@@ -165,3 +165,30 @@ export const Shop4 = pinnacle.attr({
 .position(1200, 550)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
+
+export const Remainder1 = pinnacle.attr({
+  '.label': {
+    text: 'Remainder 1'
+  }
+})
+.position(1200, 700)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Remainder2 = pinnacle.attr({
+  '.label': {
+    text: 'Remainder 2'
+  }
+})
+.position(1200, 850)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;
+
+export const Remainder3 = pinnacle.attr({
+  '.label': {
+    text: 'Remainder 3'
+  }
+})
+.position(1200, 1000)
+.set('tokens', 0)
+.clone() as joint.dia.Cell;

@@ -1,13 +1,5 @@
 import * as joint from 'jointjs';
 
-export function setBaseTransition(transitionModel: joint.shapes.pn.Transition, base: string | number) {
-  transitionModel.attr('.label-base/text', `b = ${base}`);
-}
-
-export function getBaseTransition(transitionModel: joint.shapes.pn.Transition) {
-  return +transitionModel.attr('.label-base/text').split(' ')[2];
-}
-
 export function getTimeTransition(transitionModel: joint.shapes.pn.Transition) {
   return +transitionModel.attr('.label-time/text').split(' ')[2];
 }
@@ -163,3 +155,30 @@ export const PT4 = transitionBasis.attr({
     text: 't = 30'
   }
 }).position(1100, 550).clone();
+
+export const RT1 = transitionBasis.attr({
+  '.label': {
+    text: 'RT 1'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1100, 700).clone();
+
+export const RT2 = transitionBasis.attr({
+  '.label': {
+    text: 'RT 2'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1100, 850).clone();
+
+export const RT3 = transitionBasis.attr({
+  '.label': {
+    text: 'RT 3'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1100, 1000).clone();
