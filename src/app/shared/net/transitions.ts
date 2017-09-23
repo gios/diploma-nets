@@ -48,7 +48,7 @@ const transitionBasis = new joint.shapes.pn.Transition({
 
 export const IT1 = transitionBasis.attr({
   '.label': {
-    text: 'IT1'
+    text: 'IT 1'
   },
   '.label-time': {
     text: 't = 30'
@@ -58,7 +58,7 @@ export const IT1 = transitionBasis.attr({
 
 export const IT2 = transitionBasis.attr({
   '.label': {
-    text: 'IT2'
+    text: 'IT 2'
   },
   '.label-time': {
     text: 't = 30'
@@ -67,7 +67,7 @@ export const IT2 = transitionBasis.attr({
 
 export const IT3 = transitionBasis.attr({
   '.label': {
-    text: 'IT2'
+    text: 'IT 3'
   },
   '.label-time': {
     text: 't = 30'
@@ -76,7 +76,7 @@ export const IT3 = transitionBasis.attr({
 
 export const IT4 = transitionBasis.attr({
   '.label': {
-    text: 'IT4'
+    text: 'IT 4'
   },
   '.label-time': {
     text: 't = 30'
@@ -85,7 +85,7 @@ export const IT4 = transitionBasis.attr({
 
 export const IT5 = transitionBasis.attr({
   '.label': {
-    text: 'IT5'
+    text: 'IT 5'
   },
   '.label-time': {
     text: 't = 30'
@@ -94,7 +94,7 @@ export const IT5 = transitionBasis.attr({
 
 export const IT6 = transitionBasis.attr({
   '.label': {
-    text: 'IT6'
+    text: 'IT 6'
   },
   '.label-time': {
     text: 't = 30'
@@ -103,7 +103,7 @@ export const IT6 = transitionBasis.attr({
 
 export const CT1 = transitionBasis.attr({
   '.label': {
-    text: 'CT1'
+    text: 'CT 1'
   },
   '.label-time': {
     text: 't = 30'
@@ -112,7 +112,7 @@ export const CT1 = transitionBasis.attr({
 
 export const CT2 = transitionBasis.attr({
   '.label': {
-    text: 'CT2'
+    text: 'CT 2'
   },
   '.label-time': {
     text: 't = 30'
@@ -121,7 +121,7 @@ export const CT2 = transitionBasis.attr({
 
 export const CT3 = transitionBasis.attr({
   '.label': {
-    text: 'CT3'
+    text: 'CT 3'
   },
   '.label-time': {
     text: 't = 30'
@@ -130,7 +130,7 @@ export const CT3 = transitionBasis.attr({
 
 export const PT1 = transitionBasis.attr({
   '.label': {
-    text: 'PT1'
+    text: 'PT 1'
   },
   '.label-time': {
     text: 't = 30'
@@ -139,7 +139,7 @@ export const PT1 = transitionBasis.attr({
 
 export const PT2 = transitionBasis.attr({
   '.label': {
-    text: 'PT2'
+    text: 'PT 2'
   },
   '.label-time': {
     text: 't = 30'
@@ -148,7 +148,7 @@ export const PT2 = transitionBasis.attr({
 
 export const PT3 = transitionBasis.attr({
   '.label': {
-    text: 'PT3'
+    text: 'PT 3'
   },
   '.label-time': {
     text: 't = 30'
@@ -157,7 +157,7 @@ export const PT3 = transitionBasis.attr({
 
 export const PT4 = transitionBasis.attr({
   '.label': {
-    text: 'PT4'
+    text: 'PT 4'
   },
   '.label-time': {
     text: 't = 30'
