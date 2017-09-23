@@ -30,11 +30,12 @@
       border-radius: 0 50% 50% 0;
       height: 70px;
       width: 2em;
-      transition: 0.3s transform ease-in-out;
+      transition: 0.3s transform ease-in-out, 0.25s border-radius ease;
 
       &:hover {
-        color: darken(#f5552a, 10%);
-        transition: 0.3s transform ease-in-out;
+        color: darken(#f5552a, 15%);
+        transition: 0.3s transform ease-in-out, 0.25s border-radius ease;
+        border-radius: 0;
         transform: translateX(5%);
       }
     }
