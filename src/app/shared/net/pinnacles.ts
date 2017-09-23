@@ -7,7 +7,6 @@ const pinnacle = new joint.shapes.pn.Place({
   },
   attrs: {
     '.label': {
-      text: 'Consumer',
       fill: '#be0037',
       'font-weight': 'bold'
     },
@@ -22,13 +21,43 @@ const pinnacle = new joint.shapes.pn.Place({
   tokens: 1
 });
 
+export const State1 = pinnacle
+.position(100, 100)
+.set('tokens', 1)
+.clone() as joint.dia.Cell;
+
+export const State2 = pinnacle
+.position(100, 200)
+.set('tokens', 1)
+.clone() as joint.dia.Cell;
+
+export const State3 = pinnacle
+.position(100, 300)
+.set('tokens', 1)
+.clone() as joint.dia.Cell;
+
+export const State4 = pinnacle
+.position(100, 400)
+.set('tokens', 1)
+.clone() as joint.dia.Cell;
+
+export const State5 = pinnacle
+.position(100, 500)
+.set('tokens', 1)
+.clone() as joint.dia.Cell;
+
+export const State6 = pinnacle
+.position(100, 600)
+.set('tokens', 1)
+.clone() as joint.dia.Cell;
+
 export const Ingredient1 = pinnacle.attr({
   '.label': {
     text: 'Ingredient 1'
   }
 })
-.position(100, 100)
-.set('tokens', 1)
+.position(450, 100)
+.set('tokens', 0)
 .clone() as joint.dia.Cell;
 
 export const Ingredient2 = pinnacle.attr({
@@ -36,8 +65,8 @@ export const Ingredient2 = pinnacle.attr({
     text: 'Ingredient 2'
   }
 })
-.position(100, 200)
-.set('tokens', 1)
+.position(450, 200)
+.set('tokens', 0)
 .clone() as joint.dia.Cell;
 
 export const Ingredient3 = pinnacle.attr({
@@ -45,8 +74,8 @@ export const Ingredient3 = pinnacle.attr({
     text: 'Ingredient 3'
   }
 })
-.position(100, 300)
-.set('tokens', 1)
+.position(450, 300)
+.set('tokens', 0)
 .clone() as joint.dia.Cell;
 
 export const Ingredient4 = pinnacle.attr({
@@ -54,8 +83,8 @@ export const Ingredient4 = pinnacle.attr({
     text: 'Ingredient 4'
   }
 })
-.position(100, 400)
-.set('tokens', 1)
+.position(450, 400)
+.set('tokens', 0)
 .clone() as joint.dia.Cell;
 
 export const Ingredient5 = pinnacle.attr({
@@ -63,8 +92,8 @@ export const Ingredient5 = pinnacle.attr({
     text: 'Ingredient 5'
   }
 })
-.position(100, 500)
-.set('tokens', 1)
+.position(450, 500)
+.set('tokens', 0)
 .clone() as joint.dia.Cell;
 
 export const Ingredient6 = pinnacle.attr({
@@ -72,8 +101,8 @@ export const Ingredient6 = pinnacle.attr({
     text: 'Ingredient 6'
   }
 })
-.position(100, 600)
-.set('tokens', 1)
+.position(450, 600)
+.set('tokens', 0)
 .clone() as joint.dia.Cell;
 
 export const Construction1 = pinnacle.attr({
@@ -81,7 +110,7 @@ export const Construction1 = pinnacle.attr({
     text: 'Construction 1'
   }
 })
-.position(500, 200)
+.position(850, 200)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -90,7 +119,7 @@ export const Construction2 = pinnacle.attr({
     text: 'Construction 2'
   }
 })
-.position(500, 350)
+.position(850, 350)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -99,7 +128,7 @@ export const Construction3 = pinnacle.attr({
     text: 'Construction 3'
   }
 })
-.position(500, 500)
+.position(850, 500)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
