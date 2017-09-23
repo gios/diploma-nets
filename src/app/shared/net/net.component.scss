@@ -4,11 +4,4 @@
   .joint-paper {
     background-color: inherit;
   }
-
-  /deep/ g.joint-viewport {
-
-    circle[id^="v-"][r^="5"] {
-      fill: #f5552a;
-    }
-  }
 }

@@ -1,5 +1,5 @@
 import { V } from 'jointjs';
-import { each, map, uniq, find, defer, invoke, min } from 'lodash';
+import { each, map, uniq, find, defer, invokeMap, min, isEmpty } from 'lodash';
 
 import { getLinkValue } from './linkConnections';
 import { getTimeTransition } from './transitions';
@@ -12,12 +12,12 @@ export function fireTransition(graph, paper, transitions, globalDuration, callba
 
   each(transitions, (transition: any) => {
     fireTransitionOnce(graph, paper, transition, getTimeTransition(transition), globalDuration, (name) => {
+      finishDelay.push(name);
+      finishDelay = uniq(finishDelay);
       if (firableTransition === finishDelay.length) {
         transitionFireCount += 1;
         callback(transitionFireCount);
       }
-      finishDelay.push(name);
-      finishDelay = uniq(finishDelay);
     });
   });
 }
@@ -35,6 +35,11 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
   });
 
   let isFirable = true;
+
+  if (isEmpty(placesBefore) || isEmpty(placesAfter)) {
+    isFirable = false;
+  }
+
   each(placesBefore, (pinnacleModel) => {
     if (pinnacleModel.get('tokens') === 0) {
       isFirable = false;
@@ -45,52 +50,54 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
     }
   });
 
-  if (isFirable) {
-    each(placesBefore, (pinnacleModel) => {
-      const linked = find(inbound, (link: any) => {
-        return link.get('source').id === pinnacleModel.id;
-      });
+  if (!isFirable) {
+    return;
+  }
 
-      if (pinnacleModel.get('tokens') >= getLinkValue(linked)) {
-        paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#feb662' }).node, (sec * 1000) / (30 / globalDuration));
-
-        defer(() => {
-          if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
-            pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
-          }
-        });
-      }
+  each(placesBefore, (pinnacleModel) => {
+    const linked = find(inbound, (link: any) => {
+      return link.get('source').id === pinnacleModel.id;
     });
 
-    let differenceTokenValue;
+    if (pinnacleModel.get('tokens') >= getLinkValue(linked)) {
+      paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000);
 
-    if (getFilteredLinkCount(placesBefore, inbound) > 1) {
-      differenceTokenValue = min(invoke(placesBefore, 'get', 'tokens') as any);
-      each(placesBefore, (pinnacleModel) => {
-        pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
+      defer(() => {
+        if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
+          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
+        }
       });
     }
+  });
 
-    each(placesAfter, (pinnacleModel) => {
-      const linked = find(outbound, (link: any) => {
-        return link.get('target').id === pinnacleModel.id;
-      });
+  let differenceTokenValue;
 
-      if (differenceTokenValue !== 0) {
-        paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#feb662' }).node, (sec * 1000) / (30 / globalDuration),
-          () => {
-            if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
-              pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
-            } else {
-              pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
-            }
-            callback(transition.attr('.label/text'));
-          });
-      } else {
-        callback(transition.attr('.label/text'));
-      }
+  if (getFilteredLinkCount(placesBefore, inbound) > 1) {
+    differenceTokenValue = min(invokeMap(placesBefore, 'get', 'tokens') as any);
+    each(placesBefore, (pinnacleModel) => {
+      pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
     });
   }
+
+  each(placesAfter, (pinnacleModel) => {
+    const linked = find(outbound, (link: any) => {
+      return link.get('target').id === pinnacleModel.id;
+    });
+
+    if (differenceTokenValue !== 0) {
+      paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
+        () => {
+          if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
+            pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
+          } else {
+            pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
+          }
+          callback(transition.attr('.label/text'));
+        });
+    } else {
+      callback(transition.attr('.label/text'));
+    }
+  });
 }
 
 function getFirableTransitionsCount(graph, paper, transitions) {
@@ -104,6 +111,11 @@ function getFirableTransitionsCount(graph, paper, transitions) {
     });
 
     let isFirable = true;
+
+    if (isEmpty(placesBefore)) {
+      isFirable = false;
+    }
+
     each(placesBefore, (model) => {
       if (model.get('tokens') === 0) {
         isFirable = false;
