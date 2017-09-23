@@ -36,7 +36,11 @@ export function link(
     labels: [{
       position: 0.5,
       attrs: {
+        rect: {
+          fill: '#fafafa',
+        },
         text: {
+          fill: '#5d5d5e',
           text: `${label}`
         }
       }

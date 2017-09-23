@@ -24,7 +24,7 @@ const pinnacle = new joint.shapes.pn.Place({
 
 export const Ingredient1 = pinnacle.attr({
   '.label': {
-    text: 'Ingredient1'
+    text: 'Ingredient 1'
   }
 })
 .position(100, 100)
@@ -33,7 +33,7 @@ export const Ingredient1 = pinnacle.attr({
 
 export const Ingredient2 = pinnacle.attr({
   '.label': {
-    text: 'Ingredient2'
+    text: 'Ingredient 2'
   }
 })
 .position(100, 200)
@@ -42,7 +42,7 @@ export const Ingredient2 = pinnacle.attr({
 
 export const Ingredient3 = pinnacle.attr({
   '.label': {
-    text: 'Ingredient3'
+    text: 'Ingredient 3'
   }
 })
 .position(100, 300)
@@ -51,7 +51,7 @@ export const Ingredient3 = pinnacle.attr({
 
 export const Ingredient4 = pinnacle.attr({
   '.label': {
-    text: 'Ingredient4'
+    text: 'Ingredient 4'
   }
 })
 .position(100, 400)
@@ -60,7 +60,7 @@ export const Ingredient4 = pinnacle.attr({
 
 export const Ingredient5 = pinnacle.attr({
   '.label': {
-    text: 'Ingredient5'
+    text: 'Ingredient 5'
   }
 })
 .position(100, 500)
@@ -69,7 +69,7 @@ export const Ingredient5 = pinnacle.attr({
 
 export const Ingredient6 = pinnacle.attr({
   '.label': {
-    text: 'Ingredient6'
+    text: 'Ingredient 6'
   }
 })
 .position(100, 600)
@@ -78,7 +78,7 @@ export const Ingredient6 = pinnacle.attr({
 
 export const Construction1 = pinnacle.attr({
   '.label': {
-    text: 'Construction1'
+    text: 'Construction 1'
   }
 })
 .position(500, 200)
@@ -87,7 +87,7 @@ export const Construction1 = pinnacle.attr({
 
 export const Construction2 = pinnacle.attr({
   '.label': {
-    text: 'Construction2'
+    text: 'Construction 2'
   }
 })
 .position(500, 350)
@@ -96,7 +96,7 @@ export const Construction2 = pinnacle.attr({
 
 export const Construction3 = pinnacle.attr({
   '.label': {
-    text: 'Construction3'
+    text: 'Construction 3'
   }
 })
 .position(500, 500)
@@ -105,7 +105,7 @@ export const Construction3 = pinnacle.attr({
 
 export const Product1 = pinnacle.attr({
   '.label': {
-    text: 'Product1'
+    text: 'Product 1'
   }
 })
 .position(850, 200)
@@ -114,7 +114,7 @@ export const Product1 = pinnacle.attr({
 
 export const Product2 = pinnacle.attr({
   '.label': {
-    text: 'Product2'
+    text: 'Product 2'
   }
 })
 .position(850, 350)
@@ -123,7 +123,7 @@ export const Product2 = pinnacle.attr({
 
 export const Product3 = pinnacle.attr({
   '.label': {
-    text: 'Product2'
+    text: 'Product 3'
   }
 })
 .position(850, 500)

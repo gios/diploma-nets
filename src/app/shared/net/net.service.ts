@@ -80,6 +80,12 @@ export class NetService {
       link(IT5, Construction1, { label: this.randomNumbers() }),
       link(IT6, Construction2, { label: this.randomNumbers() }),
       link(IT6, Construction3, { label: this.randomNumbers() }),
+      link(Construction1, CT1),
+      link(Construction2, CT2),
+      link(Construction3, CT3),
+      link(CT1, Product1, { label: this.randomNumbers() }),
+      link(CT2, Product2, { label: this.randomNumbers() }),
+      link(CT3, Product3, { label: this.randomNumbers() })
     ];
   }
 
