@@ -6,11 +6,10 @@
     .fill-remaining-space {
       flex: 1 1 auto;
     }
-    position: absolute;
   }
 
   .sidenav-action {
-    position: absolute;
+    position: fixed;
     display: flex;
     flex-flow: column nowrap;
     justify-content: center;

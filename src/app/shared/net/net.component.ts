@@ -30,8 +30,8 @@ export class NetComponent implements OnInit {
   ngOnInit() {
     this.paper = new joint.dia.Paper({
       el: this.netSelector.nativeElement,
-      width: 100,
-      height: 100,
+      width: 2000,
+      height: 1200,
       gridSize: 1,
       perpendicularLinks: true,
       interactive: false,
