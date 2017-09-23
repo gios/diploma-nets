@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import * as joint from 'jointjs';
 
 import { NetService } from './net.service';
@@ -12,7 +12,7 @@ const GLOBAL_DURATION = 50;
   styleUrls: ['./net.component.scss'],
   providers: [NetService]
 })
-export class NetComponent implements OnInit {
+export class NetComponent implements OnInit, OnDestroy {
   transitions: joint.dia.Cell[];
   pinnacles: joint.dia.Cell[];
   graph = new joint.dia.Graph();
@@ -45,6 +45,11 @@ export class NetComponent implements OnInit {
 
     this.graph.addCell(this.netService.getLinkedConnections());
     // this.startInfinityTransition();
+  }
+
+  ngOnDestroy() {
+    this.graph.clear();
+    this.paper.remove();
   }
 
   startInfinityTransition() {
