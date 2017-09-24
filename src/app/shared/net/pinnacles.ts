@@ -137,7 +137,7 @@ export const Product1 = pinnacle.attr({
     text: 'Product 1'
   }
 })
-.position(850, 200)
+.position(1250, 200)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -146,7 +146,7 @@ export const Product2 = pinnacle.attr({
     text: 'Product 2'
   }
 })
-.position(850, 350)
+.position(1250, 350)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -155,7 +155,7 @@ export const Product3 = pinnacle.attr({
     text: 'Product 3'
   }
 })
-.position(850, 500)
+.position(1250, 500)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 

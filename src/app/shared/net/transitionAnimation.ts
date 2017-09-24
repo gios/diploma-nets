@@ -5,8 +5,6 @@ import { getLinkValue } from './linkConnections';
 import { getTimeTransition } from './transitions';
 
 export function fireTransition(graph, paper, transitions, globalDuration, callback) {
-  const firableTransition = getFirableTransitionsCount(graph, paper, transitions);
-
   each(transitions, (transition: any) => {
     fireTransitionOnce(graph, paper, transition, getTimeTransition(transition), globalDuration, (name) => {
       callback(name);
@@ -37,7 +35,7 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
       isFirable = false;
     } else if (transition.get('firing')) {
       isFirable = false;
-    } else if (getFilteredLinkCount(placesBefore, inbound) > 1) {
+    } else if (getLinkCount(placesBefore, inbound) > 1) {
       isFirable = true;
     } else {
       isFirable = true;
@@ -48,104 +46,70 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
     return;
   }
 
-  const differenceTokenValue = min(invokeMap(cloneDeep(placesBefore), 'get', 'tokens')) as number;
   transition.set('firing', true);
   transition.set('blocked', false);
 
-  each(placesBefore, (pinnacleModel) => {
-    const linked = find(inbound, (link: any) => {
-      return link.get('source').id === pinnacleModel.id;
-    });
+  const differenceTokenValue = min(invokeMap(cloneDeep(placesBefore), 'get', 'tokens')) as number;
 
-    if (pinnacleModel.get('tokens') >= getLinkValue(linked) && (pinnacleModel.get('tokens') - differenceTokenValue) >= 0) {
+  if (canTransitFrom(placesBefore, inbound)) {
+    each(placesBefore, (pinnacleModel) => {
+      let innerCounter = 0;
+      const linked = getLinked(pinnacleModel, inbound, 'source');
+
       paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
-        () => {
-          if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
+      () => {
+        if (canTransitFrom(placesBefore, inbound)) {
+          if (getLinkCount(placesBefore, inbound) <= 1) {
             pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
-            transition.set('firing', false);
           } else {
-            if ((pinnacleModel.get('tokens') - differenceTokenValue) >= 0) {
-              pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
-              transition.set('blocked', false);
-            } else {
-              transition.set('blocked', true);
-            }
-            transition.set('firing', false);
+            pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
           }
-        });
-    }
-  });
+        } else {
+          transition.set('blocked', true);
+        }
 
-  let iterationCount = 0;
-  let iterationCountSuccess = 0;
+        ++innerCounter;
+        transition.set('firing', false);
+      });
+    });
+  } else {
+    transition.set('firing', false);
+    transition.set('blocked', true);
+  }
+
+  const placesAfterCount = getLinkCount(placesAfter, inbound);
+  let placesAfterCountSuccess = 0;
+
+  if (transition.get('blocked')) {
+    return;
+  }
 
   each(placesAfter, (pinnacleModel) => {
-    const linked = find(outbound, (link: any) => {
-      return link.get('target').id === pinnacleModel.id;
-    });
+    const linked = getLinked(pinnacleModel, outbound, 'target');
 
-    if (differenceTokenValue > 0 && !transition.get('blocked')) {
-      ++iterationCount;
-      paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
-        () => {
-          if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
-            pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
-          } else {
-            if (!transition.get('blocked')) {
-              pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
-            }
-          }
-
-          ++iterationCountSuccess;
-          if (iterationCount === iterationCountSuccess) {
-            transition.set('firing', false);
-            defer(() => callback(transition.attr('.label/text')));
-          }
-        });
-    } else {
-      ++iterationCountSuccess;
-      if (iterationCount === iterationCountSuccess) {
-        transition.set('firing', false);
-        defer(() => callback(transition.attr('.label/text')));
+    paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
+    () => {
+      if (!transition.get('blocked')) {
+        if (getLinkCount(placesBefore, inbound) <= 1) {
+          pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
+        } else {
+          pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
+        }
       }
-    }
+
+      ++placesAfterCountSuccess;
+      if (placesAfterCount === placesAfterCountSuccess) {
+        callback(transition.attr('.label/text'));
+      }
+    });
   });
 }
 
-function getFirableTransitionsCount(graph, paper, transitions) {
-  let firableCount = 0;
-
-  each(transitions, (transition) => {
-    const inbound = graph.getConnectedLinks(transition, { inbound: true });
-
-    const placesBefore = map(inbound, (link: any) => {
-      return graph.getCell(link.get('source').id);
-    });
-
-    let isFirable = true;
-
-    if (isEmpty(placesBefore)) {
-      isFirable = false;
-    }
-
-    each(placesBefore, (model) => {
-      if (model.get('tokens') === 0) {
-        isFirable = false;
-      }
-    });
-
-    if (isFirable) {
-      firableCount += 1;
-    }
-  });
-  return firableCount;
-}
-
-function getFilteredLinkCount(placesBefore, inbound) {
+function getLinkCount(places, bound) {
   let linkCount = 0;
 
-  each(placesBefore, (pinnacleModel: any) => {
-    const linked = find(inbound, (link: any) => {
+  each(places, (pinnacleModel: any) => {
+    const linked = find(bound, (link: any) => {
       return link.get('source').id === pinnacleModel.id;
     });
     linkCount += 1;
@@ -155,4 +119,25 @@ function getFilteredLinkCount(placesBefore, inbound) {
 
 function isRealPinnacle(pinnacleModel) {
   return !!pinnacleModel.get('attrs')['.label'].text;
+}
+
+function getLinked(pinnacleModel, bound, state) {
+  return find(bound, (link: any) => {
+    return link.get(state).id === pinnacleModel.id;
+  });
+}
+
+function canTransitFrom(placesBefore, inbound) {
+  const placesBeforeCount = getLinkCount(placesBefore, inbound);
+  let placesBeforeCountSuccess = 0;
+
+  each(placesBefore, (pinnacleModel: any) => {
+    const linked = getLinked(pinnacleModel, inbound, 'source');
+
+    if (pinnacleModel.get('tokens') >= getLinkValue(linked)) {
+      ++placesBeforeCountSuccess;
+    }
+  });
+
+  return placesBeforeCount === placesBeforeCountSuccess;
 }

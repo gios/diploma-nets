@@ -13,7 +13,6 @@ import {
   PT1,
   PT2,
   PT3,
-  PT4,
   RT1,
   RT2,
   RT3
@@ -71,9 +70,9 @@ export class NetService {
       Construction1,
       Construction2,
       Construction3,
-      // Product1,
-      // Product2,
-      // Product3,
+      Product1,
+      Product2,
+      Product3,
       // Shop1,
       // Shop2,
       // Shop3,
@@ -98,10 +97,9 @@ export class NetService {
       PT1,
       PT2,
       PT3,
-      PT4,
-      RT1,
-      RT2,
-      RT3
+      // RT1,
+      // RT2,
+      // RT3
     ];
   }
 
@@ -136,18 +134,19 @@ export class NetService {
       link(Ingredient5, CT1),
       link(Ingredient6, CT2),
       link(Ingredient6, CT3),
+
       link(CT1, Construction1),
       link(CT2, Construction2),
       link(CT3, Construction3),
-      // link(CT1, Product1, { label: this.randomNumbers() }),
-      // link(CT2, Product2, { label: this.randomNumbers() }),
-      // link(CT3, Product3, { label: this.randomNumbers() }),
-      // link(Product1, PT1, { label: this.randomNumbers() }),
-      // link(Product2, PT1, { label: this.randomNumbers() }),
-      // link(Product2, PT2, { label: this.randomNumbers() }),
-      // link(Product2, PT3, { label: this.randomNumbers() }),
-      // link(Product3, PT3, { label: this.randomNumbers() }),
-      // link(Product3, PT4, { label: this.randomNumbers() }),
+
+      link(Construction1, PT1, { label: this.randomNumbers() }),
+      link(Construction2, PT2, { label: this.randomNumbers() }),
+      link(Construction3, PT3, { label: this.randomNumbers() }),
+
+      link(PT1, Product1, { label: this.randomNumbers() }),
+      link(PT2, Product2, { label: this.randomNumbers() }),
+      link(PT3, Product3, { label: this.randomNumbers() }),
+
       // link(PT1, Shop1),
       // link(PT2, Shop2),
       // link(PT3, Shop3),
