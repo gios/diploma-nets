@@ -14,7 +14,7 @@ const app = new Koa();
 const router = new Router();
 
 app.use(helmet());
-app.use(serve('./public'));
+app.use(serve('../public'));
 app.use(convert(bodyparser()));
 
 // Routes
