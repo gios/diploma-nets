@@ -54,7 +54,7 @@ export class NetComponent implements OnInit, OnDestroy {
 
   startInfinityTransition() {
     function simulate(graph: joint.dia.Graph, paper: joint.dia.Paper, transitions: joint.dia.Cell[]) {
-      fireTransition(graph, paper, transitions, GLOBAL_DURATION, (iterations) => {
+      fireTransition(graph, paper, transitions, GLOBAL_DURATION, (name) => {
         simulate.call(this, graph, paper, transitions);
       });
     }

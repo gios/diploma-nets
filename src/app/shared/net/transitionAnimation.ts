@@ -1,23 +1,15 @@
 import { V } from 'jointjs';
-import { each, map, uniq, find, defer, invokeMap, min, isEmpty } from 'lodash';
+import { each, map, uniq, find, defer, invokeMap, min, isEmpty, cloneDeep } from 'lodash';
 
 import { getLinkValue } from './linkConnections';
 import { getTimeTransition } from './transitions';
 
-let transitionFireCount = 0;
-
 export function fireTransition(graph, paper, transitions, globalDuration, callback) {
-  let finishDelay = [];
   const firableTransition = getFirableTransitionsCount(graph, paper, transitions);
 
   each(transitions, (transition: any) => {
     fireTransitionOnce(graph, paper, transition, getTimeTransition(transition), globalDuration, (name) => {
-      finishDelay.push(name);
-      finishDelay = uniq(finishDelay);
-      if (firableTransition === finishDelay.length) {
-        transitionFireCount += 1;
-        callback(transitionFireCount);
-      }
+      callback(name);
     });
   });
 }
@@ -43,6 +35,8 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
   each(placesBefore, (pinnacleModel) => {
     if (pinnacleModel.get('tokens') === 0) {
       isFirable = false;
+    } else if (transition.get('firing')) {
+      isFirable = false;
     } else if (getFilteredLinkCount(placesBefore, inbound) > 1) {
       isFirable = true;
     } else {
@@ -54,48 +48,66 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
     return;
   }
 
+  const differenceTokenValue = min(invokeMap(cloneDeep(placesBefore), 'get', 'tokens')) as number;
+  transition.set('firing', true);
+  transition.set('blocked', false);
+
   each(placesBefore, (pinnacleModel) => {
     const linked = find(inbound, (link: any) => {
       return link.get('source').id === pinnacleModel.id;
     });
 
-    if (pinnacleModel.get('tokens') >= getLinkValue(linked)) {
-      paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000);
-
-      defer(() => {
-        if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
-          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
-        }
-      });
+    if (pinnacleModel.get('tokens') >= getLinkValue(linked) && (pinnacleModel.get('tokens') - differenceTokenValue) >= 0) {
+      paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
+        () => {
+          if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
+            pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
+            transition.set('firing', false);
+          } else {
+            if ((pinnacleModel.get('tokens') - differenceTokenValue) >= 0) {
+              pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
+              transition.set('blocked', true);
+            } else {
+              transition.set('blocked', false);
+            }
+            transition.set('firing', false);
+          }
+        });
     }
   });
 
-  let differenceTokenValue;
-
-  if (getFilteredLinkCount(placesBefore, inbound) > 1) {
-    differenceTokenValue = min(invokeMap(placesBefore, 'get', 'tokens') as any);
-    each(placesBefore, (pinnacleModel) => {
-      pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
-    });
-  }
+  let iterationCount = 0;
+  let iterationCountSuccess = 0;
 
   each(placesAfter, (pinnacleModel) => {
     const linked = find(outbound, (link: any) => {
       return link.get('target').id === pinnacleModel.id;
     });
 
-    if (differenceTokenValue !== 0) {
+    if (differenceTokenValue > 0) {
+      ++iterationCount;
       paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
         () => {
           if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
             pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
           } else {
-            pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
+            if (transition.get('blocked')) {
+              pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
+            }
           }
-          callback(transition.attr('.label/text'));
+
+          ++iterationCountSuccess;
+          if (iterationCount === iterationCountSuccess) {
+            transition.set('firing', false);
+            defer(() => callback(transition.attr('.label/text')));
+          }
         });
     } else {
-      callback(transition.attr('.label/text'));
+      ++iterationCountSuccess;
+      if (iterationCount === iterationCountSuccess) {
+        transition.set('firing', false);
+        defer(() => callback(transition.attr('.label/text')));
+      }
     }
   });
 }
@@ -139,4 +151,8 @@ function getFilteredLinkCount(placesBefore, inbound) {
     linkCount += 1;
   });
   return linkCount;
+}
+
+function isRealPinnacle(pinnacleModel) {
+  return !!pinnacleModel.get('attrs')['.label'].text;
 }

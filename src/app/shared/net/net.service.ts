@@ -114,6 +114,13 @@ export class NetService {
       link(State5, IT5),
       link(State6, IT6),
 
+      link(IT1, State1),
+      link(IT2, State2),
+      link(IT3, State3),
+      link(IT4, State4),
+      link(IT5, State5),
+      link(IT6, State6),
+
       link(IT1, Ingredient1, { label: this.randomNumbers() }),
       link(IT2, Ingredient2, { label: this.randomNumbers() }),
       link(IT3, Ingredient3, { label: this.randomNumbers() }),

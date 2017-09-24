@@ -43,7 +43,7 @@ export const IT1 = transitionBasis.attr({
     text: 'IT 1'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 3'
   }
 }).position(300, 100).clone();
 
@@ -53,16 +53,16 @@ export const IT2 = transitionBasis.attr({
     text: 'IT 2'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 12'
   }
 }).position(300, 200).clone();
 
 export const IT3 = transitionBasis.attr({
   '.label': {
-    text: 'IT 3'
+    text: 'IT 33'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 66'
   }
 }).position(300, 300).clone();
 
@@ -71,7 +71,7 @@ export const IT4 = transitionBasis.attr({
     text: 'IT 4'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 22'
   }
 }).position(300, 400).clone();
 
@@ -80,7 +80,7 @@ export const IT5 = transitionBasis.attr({
     text: 'IT 5'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 77'
   }
 }).position(300, 500).clone();
 
@@ -89,7 +89,7 @@ export const IT6 = transitionBasis.attr({
     text: 'IT 6'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 10'
   }
 }).position(300, 600).clone();
 
@@ -98,7 +98,7 @@ export const CT1 = transitionBasis.attr({
     text: 'CT 1'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 13'
   }
 }).position(700, 200).clone();
 
@@ -107,7 +107,7 @@ export const CT2 = transitionBasis.attr({
     text: 'CT 2'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 13'
   }
 }).position(700, 350).clone();
 
@@ -116,7 +116,7 @@ export const CT3 = transitionBasis.attr({
     text: 'CT 3'
   },
   '.label-time': {
-    text: 't = 30'
+    text: 't = 8'
   }
 }).position(700, 500).clone();
 
