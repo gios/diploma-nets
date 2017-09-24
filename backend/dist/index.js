@@ -13,7 +13,7 @@ var routes_init_1 = require("./routes/routes-init");
 var app = new Koa();
 var router = new Router();
 app.use(helmet());
-app.use(serve('../public'));
+app.use(serve('public'));
 app.use(convert(bodyparser()));
 routes_init_1.initRoutes(app);
 app.use(router.routes());
