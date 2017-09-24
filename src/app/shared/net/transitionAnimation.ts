@@ -66,9 +66,9 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
           } else {
             if ((pinnacleModel.get('tokens') - differenceTokenValue) >= 0) {
               pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
-              transition.set('blocked', true);
-            } else {
               transition.set('blocked', false);
+            } else {
+              transition.set('blocked', true);
             }
             transition.set('firing', false);
           }
@@ -84,14 +84,14 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
       return link.get('target').id === pinnacleModel.id;
     });
 
-    if (differenceTokenValue > 0) {
+    if (differenceTokenValue > 0 && !transition.get('blocked')) {
       ++iterationCount;
       paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
         () => {
           if (getFilteredLinkCount(placesBefore, inbound) <= 1) {
             pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
           } else {
-            if (transition.get('blocked')) {
+            if (!transition.get('blocked')) {
               pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
             }
           }
