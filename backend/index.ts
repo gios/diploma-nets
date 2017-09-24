@@ -17,10 +17,6 @@ app.use(helmet());
 app.use(serve('public'));
 app.use(convert(bodyparser()));
 
-router.get('/', async (ctx) => {
-  ctx.body = 'amigo';
-});
-
 // Routes
 initRoutes(app);
 app.use(router.routes());
