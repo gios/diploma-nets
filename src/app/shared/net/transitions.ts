@@ -147,6 +147,42 @@ export const PT3 = transitionBasis.attr({
   }
 }).position(1050, 500).clone();
 
+export const ST1 = transitionBasis.attr({
+  '.label': {
+    text: 'ST 1'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1450, 100).clone();
+
+export const ST2 = transitionBasis.attr({
+  '.label': {
+    text: 'ST 2'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1450, 250).clone();
+
+export const ST3 = transitionBasis.attr({
+  '.label': {
+    text: 'ST 3'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1450, 450).clone();
+
+export const ST4 = transitionBasis.attr({
+  '.label': {
+    text: 'ST 4'
+  },
+  '.label-time': {
+    text: 't = 30'
+  }
+}).position(1450, 600).clone();
+
 export const RT1 = transitionBasis.attr({
   '.label': {
     text: 'RT 1'
