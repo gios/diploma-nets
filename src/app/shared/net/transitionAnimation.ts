@@ -4,23 +4,32 @@ import { each, map, uniq, find, defer, invokeMap, min, isEmpty, cloneDeep } from
 import { getLinkValue } from './linkConnections';
 import { getTimeTransition } from './transitions';
 
-export function fireTransition(graph, paper, transitions, globalDuration, callback) {
-  each(transitions, (transition: any) => {
-    fireTransitionOnce(graph, paper, transition, getTimeTransition(transition), globalDuration, (name) => {
+export function fireTransition(
+  graph: joint.dia.Graph,
+  paper: joint.dia.Paper,
+  transitions: joint.dia.Cell[],
+  callback) {
+  each(transitions, (transition) => {
+    fireTransitionOnce(graph, paper, transition, getTimeTransition(transition), (name: string) => {
       callback(name);
     });
   });
 }
 
-function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callback) {
+function fireTransitionOnce(
+  graph: joint.dia.Graph,
+  paper: joint.dia.Paper,
+  transition: joint.dia.Cell,
+  sec: number,
+  callback) {
   const inbound = graph.getConnectedLinks(transition, { inbound: true });
   const outbound = graph.getConnectedLinks(transition, { outbound: true });
 
-  const placesBefore = map(inbound, (link: any) => {
+  const placesBefore = map(inbound, (link) => {
     return graph.getCell(link.get('source').id);
   });
 
-  const placesAfter = map(outbound, (link: any) => {
+  const placesAfter = map(outbound, (link) => {
     return graph.getCell(link.get('target').id);
   });
 
@@ -56,14 +65,12 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
       let innerCounter = 0;
       const linked = getLinked(pinnacleModel, inbound, 'source');
 
-      paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
+      (<any> paper.findViewByModel(linked)).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
       () => {
-        if (canTransitFrom(placesBefore, inbound)) {
-          if (getLinkCount(placesBefore, inbound) <= 1) {
-            pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
-          } else {
-            pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
-          }
+        if (getLinkCount(placesBefore, inbound) <= 1) {
+          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
+        } else if (pinnacleModel.get('tokens') >= 0) {
+          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
         } else {
           transition.set('blocked', true);
         }
@@ -87,7 +94,7 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
   each(placesAfter, (pinnacleModel) => {
     const linked = getLinked(pinnacleModel, outbound, 'target');
 
-    paper.findViewByModel(linked).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
+    (<any> paper.findViewByModel(linked)).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
     () => {
       if (!transition.get('blocked')) {
         if (getLinkCount(placesBefore, inbound) <= 1) {
@@ -105,11 +112,11 @@ function fireTransitionOnce(graph, paper, transition, sec, globalDuration, callb
   });
 }
 
-function getLinkCount(places, bound) {
+function getLinkCount(places: joint.dia.Cell[], bound: joint.dia.Link[]) {
   let linkCount = 0;
 
-  each(places, (pinnacleModel: any) => {
-    const linked = find(bound, (link: any) => {
+  each(places, (pinnacleModel) => {
+    const linked = find(bound, (link) => {
       return link.get('source').id === pinnacleModel.id;
     });
     linkCount += 1;
@@ -117,21 +124,21 @@ function getLinkCount(places, bound) {
   return linkCount;
 }
 
-function isRealPinnacle(pinnacleModel) {
+function isRealPinnacle(pinnacleModel: joint.dia.Cell) {
   return !!pinnacleModel.get('attrs')['.label'].text;
 }
 
-function getLinked(pinnacleModel, bound, state) {
-  return find(bound, (link: any) => {
+function getLinked(pinnacleModel: joint.dia.Cell, bound: joint.dia.Link[], state: string) {
+  return find(bound, (link) => {
     return link.get(state).id === pinnacleModel.id;
   });
 }
 
-function canTransitFrom(placesBefore, inbound) {
+function canTransitFrom(placesBefore: joint.dia.Cell[], inbound: joint.dia.Link[]) {
   const placesBeforeCount = getLinkCount(placesBefore, inbound);
   let placesBeforeCountSuccess = 0;
 
-  each(placesBefore, (pinnacleModel: any) => {
+  each(placesBefore, (pinnacleModel) => {
     const linked = getLinked(pinnacleModel, inbound, 'source');
 
     if (pinnacleModel.get('tokens') >= getLinkValue(linked)) {

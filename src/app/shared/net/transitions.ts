@@ -1,10 +1,10 @@
 import * as joint from 'jointjs';
 
-export function getTimeTransition(transitionModel: joint.shapes.pn.Transition) {
+export function getTimeTransition(transitionModel: joint.dia.Cell) {
   return +transitionModel.attr('.label-time/text').split(' ')[2];
 }
 
-export function setTimeTransition(transitionModel: joint.shapes.pn.Transition, time: string | number) {
+export function setTimeTransition(transitionModel: joint.dia.Cell, time: string | number) {
   transitionModel.attr('.label-time/text', `t = ${time}`);
 }
 

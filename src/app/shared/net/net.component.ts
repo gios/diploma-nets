@@ -4,8 +4,6 @@ import * as joint from 'jointjs';
 import { NetService } from './net.service';
 import { fireTransition } from './transitionAnimation';
 
-const GLOBAL_DURATION = 5;
-
 @Component({
   selector: 'app-net',
   templateUrl: './net.component.html',
@@ -54,7 +52,7 @@ export class NetComponent implements OnInit, OnDestroy {
 
   startInfinityTransition() {
     function simulate(graph: joint.dia.Graph, paper: joint.dia.Paper, transitions: joint.dia.Cell[]) {
-      fireTransition(graph, paper, transitions, GLOBAL_DURATION, (name) => {
+      fireTransition(graph, paper, transitions, (name) => {
         console.log('FIRED ', name);
         setTimeout(() => simulate.call(this, graph, paper, transitions), 10);
       });
