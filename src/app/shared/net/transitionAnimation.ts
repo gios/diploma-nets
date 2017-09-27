@@ -60,18 +60,29 @@ function fireTransitionOnce(
 
   const differenceTokenValue = min(invokeMap(cloneDeep(placesBefore), 'get', 'tokens')) as number;
 
-  if (canTransitFrom(placesBefore, inbound)) {
+  if (canTransitTo(placesBefore, inbound)) {
     each(placesBefore, (pinnacleModel) => {
+      let innerPlacesBeforeCounter = 0;
+      let transitAnimation = false;
       const linked = getLinked(pinnacleModel, inbound, 'source');
 
       (<any> paper.findViewByModel(linked)).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
       () => {
-        if (getLinkCount(placesBefore, inbound) <= 1) {
-          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
-        } else {
-          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
+        if (!innerPlacesBeforeCounter) {
+          transitAnimation = canTransitTo(placesBefore, inbound);
         }
 
+        if (transitAnimation) {
+          if (getLinkCount(placesBefore, inbound) <= 1) {
+            pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
+          } else {
+            pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
+          }
+        } else {
+          transition.set('blocked', true);
+        }
+
+        innerPlacesBeforeCounter += 1;
         transition.set('firing', false);
       });
     });
@@ -130,7 +141,7 @@ function getLinked(pinnacleModel: joint.dia.Cell, bound: joint.dia.Link[], state
   });
 }
 
-function canTransitFrom(placesBefore: joint.dia.Cell[], inbound: joint.dia.Link[]) {
+function canTransitTo(placesBefore: joint.dia.Cell[], inbound: joint.dia.Link[]) {
   const placesBeforeCount = getLinkCount(placesBefore, inbound);
   let placesBeforeCountSuccess = 0;
 
