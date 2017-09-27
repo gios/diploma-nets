@@ -62,20 +62,16 @@ function fireTransitionOnce(
 
   if (canTransitFrom(placesBefore, inbound)) {
     each(placesBefore, (pinnacleModel) => {
-      let innerCounter = 0;
       const linked = getLinked(pinnacleModel, inbound, 'source');
 
       (<any> paper.findViewByModel(linked)).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
       () => {
         if (getLinkCount(placesBefore, inbound) <= 1) {
           pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
-        } else if (pinnacleModel.get('tokens') >= 0) {
-          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
         } else {
-          transition.set('blocked', true);
+          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
         }
 
-        ++innerCounter;
         transition.set('firing', false);
       });
     });
