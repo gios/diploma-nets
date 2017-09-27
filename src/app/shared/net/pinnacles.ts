@@ -164,7 +164,7 @@ export const Shop1 = pinnacle.attr({
     text: 'Shop 1'
   }
 })
-.position(1200, 100)
+.position(1650, 100)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -173,7 +173,7 @@ export const Shop2 = pinnacle.attr({
     text: 'Shop 2'
   }
 })
-.position(1200, 250)
+.position(1650, 250)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -182,7 +182,7 @@ export const Shop3 = pinnacle.attr({
     text: 'Shop 3'
   }
 })
-.position(1200, 400)
+.position(1650, 400)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -191,7 +191,7 @@ export const Shop4 = pinnacle.attr({
     text: 'Shop 4'
   }
 })
-.position(1200, 550)
+.position(1650, 550)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -200,7 +200,7 @@ export const Remainder1 = pinnacle.attr({
     text: 'Remainder 1'
   }
 })
-.position(1200, 700)
+.position(1650, 700)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -209,7 +209,7 @@ export const Remainder2 = pinnacle.attr({
     text: 'Remainder 2'
   }
 })
-.position(1200, 850)
+.position(1650, 850)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;
 
@@ -218,6 +218,6 @@ export const Remainder3 = pinnacle.attr({
     text: 'Remainder 3'
   }
 })
-.position(1200, 1000)
+.position(1650, 1000)
 .set('tokens', 0)
 .clone() as joint.dia.Cell;

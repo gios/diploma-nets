@@ -16,10 +16,10 @@ import {
   ST1,
   ST2,
   ST3,
-  ST4
-  // RT1,
-  // RT2,
-  // RT3
+  ST4,
+  RT1,
+  RT2,
+  RT3
 } from './transitions';
 
 import {
@@ -41,13 +41,13 @@ import {
   Product1,
   Product2,
   Product3,
-  // Shop1,
-  // Shop2,
-  // Shop3,
-  // Shop4,
-  // Remainder1,
-  // Remainder2,
-  // Remainder3
+  Shop1,
+  Shop2,
+  Shop3,
+  Shop4,
+  Remainder1,
+  Remainder2,
+  Remainder3
 } from './pinnacles';
 
 import { link } from './linkConnections';
@@ -77,13 +77,13 @@ export class NetService {
       Product1,
       Product2,
       Product3,
-      // Shop1,
-      // Shop2,
-      // Shop3,
-      // Shop4,
-      // Remainder1,
-      // Remainder2,
-      // Remainder3
+      Shop1,
+      Shop2,
+      Shop3,
+      Shop4,
+      Remainder1,
+      Remainder2,
+      Remainder3
     ];
   }
 
@@ -105,9 +105,9 @@ export class NetService {
       ST2,
       ST3,
       ST4,
-      // RT1,
-      // RT2,
-      // RT3
+      RT1,
+      RT2,
+      RT3
     ];
   }
 
@@ -162,16 +162,18 @@ export class NetService {
       link(Product3, ST3, { label: this.randomNumbers() }),
       link(Product3, ST4, { label: this.randomNumbers() }),
 
-      // link(PT1, Shop1),
-      // link(PT2, Shop2),
-      // link(PT3, Shop3),
-      // link(PT4, Shop4),
-      // link(Product1, RT1, { label: this.randomNumbers() }),
-      // link(Product2, RT2, { label: this.randomNumbers() }),
-      // link(Product3, RT3, { label: this.randomNumbers() }),
-      // link(RT1, Remainder1),
-      // link(RT2, Remainder2),
-      // link(RT3, Remainder3)
+      link(ST1, Shop1),
+      link(ST2, Shop2),
+      link(ST3, Shop3),
+      link(ST4, Shop4),
+
+
+      link(Product1, RT1, { label: this.randomNumbers() }),
+      link(Product2, RT2, { label: this.randomNumbers() }),
+      link(Product3, RT3, { label: this.randomNumbers() }),
+      link(RT1, Remainder1),
+      link(RT2, Remainder2),
+      link(RT3, Remainder3)
     ];
   }
 
