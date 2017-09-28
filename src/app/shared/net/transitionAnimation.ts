@@ -1,5 +1,5 @@
 import { V } from 'jointjs';
-import { each, map, uniq, find, defer, invokeMap, min, isEmpty, cloneDeep } from 'lodash';
+import { each, map, uniq, find, defer, invokeMap, min, isEmpty } from 'lodash';
 
 import { getLinkValue } from './linkConnections';
 import { getTimeTransition } from './transitions';
@@ -58,7 +58,7 @@ function fireTransitionOnce(
   transition.set('firing', true);
   transition.set('blocked', false);
 
-  const differenceTokenValue = min(invokeMap(cloneDeep(placesBefore), 'get', 'tokens')) as number;
+  const differenceTokenValue = min(invokeMap(placesBefore, 'get', 'tokens')) as number;
 
   if (canTransitTo(placesBefore, inbound)) {
     each(placesBefore, (pinnacleModel) => {
