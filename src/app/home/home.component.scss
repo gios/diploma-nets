@@ -1,6 +1,9 @@
 :host {
-  width: 100%;
-  height: calc(100% - 64px);
-  position: absolute;
-  overflow: auto;
+
+  > .net-container {
+    width: 100%;
+    height: calc(100% - 64px);
+    position: absolute;
+    overflow: auto;
+  }
 }

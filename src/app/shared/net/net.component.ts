@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges
+} from '@angular/core';
 import * as joint from 'jointjs';
 
 import { NetService } from './net.service';
@@ -8,14 +10,18 @@ import { fireTransition } from './transitionAnimation';
   selector: 'app-net',
   templateUrl: './net.component.html',
   styleUrls: ['./net.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [NetService]
 })
-export class NetComponent implements OnInit, OnDestroy {
+export class NetComponent implements OnInit, OnDestroy, OnChanges {
   transitions: joint.dia.Cell[];
   pinnacles: joint.dia.Cell[];
   graph = new joint.dia.Graph();
   paper: joint.dia.Paper;
+  pendingIterations = 0;
+  pendingStopTransitions = false;
 
+  @Input() transitionState: boolean;
   @ViewChild('netSelector') netSelector: ElementRef;
 
   constructor(
@@ -42,7 +48,15 @@ export class NetComponent implements OnInit, OnDestroy {
     ]);
 
     this.graph.addCell(this.netService.getLinkedConnections());
-    this.startInfinityTransition();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.transitionState.currentValue) {
+      this.pendingStopTransitions = false;
+      this.startInfinityTransition();
+    } else {
+      this.pendingStopTransitions = true;
+    }
   }
 
   ngOnDestroy() {
@@ -52,9 +66,11 @@ export class NetComponent implements OnInit, OnDestroy {
 
   startInfinityTransition() {
     function simulate(graph: joint.dia.Graph, paper: joint.dia.Paper, transitions: joint.dia.Cell[]) {
-      fireTransition(graph, paper, transitions, (name) => {
-        console.log('FIRED ', name);
-        setTimeout(() => simulate.call(this, graph, paper, transitions), 10);
+      fireTransition(graph, paper, transitions, () => {
+        if (!this.pendingStopTransitions) {
+          ++this.pendingIterations;
+          setTimeout(() => simulate.call(this, graph, paper, transitions), 10);
+        }
       });
     }
 
