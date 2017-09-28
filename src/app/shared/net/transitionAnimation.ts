@@ -58,8 +58,6 @@ function fireTransitionOnce(
   transition.set('firing', true);
   transition.set('blocked', false);
 
-  const differenceTokenValue = min(invokeMap(placesBefore, 'get', 'tokens')) as number;
-
   if (canTransitTo(placesBefore, inbound)) {
     each(placesBefore, (pinnacleModel) => {
       const linked = getLinked(pinnacleModel, inbound, 'source');
@@ -67,12 +65,7 @@ function fireTransitionOnce(
       (<any> paper.findViewByModel(linked)).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
       () => {
         // Check if before pinnacles don't have minus values
-        if (getLinkCount(placesBefore, inbound) <= 1) {
-          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
-        } else {
-          pinnacleModel.set('tokens', pinnacleModel.get('tokens') - differenceTokenValue);
-        }
-
+        pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
         transition.set('firing', false);
       });
     });
@@ -94,11 +87,7 @@ function fireTransitionOnce(
     (<any> paper.findViewByModel(linked)).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
     () => {
       if (!transition.get('blocked')) {
-        if (getLinkCount(placesBefore, inbound) <= 1) {
-          pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
-        } else {
-          pinnacleModel.set('tokens', pinnacleModel.get('tokens') + differenceTokenValue);
-        }
+        pinnacleModel.set('tokens', pinnacleModel.get('tokens') + getLinkValue(linked));
       }
 
       ++placesAfterCountSuccess;
