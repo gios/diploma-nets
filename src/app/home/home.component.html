@@ -1,4 +1,4 @@
-<app-toolbar (buttonEvent)="transitionState = $event"></app-toolbar>
+<app-toolbar [buttons]="toolbarButtons"></app-toolbar>
 <div class="net-container">
-  <app-net [transitionState]="transitionState"></app-net>
+  <app-net [(transitionState)]="transitionState"></app-net>
 </div>

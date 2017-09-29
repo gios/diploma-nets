@@ -1,12 +1,14 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { IInputButtons } from './toolbar';
 
 @Component({
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrls: ['./toolbar.component.scss']
 })
 export class ToolbarComponent implements OnInit {
-  @Output() buttonEvent = new EventEmitter<boolean>();
+  @Input() buttons: IInputButtons;
 
   constructor() { }
 

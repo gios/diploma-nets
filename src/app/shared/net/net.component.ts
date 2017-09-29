@@ -18,7 +18,6 @@ export class NetComponent implements OnInit, OnDestroy, OnChanges {
   pinnacles: joint.dia.Cell[];
   graph = new joint.dia.Graph();
   paper: joint.dia.Paper;
-  pendingIterations = 0;
   pendingStopTransitions = false;
 
   @Input() transitionState: boolean;
@@ -67,10 +66,10 @@ export class NetComponent implements OnInit, OnDestroy, OnChanges {
   startInfinityTransition() {
     function simulate(graph: joint.dia.Graph, paper: joint.dia.Paper, transitions: joint.dia.Cell[]) {
       fireTransition(graph, paper, transitions, () => {
-        if (!this.pendingStopTransitions) {
-          ++this.pendingIterations;
-          setTimeout(() => simulate.call(this, graph, paper, transitions), 10);
+        if (this.pendingStopTransitions) {
+          return;
         }
+        setTimeout(() => simulate.call(this, graph, paper, transitions), 10);
       });
     }
 

@@ -1,6 +1,11 @@
 <md-toolbar>
-  <button md-raised-button color="primary" (click)="buttonEvent.emit(true)">Start Transition</button>
-  <button md-raised-button color="warn" (click)="buttonEvent.emit(false)">Stop Transition</button>
+  <div *ngFor="let button of buttons">
+    <button md-raised-button [color]="button.type"
+      (click)="button.click()"
+      [disabled]="button.disabled">
+    {{ button.text }} <md-icon *ngIf="button.icon">{{ button.icon }}</md-icon>
+    </button>
+  </div>
   <span class="fill-remaining-space"></span>
   <span>Developed by: Pavlo Blazhchuk</span>
 </md-toolbar>
