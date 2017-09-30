@@ -24,30 +24,40 @@
     "@angular/platform-browser-dynamic": "^4.2.4",
     "@angular/router": "^4.2.4",
     "core-js": "^2.4.1",
-    "jointjs": "^1.1.0",
-    "lodash": "^4.17.4",
-    "rxjs": "^5.4.2",
-    "zone.js": "^0.8.14",
-
     "dotenv": "^4.0.0",
+    "jointjs": "^1.1.0",
+    "knex": "^0.13.0",
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
     "koa-convert": "^1.2.0",
     "koa-helmet": "^3.2.0",
     "koa-router": "^7.2.1",
     "koa-static": "^4.0.1",
-    "winston": "^2.3.1"
+    "lodash": "^4.17.4",
+    "pg": "^7.3.0",
+    "rxjs": "^5.4.2",
+    "winston": "^2.3.1",
+    "zone.js": "^0.8.14"
   },
   "devDependencies": {
     "@angular/cli": "1.4.2",
     "@angular/compiler-cli": "^4.2.4",
     "@angular/language-service": "^4.2.4",
+    "@types/dotenv": "^4.0.1",
     "@types/jasmine": "~2.5.53",
     "@types/jasminewd2": "~2.0.2",
     "@types/jointjs": "^1.0.5",
+    "@types/knex": "0.0.61",
+    "@types/koa": "^2.0.39",
+    "@types/koa-bodyparser": "^3.0.25",
+    "@types/koa-helmet": "^3.1.1",
+    "@types/koa-router": "^7.0.23",
+    "@types/koa-static": "^3.0.1",
     "@types/lodash": "^4.14.74",
     "@types/node": "~6.0.60",
+    "@types/winston": "^2.3.6",
     "codelyzer": "~3.1.1",
+    "concurrently": "^3.5.0",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
@@ -56,25 +66,16 @@
     "karma-coverage-istanbul-reporter": "^1.2.1",
     "karma-jasmine": "~1.1.0",
     "karma-jasmine-html-reporter": "^0.2.2",
+    "nodemon": "^1.12.1",
     "protractor": "~5.1.2",
+    "rimraf": "^2.6.2",
     "stylelint": "^8.1.1",
     "stylelint-scss": "^2.1.0",
     "ts-node": "~3.2.0",
     "tslint": "~5.3.2",
-    "typescript": "~2.3.3",
-
-    "@types/dotenv": "^4.0.1",
-    "@types/koa": "^2.0.39",
-    "@types/koa-bodyparser": "^3.0.25",
-    "@types/koa-helmet": "^3.1.1",
-    "@types/koa-router": "^7.0.23",
-    "@types/koa-static": "^3.0.1",
-    "@types/winston": "^2.3.6",
-    "concurrently": "^3.5.0",
-    "nodemon": "^1.12.1",
-    "rimraf": "^2.6.2"
+    "typescript": "~2.3.3"
   },
-  "engines" : {
-    "node" : ">=8"
+  "engines": {
+    "node": ">=8"
   }
 }

@@ -171,9 +171,9 @@ export class NetService {
       link(Product1, RT1, { label: this.randomNumbers() }),
       link(Product2, RT2, { label: this.randomNumbers() }),
       link(Product3, RT3, { label: this.randomNumbers() }),
-      link(RT1, Remainder1),
-      link(RT2, Remainder2),
-      link(RT3, Remainder3)
+      link(RT1, Remainder1, { label: this.randomNumbers() }),
+      link(RT2, Remainder2, { label: this.randomNumbers() }),
+      link(RT3, Remainder3, { label: this.randomNumbers() })
     ];
   }
 
