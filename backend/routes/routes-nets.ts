@@ -5,7 +5,7 @@ import {
 } from '../nets/middlewares';
 
 export const router = new Router({
-  prefix: '/nets',
+  prefix: '/net',
 });
 
 router.get('/', getNet);

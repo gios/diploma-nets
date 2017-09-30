@@ -7,6 +7,7 @@ import { invokeMap } from 'lodash';
 
 import { NetService } from './net.service';
 import { fireTransition } from './transitionAnimation';
+import { INetAttributes } from './net.interface';
 
 @Component({
   selector: 'app-net',
@@ -22,6 +23,7 @@ export class NetComponent implements OnInit, OnDestroy, OnChanges {
   paper: joint.dia.Paper;
   pendingStopTransitions = false;
 
+  @Input() data: INetAttributes;
   @Input() transitionState: boolean;
   @Output() transitionStopped = new EventEmitter<boolean>();
   @ViewChild('netSelector') netSelector: ElementRef;
@@ -53,7 +55,7 @@ export class NetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.transitionState.currentValue) {
+    if (changes.transitionState && changes.transitionState.currentValue) {
       this.pendingStopTransitions = false;
       this.startInfinityTransition();
     } else {

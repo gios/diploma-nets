@@ -26,9 +26,6 @@ export interface IPinnacle extends ITimestamps {
 
 export interface ILinkConnection extends ITimestamps {
   id: number;
-  pinnacleId: number;
-  transitionId: number;
-  from: number;
   value: number;
   connect: [IConnect, IConnect];
 }

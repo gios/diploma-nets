@@ -1,12 +1,16 @@
-import { Component, SimpleChanges } from '@angular/core';
+import { Component, SimpleChanges, OnInit } from '@angular/core';
+import { Http } from '@angular/http';
+
 import { IInputButtons } from '../shared/toolbar/toolbar';
+import { INetAttributes } from '../shared/net/net.interface';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  netData: INetAttributes;
   transitionState: boolean;
   toolbarButtons: IInputButtons[] = [
     {
@@ -25,7 +29,16 @@ export class HomeComponent {
     }
   ];
 
-  constructor() { }
+  constructor(
+    private http: Http
+  ) { }
+
+  ngOnInit() {
+    this.http.get('api/net').subscribe(response => {
+      const data = response.json();
+      this.netData = data;
+    });
+  }
 
   startTransition() {
     this.transitionState = true;

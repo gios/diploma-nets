@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
+import { HttpModule } from '@angular/http';
 import { MdSidenavModule, MdIconModule } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -18,6 +19,7 @@ import { AboutComponent } from './about/about.component';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    HttpModule,
     MdSidenavModule,
     MdIconModule,
     AppRoutingModule,

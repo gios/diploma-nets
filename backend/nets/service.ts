@@ -37,12 +37,19 @@ export class NetService {
   private transformLinkConnections(data: ILinkConnection[]) {
     return data.map((item) => {
       if (item.from - 1) {
-        item.connect = [{ transitionId: item.transitionId }, { pinnacleId: item.pinnacleId }];
+        item.connect = [
+          { type: 'transition', id: item.transitionId },
+          { type: 'pinnacle', id: item.pinnacleId }
+        ];
       } else {
-        item.connect = [{ pinnacleId: item.pinnacleId }, { transitionId: item.transitionId }];
+        item.connect = [
+          { type: 'pinnacle', id: item.pinnacleId },
+          { type: 'transition', id: item.transitionId }
+        ];
       }
       delete item.pinnacleId;
       delete item.transitionId;
+      delete item.from;
       return item;
     });
   }

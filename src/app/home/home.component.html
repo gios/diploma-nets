@@ -1,4 +1,4 @@
 <app-toolbar [buttons]="toolbarButtons"></app-toolbar>
 <div class="net-container">
-  <app-net [transitionState]="transitionState" (transitionStopped)="transitionStopped($event)"></app-net>
+  <app-net [data]="netData" [transitionState]="transitionState" (transitionStopped)="transitionStopped($event)"></app-net>
 </div>
