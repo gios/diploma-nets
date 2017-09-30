@@ -3,26 +3,31 @@ exports.up = async (knex) => {
     table.increments();
     table.string("name").notNullable();
     table.integer("time");
+    table.integer("x");
+    table.integer("y");
     table.timestamps(true, true);
   });
 
   await knex("transitions").insert([
-    { name: "IT1", time: 3 },
-    { name: "IT2", time: 12 },
-    { name: "IT3", time: 66 },
-    { name: "IT4", time: 22 },
-    { name: "IT5", time: 77 },
-    { name: "IT6", time: 10 },
-    { name: "CT1", time: 13 },
-    { name: "CT2", time: 13 },
-    { name: "CT3", time: 8 },
-    { name: "PT1", time: 4 },
-    { name: "PT2", time: 5 },
-    { name: "PT3", time: 6 },
-    { name: "ST1", time: 26 },
-    { name: "ST2", time: 20 },
-    { name: "ST3", time: 22 },
-    { name: "ST4", time: 35 }
+    { name: "IT 1", time: 3, x: 300, y: 100 },
+    { name: "IT 2", time: 12, x: 300, y: 200 },
+    { name: "IT 3", time: 66, x: 300, y: 300 },
+    { name: "IT 4", time: 22, x: 300, y: 400 },
+    { name: "IT 5", time: 77, x: 300, y: 500 },
+    { name: "IT 6", time: 10, x: 300, y: 600 },
+    { name: "CT 1", time: 13, x: 700, y: 200 },
+    { name: "CT 2", time: 13, x: 700, y: 350 },
+    { name: "CT 3", time: 8, x: 700, y: 500 },
+    { name: "PT 1", time: 4, x: 1050, y: 200 },
+    { name: "PT 2", time: 5, x: 1050, y: 350 },
+    { name: "PT 3", time: 6, x: 1050, y: 500 },
+    { name: "ST 1", time: 26, x: 1450, y: 100 },
+    { name: "ST 2", time: 20, x: 1450, y: 250 },
+    { name: "ST 3", time: 22, x: 1450, y: 400 },
+    { name: "ST 4", time: 35, x: 1450, y: 550 },
+    { name: "RT 1", time: 35, x: 1450, y: 700 },
+    { name: "RT 2", time: 35, x: 1450, y: 850 },
+    { name: "RT 3", time: 35, x: 1450, y: 1000 }
   ]);
 };
 
