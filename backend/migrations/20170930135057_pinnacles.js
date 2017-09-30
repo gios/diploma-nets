@@ -9,12 +9,12 @@ exports.up = async (knex) => {
   });
 
   await knex("pinnacles").insert([
-    { name: "State 1", value: 0, x: 100, y: 100 },
-    { name: "State 2", value: 0, x: 100, y: 200 },
-    { name: "State 3", value: 0, x: 100, y: 300 },
-    { name: "State 4", value: 0, x: 100, y: 400 },
-    { name: "State 5", value: 0, x: 100, y: 500 },
-    { name: "State 6", value: 0, x: 100, y: 600 },
+    { name: "State 1", value: 1, x: 100, y: 100 },
+    { name: "State 2", value: 1, x: 100, y: 200 },
+    { name: "State 3", value: 1, x: 100, y: 300 },
+    { name: "State 4", value: 1, x: 100, y: 400 },
+    { name: "State 5", value: 1, x: 100, y: 500 },
+    { name: "State 6", value: 1, x: 100, y: 600 },
     { name: "Ingredient 1", value: 0, x: 450, y: 100 },
     { name: "Ingredient 2", value: 0, x: 450, y: 200 },
     { name: "Ingredient 3", value: 0, x: 450, y: 300 },

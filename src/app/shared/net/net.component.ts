@@ -57,7 +57,6 @@ export class NetComponent implements OnDestroy, OnChanges {
   }
 
   simulation() {
-    console.log(this.graph, this.paper, this.transitions)
     fireTransition(this.graph, this.paper, this.transitions, () => {
       const firedCount = invokeMap(this.transitions, 'get', 'firing').filter(item => !!item);
       if (!firedCount.length) {
