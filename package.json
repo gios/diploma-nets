@@ -14,8 +14,8 @@
     "watch-server": "tsc -p backend/tsconfig.json --pretty -w",
     "start-server": "npm run build-server && node backend/dist/index.js",
     "start-dev-server": "concurrently \"nodemon --inspect backend/dist/index.js\" \"npm run watch-server\"",
-    "migrate": "knex migrate:latest",
-    "rollback": "knex migrate:rollback"
+    "migrate": "knex migrate:latest --knexfile backend/knexfile.js",
+    "rollback": "knex migrate:rollback --knexfile backend/knexfile.js"
   },
   "private": true,
   "dependencies": {

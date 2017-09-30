@@ -1,5 +1,7 @@
 import * as joint from 'jointjs';
-import { map, last } from 'lodash';
+import { find } from 'lodash';
+
+import { ILinkConnection } from './net.interface';
 
 const defaultLinkOptions = {
   label: ''
@@ -55,45 +57,26 @@ export function getLinkValue(link: joint.shapes.pn.Link) {
   return parseInt((linkValue) ? linkValue : 1, 10);
 }
 
-function setLinkValue(link: joint.shapes.pn.Link, value: string | number) {
-  link.label(0, { attrs: { text: { text: value} } } as any);
-}
-
-function getLinkByTransition(graph: joint.dia.Graph, transition: joint.dia.Cell) {
-  const outbound = graph.getConnectedLinks(transition, { outbound: true });
-
-  return map(outbound, (link) => {
-    return getLinkValue(link);
-  });
-}
-
-export function getConsumerValue(graph: joint.dia.Graph, customerTransition: joint.dia.Cell) {
-  return last(getLinkByTransition(graph, customerTransition));
-}
-
-export function setConsumerValue(graph: joint.dia.Graph, customerTransition: joint.dia.Cell, value: string | number) {
-  const outbound = graph.getConnectedLinks(customerTransition, { outbound: true });
-  setLinkValue(last(outbound), value);
-}
-
-export function getSolarStationValue(graph: joint.dia.Graph, solarStationTransition: joint.dia.Cell) {
-  return last(getLinkByTransition(graph, solarStationTransition));
-}
-
-export function setSolarStationValue(graph: joint.dia.Graph, solarStationTransition: joint.dia.Cell, value: string | number) {
-  const outbound = graph.getConnectedLinks(solarStationTransition, { outbound: true });
-  setLinkValue(last(outbound), value);
-}
-
-export function getElectroStationValue(graph: joint.dia.Graph, electroStationTransition: joint.dia.Cell) {
-  return last(getLinkByTransition(graph, electroStationTransition));
-}
-
-export function setElectroStationValue(
-  graph: joint.dia.Graph,
-  electroStationTransition: joint.dia.Cell,
-  value: string | number
+export function generateConnections(
+  pinnacles: joint.dia.Cell[],
+  transitions: joint.dia.Cell[],
+  connections: ILinkConnection[]
 ) {
-  const outbound = graph.getConnectedLinks(electroStationTransition, { outbound: true });
-  setLinkValue(last(outbound), value);
+  const generatedConnections: joint.shapes.pn.Link[] = [];
+  let options = null;
+
+  connections.forEach((connectionItem) => {
+    const connectedItems = connectionItem.connect.map((item) => {
+      return item.type === 'pinnacle'
+      ? find(pinnacles, ['attributes.baseId', item.id])
+      : find(transitions, ['attributes.baseId', item.id]);
+    });
+
+    if (connectionItem.value > 1) {
+      options = { label: connectionItem.value.toString() };
+    }
+    generatedConnections.push(link(connectedItems[0], connectedItems[1], options));
+  });
+
+  return generatedConnections;
 }

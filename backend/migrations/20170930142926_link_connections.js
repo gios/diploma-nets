@@ -11,17 +11,19 @@ exports.up = async (knex) => {
   });
 
   await knex("link_connections").insert([
-    { pinnacle_id: 1, transition_id: 1, from: 1, value: 0 },
-    { pinnacle_id: 2, transition_id: 2, from: 1, value: 0 },
-    { pinnacle_id: 3, transition_id: 3, from: 1, value: 0 },
-    { pinnacle_id: 4, transition_id: 4, from: 1, value: 0 },
-    { pinnacle_id: 5, transition_id: 5, from: 1, value: 0 },
+    { pinnacle_id: 1, transition_id: 1, from: 1, value: 1 },
+    { pinnacle_id: 2, transition_id: 2, from: 1, value: 1 },
+    { pinnacle_id: 3, transition_id: 3, from: 1, value: 1 },
+    { pinnacle_id: 4, transition_id: 4, from: 1, value: 1 },
+    { pinnacle_id: 5, transition_id: 5, from: 1, value: 1 },
+    { pinnacle_id: 6, transition_id: 6, from: 1, value: 1 },
 
-    { pinnacle_id: 1, transition_id: 1, from: 2, value: 0 },
-    { pinnacle_id: 2, transition_id: 2, from: 2, value: 0 },
-    { pinnacle_id: 3, transition_id: 3, from: 2, value: 0 },
-    { pinnacle_id: 4, transition_id: 4, from: 2, value: 0 },
-    { pinnacle_id: 5, transition_id: 5, from: 2, value: 0 },
+    { pinnacle_id: 1, transition_id: 1, from: 2, value: 1 },
+    { pinnacle_id: 2, transition_id: 2, from: 2, value: 1 },
+    { pinnacle_id: 3, transition_id: 3, from: 2, value: 1 },
+    { pinnacle_id: 4, transition_id: 4, from: 2, value: 1 },
+    { pinnacle_id: 5, transition_id: 5, from: 2, value: 1 },
+    { pinnacle_id: 6, transition_id: 6, from: 2, value: 1 },
 
     { pinnacle_id: 7, transition_id: 1, from: 2, value: 265 },
     { pinnacle_id: 8, transition_id: 2, from: 2, value: 277 },
