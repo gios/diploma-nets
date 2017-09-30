@@ -1,8 +1,11 @@
 import * as Koa from 'koa';
 
-import { router as testRoutes } from './test-routes';
+import { routesList } from './routes';
 
 export const initRoutes = (app: Koa) => {
-  app.use(testRoutes.routes());
-  app.use(testRoutes.allowedMethods());
+  routesList.forEach((router) => {
+    router.prefix('/api');
+    app.use(router.routes());
+    app.use(router.allowedMethods());
+  });
 };

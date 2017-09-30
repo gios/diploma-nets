@@ -10,10 +10,11 @@
     "outDir": "dist",
     "module": "commonjs",
     "declaration": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "removeComments": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitAny": false,
     "moduleResolution": "node",
     "sourceMap": true,
     "inlineSources": true
@@ -24,6 +25,6 @@
   "exclude": [
     "**/*.spec.ts",
     "dist",
-    "node_modules"
+    "../node_modules"
   ]
 }
