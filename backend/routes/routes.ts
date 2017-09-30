@@ -1,6 +1,6 @@
 import * as Router from 'koa-router';
 
-import { router as netRoutes } from './routes-net';
+import { router as netRoutes } from './routes-nets';
 
 export const routesList: Router[] = [
   netRoutes

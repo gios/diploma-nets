@@ -9,7 +9,6 @@
     ],
     "outDir": "dist",
     "module": "commonjs",
-    "declaration": true,
     "strictNullChecks": false,
     "removeComments": true,
     "noUnusedLocals": true,
@@ -17,6 +16,7 @@
     "noImplicitAny": false,
     "moduleResolution": "node",
     "sourceMap": true,
+    "allowJs": true,
     "inlineSources": true
   },
   "include": [
