@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, SimpleChanges } from '@angular/core';
 import { IInputButtons } from '../shared/toolbar/toolbar';
 
 @Component({
@@ -6,7 +6,7 @@ import { IInputButtons } from '../shared/toolbar/toolbar';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   transitionState: boolean;
   toolbarButtons: IInputButtons[] = [
     {
@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
     },
     {
       text: 'Stop Transition',
-      disabled: false,
+      disabled: true,
       type: 'warn',
       icon: 'cached',
       click: this.stopTransition.bind(this)
@@ -27,18 +27,19 @@ export class HomeComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-
-  }
-
   startTransition() {
     this.transitionState = true;
     this.toolbarButtons[0].disabled = true;
+    this.toolbarButtons[1].disabled = false;
   }
 
   stopTransition() {
     this.transitionState = false;
     this.toolbarButtons[0].disabled = true;
     this.toolbarButtons[1].disabled = true;
+  }
+
+  transitionStopped() {
+    this.toolbarButtons[0].disabled = false;
   }
 }

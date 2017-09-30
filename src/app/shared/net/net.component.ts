@@ -1,7 +1,9 @@
 import {
-  Component, OnInit, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges
+  Component, OnInit, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges,
+  Output, EventEmitter
 } from '@angular/core';
 import * as joint from 'jointjs';
+import { invokeMap } from 'lodash';
 
 import { NetService } from './net.service';
 import { fireTransition } from './transitionAnimation';
@@ -21,6 +23,7 @@ export class NetComponent implements OnInit, OnDestroy, OnChanges {
   pendingStopTransitions = false;
 
   @Input() transitionState: boolean;
+  @Output() transitionStopped = new EventEmitter<boolean>();
   @ViewChild('netSelector') netSelector: ElementRef;
 
   constructor(
@@ -64,15 +67,20 @@ export class NetComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   startInfinityTransition() {
-    function simulate(graph: joint.dia.Graph, paper: joint.dia.Paper, transitions: joint.dia.Cell[]) {
-      fireTransition(graph, paper, transitions, () => {
-        if (this.pendingStopTransitions) {
-          return;
-        }
-        setTimeout(() => simulate.call(this, graph, paper, transitions), 10);
-      });
-    }
+    this.simulation();
+  }
 
-    simulate.call(this, this.graph, this.paper, this.transitions);
+  simulation() {
+    fireTransition(this.graph, this.paper, this.transitions, () => {
+      const firedCount = invokeMap(this.transitions, 'get', 'firing').filter(item => !!item);
+      if (!firedCount.length) {
+        this.transitionStopped.emit(true);
+      }
+
+      if (this.pendingStopTransitions) {
+        return;
+      }
+      setTimeout(() => this.simulation(), 10);
+    });
   }
 }
