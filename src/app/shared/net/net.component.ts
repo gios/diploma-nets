@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges,
+  Component, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges,
   Output, EventEmitter
 } from '@angular/core';
 import * as joint from 'jointjs';
@@ -16,9 +16,8 @@ import { INetAttributes } from './net.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [NetService]
 })
-export class NetComponent implements OnInit, OnDestroy, OnChanges {
+export class NetComponent implements OnDestroy, OnChanges {
   transitions: joint.dia.Cell[];
-  pinnacles: joint.dia.Cell[];
   graph = new joint.dia.Graph();
   paper: joint.dia.Paper;
   pendingStopTransitions = false;
@@ -30,31 +29,16 @@ export class NetComponent implements OnInit, OnDestroy, OnChanges {
 
   constructor(
     private netService: NetService
-  ) {
-    this.transitions = this.netService.getTransitions();
-    this.pinnacles = this.netService.getPinnacles();
-  }
-
-  ngOnInit() {
-    this.paper = new joint.dia.Paper({
-      el: this.netSelector.nativeElement,
-      width: 2000,
-      height: 1200,
-      gridSize: 1,
-      perpendicularLinks: true,
-      interactive: false,
-      model: this.graph
-    });
-
-    this.graph.addCell([
-      ...this.pinnacles,
-      ...this.transitions
-    ]);
-
-    this.graph.addCell(this.netService.getLinkedConnections());
-  }
+  ) { }
 
   ngOnChanges(changes: SimpleChanges) {
+    if (changes.data && changes.data.currentValue) {
+      const netData = changes.data.currentValue;
+      const { paper, transitions } = this.netService.generateNet(this.netSelector, this.graph, netData);
+      this.paper = paper;
+      this.transitions = transitions;
+    }
+
     if (changes.transitionState && changes.transitionState.currentValue) {
       this.pendingStopTransitions = false;
       this.startInfinityTransition();
