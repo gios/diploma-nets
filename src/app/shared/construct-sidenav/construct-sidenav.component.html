@@ -82,11 +82,11 @@
     <div class="adjuster"></div>
     <div *ngIf="selectedTabIndex == 2">
       <md-accordion class="headers-align">
-        <div *ngFor="let navConnection of navConnections; let i = index">
+        <div *ngFor="let navConnection of navConnections">
           <md-expansion-panel>
             <md-expansion-panel-header>
               <md-panel-title>
-                Connection {{ i + 1 }}
+                {{ navConnection.get('sourceItem').get('baseName') }}
               </md-panel-title>
               <md-panel-description>
                 Connection information
