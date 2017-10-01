@@ -1,4 +1,15 @@
-<app-toolbar [buttons]="toolbarButtons"></app-toolbar>
-<div class="net-container">
-  <app-net [data]="netData" [transitionState]="transitionState" (transitionStopped)="transitionStopped($event)"></app-net>
-</div>
+<md-sidenav-container class="sidenav-container">
+
+  <md-sidenav #constructSidenav position="end">
+    <app-construct-sidenav></app-construct-sidenav>
+  </md-sidenav>
+
+  <div class="sidenav-action end">
+    <md-icon (click)="constructSidenav.open()">keyboard_arrow_right</md-icon>
+  </div>
+
+  <app-toolbar [buttons]="toolbarButtons"></app-toolbar>
+  <div class="net-container">
+    <app-net [data]="netData" [transitionState]="transitionState" (transitionStopped)="transitionStopped($event)"></app-net>
+  </div>
+</md-sidenav-container>

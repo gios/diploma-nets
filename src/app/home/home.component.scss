@@ -1,6 +1,12 @@
 :host {
 
-  > .net-container {
+  .sidenav-container {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+  }
+
+  .net-container {
     width: 100%;
     height: calc(100% - 64px);
     position: absolute;
