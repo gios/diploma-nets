@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     this.http.get('api/net').subscribe(response => {
       const data = response.json();
       this.netData = data;
-    });
+    }, (err) => console.error(err));
   }
 
   startTransition() {

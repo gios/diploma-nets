@@ -1,7 +1,7 @@
 import { Injectable, ElementRef } from '@angular/core';
 import * as joint from 'jointjs';
 
-import { INetAttributes } from './net.interface';
+import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from './net.interface';
 import { generateTransitions} from './transitions';
 import { generatePinnacles } from './pinnacles';
 import { generateConnections } from './linkConnections';
@@ -36,5 +36,23 @@ export class NetService {
       pinnacles: generatedPinnacles,
       transitions: generatedTransitions
     };
+  }
+
+  getGeneratedPinnacles(pinnacles: IPinnacle[]) {
+    return generatePinnacles(pinnacles);
+  }
+
+  getGeneratedTransitions(transitions: ITransition[]) {
+    return generateTransitions(transitions);
+  }
+
+  getGeneratedConnections(
+    pinnacles: IPinnacle[],
+    transitions: ITransition[],
+    connections: ILinkConnection[]
+  ) {
+    const generatedPinnacles = generatePinnacles(pinnacles);
+    const generatedTransitions = generateTransitions(transitions);
+    return generateConnections(generatedPinnacles, generatedTransitions, connections);
   }
 }
