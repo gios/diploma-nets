@@ -13,6 +13,7 @@
               <md-panel-description>
                 Edit pinnacle name, value and position
               </md-panel-description>
+              <md-icon>apps</md-icon>
             </md-expansion-panel-header>
 
             <div class="expansion-form">
@@ -51,6 +52,7 @@
               <md-panel-description>
                 Edit transition name, time and position
               </md-panel-description>
+              <md-icon>apps</md-icon>
             </md-expansion-panel-header>
 
             <div class="expansion-form">
@@ -78,6 +80,36 @@
 
   <md-tab label="Connections">
     <div class="adjuster"></div>
-    Content 3
+    <div *ngIf="selectedTabIndex == 2">
+      <md-accordion class="headers-align">
+        <div *ngFor="let navConnection of navConnections; let i = index">
+          <md-expansion-panel>
+            <md-expansion-panel-header>
+              <md-panel-title>
+                Connection {{ i + 1 }}
+              </md-panel-title>
+              <md-panel-description>
+                Connection information
+              </md-panel-description>
+              <md-icon>apps</md-icon>
+            </md-expansion-panel-header>
+
+            <div class="connections-body">
+              <div>
+                <div>{{ navConnection.get('sourceItem').get('baseName') }}</div>
+                <div class="type">{{ navConnection.get('sourceItem').get('type') }}</div>
+              </div>
+              <div>
+                <md-icon>arrow_forward</md-icon>
+              </div>
+              <div>
+                <div>{{ navConnection.get('targetItem').get('baseName') }}</div>
+                <div class="type">{{ navConnection.get('targetItem').get('type') }}</div>
+              </div>
+            </div>
+          </md-expansion-panel>
+        </div>
+      </md-accordion>
+    </div>
   </md-tab>
 </md-tab-group>

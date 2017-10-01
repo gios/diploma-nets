@@ -47,12 +47,10 @@ export class NetService {
   }
 
   getGeneratedConnections(
-    pinnacles: IPinnacle[],
-    transitions: ITransition[],
+    pinnacles: joint.dia.Cell[],
+    transitions: joint.dia.Cell[],
     connections: ILinkConnection[]
   ) {
-    const generatedPinnacles = generatePinnacles(pinnacles);
-    const generatedTransitions = generateTransitions(transitions);
-    return generateConnections(generatedPinnacles, generatedTransitions, connections);
+    return generateConnections(pinnacles, transitions, connections);
   }
 }

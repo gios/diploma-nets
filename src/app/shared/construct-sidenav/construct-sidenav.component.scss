@@ -19,6 +19,10 @@
       justify-content: space-between;
       align-items: center;
     }
+
+    md-icon {
+      transform: translateX(-1em);
+    }
   }
 
   .expansion-form {
@@ -29,6 +33,19 @@
 
     > md-form-field {
       margin: 0 2em;
+    }
+  }
+
+  .connections-body {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-around;
+    text-align: center;
+
+    .type {
+      font-size: 11px;
+      color: #6a737d;
     }
   }
 }
