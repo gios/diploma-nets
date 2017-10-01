@@ -63,13 +63,12 @@ export function generateConnections(
   connections: ILinkConnection[]
 ) {
   const generatedConnections: joint.shapes.pn.Link[] = [];
-  let options = null;
-
   connections.forEach((connectionItem) => {
+    let options = null;
     const connectedItems = connectionItem.connect.map((item) => {
       return item.type === 'pinnacle'
-      ? find(pinnacles, ['attributes.baseId', item.id])
-      : find(transitions, ['attributes.baseId', item.id]);
+      ? find(pinnacles, ['attributes.baseName', item.name])
+      : find(transitions, ['attributes.baseName', item.name]);
     });
 
     if (connectionItem.value > 1) {

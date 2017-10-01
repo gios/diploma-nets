@@ -18,7 +18,18 @@ export class NetService {
   }
 
   async getNetConnections(): Promise<ILinkConnection[]> {
-    const connections = await knex.select('*').from('link_connections');
+    const connections = await knex.select(
+      'link_connections.id',
+      'link_connections.from',
+      'link_connections.value',
+      'link_connections.created_at',
+      'link_connections.updated_at',
+      'pinnacles.name as pinnacle_name',
+      'transitions.name as transition_name'
+    )
+      .from('link_connections')
+      .leftJoin('pinnacles', 'link_connections.pinnacle_id', 'pinnacles.id')
+      .leftJoin('transitions', 'link_connections.transition_id', 'transitions.id');
     return this.transformLinkConnections(this.transformResponse(connections));
   }
 
@@ -38,17 +49,17 @@ export class NetService {
     return data.map((item) => {
       if (item.from - 1) {
         item.connect = [
-          { type: 'transition', id: item.transitionId },
-          { type: 'pinnacle', id: item.pinnacleId }
+          { type: 'transition', name: item.transitionName },
+          { type: 'pinnacle', name: item.pinnacleName }
         ];
       } else {
         item.connect = [
-          { type: 'pinnacle', id: item.pinnacleId },
-          { type: 'transition', id: item.transitionId }
+          { type: 'pinnacle', name: item.pinnacleName },
+          { type: 'transition', name: item.transitionName }
         ];
       }
-      delete item.pinnacleId;
-      delete item.transitionId;
+      delete item.pinnacleName;
+      delete item.transitionName;
       delete item.from;
       return item;
     });

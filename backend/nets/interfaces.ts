@@ -5,7 +5,7 @@ interface ITimestamps {
 
 interface IConnect {
   type: 'transition' | 'pinnacle';
-  id: number;
+  name: string;
 }
 
 export interface ITransition extends ITimestamps {
@@ -26,6 +26,8 @@ export interface IPinnacle extends ITimestamps {
 
 export interface ILinkConnection extends ITimestamps {
   id: number;
+  pinnacleName: string;
+  transitionName: string;
   pinnacleId: number;
   transitionId: number;
   from: number;

@@ -11,6 +11,19 @@
     width: 2%;
     z-index: 99;
 
+    &.end {
+      transform: rotate(180deg);
+      right: 0;
+
+      > md-icon {
+        color: #3f51b5;
+
+        &:hover {
+          color: darken(#3f51b5, 15%);
+        }
+      }
+    }
+
     > md-icon {
       font-size: 42px;
       color: #f5552a;

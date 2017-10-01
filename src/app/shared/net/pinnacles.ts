@@ -35,7 +35,7 @@ export function generatePinnacles(pinnacles: IPinnacle[]) {
     })
     .position(pinnacleItem.x, pinnacleItem.y)
     .set('tokens', pinnacleItem.value)
-    .set('baseId', pinnacleItem.id)
+    .set('baseName', pinnacleItem.name)
     .clone() as joint.dia.Cell;
     generatedPinnacles.push(jointPinnacle);
   });
