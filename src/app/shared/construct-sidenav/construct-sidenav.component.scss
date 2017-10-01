@@ -1,9 +1,13 @@
 :host {
 
+  .adjuster {
+    min-width: 40em;
+  }
+
   .headers-align {
 
     > div {
-      max-width: 40em;
+      width: 40em;
     }
 
     .mat-expansion-panel-header-title,
@@ -21,7 +25,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-    max-width: 40em;
+    width: 40em;
 
     > md-form-field {
       margin: 0 2em;

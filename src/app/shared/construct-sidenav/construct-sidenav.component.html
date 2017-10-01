@@ -1,6 +1,7 @@
 <md-tab-group [(selectedIndex)]="selectedTabIndex">
 
   <md-tab label="Pinnacles">
+    <div class="adjuster"></div>
     <div>
       <md-accordion class="headers-align">
         <div *ngFor="let navPinnacle of navPinnacles">
@@ -16,19 +17,19 @@
 
             <div class="expansion-form">
               <md-form-field>
-                <input mdInput placeholder="Name">
+                <input mdInput placeholder="Name" [value]="navPinnacle.get('baseName')">
               </md-form-field>
 
               <md-form-field>
-                <input mdInput placeholder="Value">
+                <input mdInput placeholder="Value" [value]="navPinnacle.get('tokens')">
               </md-form-field>
 
               <md-form-field>
-                <input mdInput placeholder="Position X">
+                <input mdInput placeholder="Position X" [value]="navPinnacle.get('position').x">
               </md-form-field>
 
               <md-form-field>
-                <input mdInput placeholder="Position Y">
+                <input mdInput placeholder="Position Y" [value]="navPinnacle.get('position').y">
               </md-form-field>
             </div>
           </md-expansion-panel>
@@ -38,6 +39,7 @@
   </md-tab>
 
   <md-tab label="Transitions">
+    <div class="adjuster"></div>
     <div *ngIf="selectedTabIndex == 1">
       <md-accordion class="headers-align">
         <div *ngFor="let navTransition of navTransitions">
@@ -53,19 +55,19 @@
 
             <div class="expansion-form">
               <md-form-field>
-                <input mdInput placeholder="Name">
+                <input mdInput placeholder="Name" [value]="navTransition.get('baseName')">
               </md-form-field>
 
               <md-form-field>
-                <input mdInput placeholder="Time">
+                <input mdInput placeholder="Time" [value]="navTransition.attr('.label-time/text').split(' ')[2]">
               </md-form-field>
 
               <md-form-field>
-                <input mdInput placeholder="Position X">
+                <input mdInput placeholder="Position X" [value]="navTransition.get('position').x">
               </md-form-field>
 
               <md-form-field>
-                <input mdInput placeholder="Position Y">
+                <input mdInput placeholder="Position Y" [value]="navTransition.get('position').y">
               </md-form-field>
             </div>
           </md-expansion-panel>
@@ -74,5 +76,8 @@
     </div>
   </md-tab>
 
-  <md-tab label="Connections">Content 3</md-tab>
+  <md-tab label="Connections">
+    <div class="adjuster"></div>
+    Content 3
+  </md-tab>
 </md-tab-group>
