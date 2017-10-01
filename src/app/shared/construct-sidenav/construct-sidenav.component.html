@@ -1,5 +1,78 @@
-<md-tab-group>
-  <md-tab label="Pinnacles">Content 1</md-tab>
-  <md-tab label="Transitions">Content 2</md-tab>
+<md-tab-group [(selectedIndex)]="selectedTabIndex">
+
+  <md-tab label="Pinnacles">
+    <div>
+      <md-accordion class="headers-align">
+        <div *ngFor="let navPinnacle of navPinnacles">
+          <md-expansion-panel>
+            <md-expansion-panel-header>
+              <md-panel-title>
+                {{ navPinnacle.get('baseName') }}
+              </md-panel-title>
+              <md-panel-description>
+                Edit pinnacle name, value and position
+              </md-panel-description>
+            </md-expansion-panel-header>
+
+            <div class="expansion-form">
+              <md-form-field>
+                <input mdInput placeholder="Name">
+              </md-form-field>
+
+              <md-form-field>
+                <input mdInput placeholder="Value">
+              </md-form-field>
+
+              <md-form-field>
+                <input mdInput placeholder="Position X">
+              </md-form-field>
+
+              <md-form-field>
+                <input mdInput placeholder="Position Y">
+              </md-form-field>
+            </div>
+          </md-expansion-panel>
+        </div>
+      </md-accordion>
+    </div>
+  </md-tab>
+
+  <md-tab label="Transitions">
+    <div *ngIf="selectedTabIndex == 1">
+      <md-accordion class="headers-align">
+        <div *ngFor="let navTransition of navTransitions">
+          <md-expansion-panel>
+            <md-expansion-panel-header>
+              <md-panel-title>
+                {{ navTransition.get('baseName') }}
+              </md-panel-title>
+              <md-panel-description>
+                Edit transition name, time and position
+              </md-panel-description>
+            </md-expansion-panel-header>
+
+            <div class="expansion-form">
+              <md-form-field>
+                <input mdInput placeholder="Name">
+              </md-form-field>
+
+              <md-form-field>
+                <input mdInput placeholder="Time">
+              </md-form-field>
+
+              <md-form-field>
+                <input mdInput placeholder="Position X">
+              </md-form-field>
+
+              <md-form-field>
+                <input mdInput placeholder="Position Y">
+              </md-form-field>
+            </div>
+          </md-expansion-panel>
+        </div>
+      </md-accordion>
+    </div>
+  </md-tab>
+
   <md-tab label="Connections">Content 3</md-tab>
 </md-tab-group>

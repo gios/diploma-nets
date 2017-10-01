@@ -1,6 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import * as joint from 'jointjs';
 
-import { INetAttributes } from '../net/net.interface';
+import { INetAttributes, IPinnacle, ITransition } from '../net/net.interface';
 import { NetService } from '../net/net.service';
 
 @Component({
@@ -9,14 +10,21 @@ import { NetService } from '../net/net.service';
   styleUrls: ['./construct-sidenav.component.scss'],
   providers: [NetService]
 })
-export class ConstructSidenavComponent implements OnInit {
+export class ConstructSidenavComponent implements OnChanges {
+  navPinnacles: joint.dia.Cell[] = [];
+  navTransitions: joint.dia.Cell[] = [];
   @Input() data: INetAttributes;
 
   constructor(
     private netService: NetService
   ) {}
 
-  ngOnInit() {
-    // Transform data for representation
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.data && changes.data.currentValue) {
+      const pinnacles = changes.data.currentValue.pinnacles as IPinnacle[];
+      const transitions = changes.data.currentValue.transitions as ITransition[];
+      this.navPinnacles = this.netService.getGeneratedPinnacles(pinnacles);
+      this.navTransitions = this.netService.getGeneratedTransitions(transitions);
+    }
   }
 }

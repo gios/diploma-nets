@@ -1,0 +1,30 @@
+:host {
+
+  .headers-align {
+
+    > div {
+      max-width: 40em;
+    }
+
+    .mat-expansion-panel-header-title,
+    .mat-expansion-panel-header-description {
+      flex-basis: 0;
+    }
+
+    .mat-expansion-panel-header-description {
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .expansion-form {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    max-width: 40em;
+
+    > md-form-field {
+      margin: 0 2em;
+    }
+  }
+}

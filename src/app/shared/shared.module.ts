@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MdSidenavModule, MdButtonModule, MdIconModule, MdToolbarModule, MdTabsModule } from '@angular/material';
+import {
+  MdSidenavModule, MdButtonModule, MdIconModule, MdToolbarModule, MdTabsModule, MdExpansionModule,
+  MdInputModule
+} from '@angular/material';
 import { RouterModule } from '@angular/router';
 
 import { NetComponent } from './net/net.component';
@@ -16,6 +19,8 @@ import { ConstructSidenavComponent } from './construct-sidenav/construct-sidenav
     MdIconModule,
     MdToolbarModule,
     MdTabsModule,
+    MdExpansionModule,
+    MdInputModule,
     RouterModule
   ],
   declarations: [
