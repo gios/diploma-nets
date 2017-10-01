@@ -43,6 +43,7 @@ Thumbs.db
 
 # Backend
 backend/dist
+backend/public
 
 #VSCode
 .vscode
