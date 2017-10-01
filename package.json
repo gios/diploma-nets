@@ -9,7 +9,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-
     "build-server": "rimraf backend/dist && tsc -p backend/tsconfig.json --pretty",
     "watch-server": "tsc -p backend/tsconfig.json --pretty -w",
     "start-server": "npm run build-server && node backend/dist/index.js",
@@ -39,6 +38,7 @@
     "koa-convert": "^1.2.0",
     "koa-helmet": "^3.2.0",
     "koa-router": "^7.2.1",
+    "koa-send": "^4.1.1",
     "koa-static": "^4.0.1",
     "lodash": "^4.17.4",
     "pg": "^7.3.0",
@@ -59,6 +59,7 @@
     "@types/koa-bodyparser": "^3.0.25",
     "@types/koa-helmet": "^3.1.1",
     "@types/koa-router": "^7.0.23",
+    "@types/koa-send": "^3.3.0",
     "@types/koa-static": "^3.0.1",
     "@types/lodash": "^4.14.74",
     "@types/node": "~6.0.60",
