@@ -59,14 +59,21 @@ function fireTransitionOnce(
   transition.set('blocked', false);
 
   if (canTransitTo(placesBefore, inbound)) {
-    each(placesBefore, (pinnacleModel) => {
+    each(placesBefore, (pinnacleModel, index) => {
       const linked = getLinked(pinnacleModel, inbound, 'source');
 
       (<any> paper.findViewByModel(linked)).sendToken((<any>V)('circle', { r: 5, fill: '#f5552a' }).node, sec * 1000,
       () => {
-        // Check if before pinnacles don't have minus values
-        pinnacleModel.set('tokens', pinnacleModel.get('tokens') - getLinkValue(linked));
-        transition.set('firing', false);
+        if (index === placesBefore.length - 1) {
+          if (canTransitTo(placesBefore, inbound)) {
+            placesBefore.forEach(pinnacle => {
+              pinnacle.set('tokens', pinnacle.get('tokens') - getLinkValue(getLinked(pinnacle, inbound, 'source')));
+            });
+            transition.set('firing', false);
+          } else {
+            transition.set('blocked', true);
+          }
+        }
       });
     });
   } else {
