@@ -1,5 +1,6 @@
 import * as knexInstance from 'knex';
 import { camelCase, mapKeys } from 'lodash';
+import { Context } from 'koa';
 
 import * as knexConfig from '../knexfile';
 import { ITransition, IPinnacle, ILinkConnection, INetAttributes } from './interfaces';
@@ -7,17 +8,20 @@ const knex = knexInstance(Object.assign(knexConfig, { connection: process.env.DA
 
 export class NetService {
 
-  async getNetTransitions(): Promise<ITransition[]> {
-    const transitions = await knex.select('*').from('transitions');
+  async getNetTransitions(ctx: Context): Promise<ITransition[]> {
+    const user = ctx.state.user;
+    const transitions = await knex.select('*').from('transitions').where('user_id', user.id);
     return this.transformResponse(transitions);
   }
 
-  async getNetPinnacles(): Promise<IPinnacle[]> {
-    const pinnacles = await knex.select('*').from('pinnacles');
+  async getNetPinnacles(ctx: Context): Promise<IPinnacle[]> {
+    const user = ctx.state.user;
+    const pinnacles = await knex.select('*').from('pinnacles').where('user_id', user.id);
     return this.transformResponse(pinnacles);
   }
 
-  async getNetConnections(): Promise<ILinkConnection[]> {
+  async getNetConnections(ctx: Context): Promise<ILinkConnection[]> {
+    const user = ctx.state.user;
     const connections = await knex.select(
       'link_connections.id',
       'link_connections.from',
@@ -28,16 +32,17 @@ export class NetService {
       'transitions.name as transition_name'
     )
       .from('link_connections')
+      .where('link_connections.user_id', user.id)
       .leftJoin('pinnacles', 'link_connections.pinnacle_id', 'pinnacles.id')
       .leftJoin('transitions', 'link_connections.transition_id', 'transitions.id');
     return this.transformLinkConnections(this.transformResponse(connections));
   }
 
-  async getNetAttributes(): Promise<INetAttributes> {
+  async getNetAttributes(ctx: Context): Promise<INetAttributes> {
     return {
-      transitions: await this.getNetTransitions(),
-      pinnacles: await this.getNetPinnacles(),
-      connections: await this.getNetConnections()
+      transitions: await this.getNetTransitions(ctx),
+      pinnacles: await this.getNetPinnacles(ctx),
+      connections: await this.getNetConnections(ctx)
     };
   }
 
