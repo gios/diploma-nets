@@ -1,5 +1,8 @@
 <mat-card>
-  <h2 class="title">Login</h2>
+  <div class="title">
+    <h2>{{ registrationState ? 'Registration' : 'Login' }}</h2>
+    <mat-slide-toggle (change)="authToggleChange($event)">Are you a new user?</mat-slide-toggle>
+  </div>
   <form class="login-container" [formGroup]="authForm" (ngSubmit)="onSubmit()" novalidate>
     <div>
       <mat-form-field hintLabel="Username is case sensitive">
@@ -14,7 +17,7 @@
       </mat-form-field>
     </div>
 
-    <button mat-button color="primary" type="submit" [disabled]="authForm.invalid">Advance</button>
-    <mat-spinner mat-diameter="5"></mat-spinner>
+    <button mat-raised-button color="primary" type="submit" [disabled]="authForm.invalid">Advance</button>
+    <mat-spinner [diameter]="40" *ngIf="spinner"></mat-spinner>
   </form>
 </mat-card>

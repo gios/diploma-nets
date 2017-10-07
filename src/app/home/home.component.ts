@@ -1,6 +1,7 @@
-import { Component, SimpleChanges, OnInit } from '@angular/core';
-import { HttpService } from '../http.service';
+import { Component, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs/Rx';
 
+import { HttpService } from '../http.service';
 import { IInputButtons } from '../shared/toolbar/toolbar';
 import { INetAttributes } from '../shared/net/net.interface';
 
@@ -9,7 +10,7 @@ import { INetAttributes } from '../shared/net/net.interface';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss', '../app.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   netData: INetAttributes;
   transitionState: boolean;
   toolbarButtons: IInputButtons[] = [
@@ -28,16 +29,23 @@ export class HomeComponent implements OnInit {
       click: this.stopTransition.bind(this)
     }
   ];
+  private defaultNet$: Subscription;
 
   constructor(
     private http: HttpService
   ) { }
 
   ngOnInit() {
-    this.http.get('api/net').subscribe(response => {
+    this.defaultNet$ = this.http.get('api/net').subscribe(response => {
       const data = response.json();
       this.netData = data;
-    }, (err) => console.error(err));
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.defaultNet$) {
+      this.defaultNet$.unsubscribe();
+    }
   }
 
   startTransition() {

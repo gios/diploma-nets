@@ -2,6 +2,10 @@ mat-card {
   margin-top: 15vh;
 }
 
+mat-spinner {
+  margin-top: 2em;
+}
+
 .title {
   text-align: center;
 }
@@ -13,6 +17,11 @@ mat-card {
   align-items: center;
 
   > div {
+    width: 30em;
     margin: 1em;
+
+    > mat-form-field {
+      width: 100%;
+    }
   }
 }
