@@ -27,8 +27,11 @@
       align-items: center;
     }
 
-    mat-icon {
-      transform: translateX(-1em);
+    mat-expansion-panel-header {
+
+      mat-icon {
+        transform: translateX(-1em);
+      }
     }
   }
 
