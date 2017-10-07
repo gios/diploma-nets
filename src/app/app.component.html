@@ -4,12 +4,12 @@
     <app-sidenav></app-sidenav>
   </mat-sidenav>
 
-  <div class="sidenav-action">
+  <div class="sidenav-action" *ngIf="isAuth">
     <mat-icon (click)="sidenav.open()">keyboard_arrow_right</mat-icon>
   </div>
 
   <div class="root">
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
   </div>
 
 </mat-sidenav-container>

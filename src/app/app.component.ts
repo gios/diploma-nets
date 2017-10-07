@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
+  isAuth = false;
+
+  onActivate() {
+    this.isAuth = !!localStorage.getItem('token');
+  }
 }

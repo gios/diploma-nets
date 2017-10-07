@@ -1,4 +1,6 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { IInputButtons } from './toolbar';
 
 @Component({
@@ -9,6 +11,12 @@ import { IInputButtons } from './toolbar';
 export class ToolbarComponent {
   @Input() buttons: IInputButtons;
 
-  constructor() { }
+  constructor(
+    private router: Router
+  ) { }
 
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
 }

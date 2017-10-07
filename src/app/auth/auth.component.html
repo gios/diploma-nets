@@ -1,7 +1,7 @@
 <mat-card>
   <div class="title">
     <h2>{{ registrationState ? 'Registration' : 'Login' }}</h2>
-    <mat-slide-toggle (change)="authToggleChange($event)">Are you a new user?</mat-slide-toggle>
+    <mat-slide-toggle (change)="authToggleChange($event)" [checked]="registrationState">Are you a new user?</mat-slide-toggle>
   </div>
   <form class="login-container" [formGroup]="authForm" (ngSubmit)="onSubmit()" novalidate>
     <div>
