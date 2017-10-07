@@ -11,6 +11,7 @@ import { INetAttributes } from '../shared/net/net.interface';
   styleUrls: ['./home.component.scss', '../app.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  spinner = false;
   netData: INetAttributes;
   transitionState: boolean;
   toolbarButtons: IInputButtons[] = [
@@ -36,10 +37,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.spinner = true;
     this.defaultNet$ = this.http.get('api/net').subscribe(response => {
       const data = response.json();
       this.netData = data;
-    });
+      this.spinner = false;
+    }, () => this.spinner = false);
   }
 
   ngOnDestroy() {

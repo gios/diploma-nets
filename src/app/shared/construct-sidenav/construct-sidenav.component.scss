@@ -4,6 +4,13 @@
     min-width: 40em;
   }
 
+  .action-buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    margin: 1em;
+  }
+
   .headers-align {
 
     > div {

@@ -8,6 +8,7 @@ const defaultLinkOptions = {
 };
 
 export function link(
+  id: number,
   connectFirst: joint.dia.Cell,
   connectSecond: joint.dia.Cell,
   options = defaultLinkOptions
@@ -15,6 +16,7 @@ export function link(
   options = Object.assign({}, defaultLinkOptions, options);
   const { label } = options;
   const configLinkOptions = {
+    id,
     source: {
       id: connectFirst.id,
       selector: '.root'
@@ -66,15 +68,20 @@ export function generateConnections(
   connections.forEach((connectionItem) => {
     let options = null;
     const connectedItems = connectionItem.connect.map((item) => {
-      return item.type === 'pinnacle'
-      ? find(pinnacles, ['attributes.baseName', item.name])
-      : find(transitions, ['attributes.baseName', item.name]);
+      let foundItem: joint.dia.Cell;
+      if (item.type === 'pinnacle') {
+        foundItem = find(pinnacles, ['attributes.baseName', item.name]);
+      } else {
+        foundItem = find(transitions, ['attributes.baseName', item.name]);
+      }
+      foundItem.set('connectionType', item.type);
+      return foundItem;
     });
 
     if (connectionItem.value > 1) {
       options = { label: connectionItem.value.toString() };
     }
-    generatedConnections.push(link(connectedItems[0], connectedItems[1], options));
+    generatedConnections.push(link(connectionItem.id, connectedItems[0], connectedItems[1], options));
   });
 
   return generatedConnections;

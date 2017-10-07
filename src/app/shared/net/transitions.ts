@@ -54,6 +54,7 @@ export function generateTransitions(transitions: ITransition[]) {
       }
     })
     .position(transitionItem.x, transitionItem.y)
+    .set('baseId', transitionItem.id)
     .set('baseName', transitionItem.name)
     .clone() as joint.dia.Cell;
     generatedTransitions.push(jointTransition);

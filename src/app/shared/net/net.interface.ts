@@ -1,6 +1,6 @@
 interface ITimestamps {
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 interface IConnect {
@@ -27,8 +27,6 @@ export interface IPinnacle extends ITimestamps {
 export interface ILinkConnection extends ITimestamps {
   id: number;
   value: number;
-  createdAt: Date;
-  updatedAt: Date;
   connect: [IConnect, IConnect];
 }
 

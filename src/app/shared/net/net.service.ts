@@ -4,7 +4,7 @@ import * as joint from 'jointjs';
 import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from './net.interface';
 import { generateTransitions} from './transitions';
 import { generatePinnacles } from './pinnacles';
-import { generateConnections } from './linkConnections';
+import { generateConnections, getLinkValue } from './linkConnections';
 
 @Injectable()
 export class NetService {
@@ -52,5 +52,9 @@ export class NetService {
     connections: ILinkConnection[]
   ) {
     return generateConnections(pinnacles, transitions, connections);
+  }
+
+  getLinkValue(link: joint.shapes.pn.Link) {
+    return getLinkValue(link);
   }
 }

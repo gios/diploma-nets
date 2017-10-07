@@ -2,13 +2,16 @@
 
   <mat-tab label="Pinnacles">
     <div class="adjuster"></div>
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" (click)="create('pinnacle')">Create</button>
+    </div>
     <div>
       <mat-accordion class="headers-align">
         <div *ngFor="let navPinnacle of navPinnacles">
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{ navPinnacle.get('baseName') }}
+                {{ navPinnacle.name }}
               </mat-panel-title>
               <mat-panel-description>
                 Edit pinnacle name, value and position
@@ -18,19 +21,19 @@
 
             <div class="expansion-form">
               <mat-form-field>
-                <input matInput placeholder="Name" [value]="navPinnacle.get('baseName')">
+                <input matInput placeholder="Name" type="text" [value]="navPinnacle.name">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Value" [value]="navPinnacle.get('tokens')">
+                <input matInput placeholder="Value" type="number" [value]="navPinnacle.value">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position X" [value]="navPinnacle.get('position').x">
+                <input matInput placeholder="Position X" type="number" [value]="navPinnacle.x">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position Y" [value]="navPinnacle.get('position').y">
+                <input matInput placeholder="Position Y" type="number" [value]="navPinnacle.y">
               </mat-form-field>
             </div>
           </mat-expansion-panel>
@@ -41,13 +44,16 @@
 
   <mat-tab label="Transitions">
     <div class="adjuster"></div>
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" (click)="create('transition')">Create</button>
+    </div>
     <div *ngIf="selectedTabIndex == 1">
       <mat-accordion class="headers-align">
         <div *ngFor="let navTransition of navTransitions">
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{ navTransition.get('baseName') }}
+                {{ navTransition.name }}
               </mat-panel-title>
               <mat-panel-description>
                 Edit transition name, time and position
@@ -57,19 +63,19 @@
 
             <div class="expansion-form">
               <mat-form-field>
-                <input matInput placeholder="Name" [value]="navTransition.get('baseName')">
+                <input matInput placeholder="Name" type="text" [value]="navTransition.name">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Time" [value]="navTransition.attr('.label-time/text').split(' ')[2]">
+                <input matInput placeholder="Time" type="number" [value]="navTransition.time">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position X" [value]="navTransition.get('position').x">
+                <input matInput placeholder="Position X" type="number" [value]="navTransition.x">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position Y" [value]="navTransition.get('position').y">
+                <input matInput placeholder="Position Y" type="number" [value]="navTransition.y">
               </mat-form-field>
             </div>
           </mat-expansion-panel>
@@ -80,13 +86,16 @@
 
   <mat-tab label="Connections">
     <div class="adjuster"></div>
+    <div class="action-buttons">
+      <button mat-raised-button color="primary" (click)="create('connection')">Create</button>
+    </div>
     <div *ngIf="selectedTabIndex == 2">
       <mat-accordion class="headers-align">
         <div *ngFor="let navConnection of navConnections">
           <mat-expansion-panel>
             <mat-expansion-panel-header>
               <mat-panel-title>
-                {{ navConnection.get('sourceItem').get('baseName') }}
+                {{ navConnection.connect[0].name }}
               </mat-panel-title>
               <mat-panel-description>
                 Connection information
@@ -96,15 +105,16 @@
 
             <div class="connections-body">
               <div>
-                <div>{{ navConnection.get('sourceItem').get('baseName') }}</div>
-                <div class="type">{{ navConnection.get('sourceItem').get('type') }}</div>
+                <div>{{ navConnection.connect[0].name }}</div>
+                <div class="type">{{ navConnection.connect[0].type }}</div>
               </div>
               <div>
                 <mat-icon>arrow_forward</mat-icon>
+                <div>{{ navConnection.connect[0].value }}</div>
               </div>
               <div>
-                <div>{{ navConnection.get('targetItem').get('baseName') }}</div>
-                <div class="type">{{ navConnection.get('targetItem').get('type') }}</div>
+                <div>{{ navConnection.connect[1].name }}</div>
+                <div class="type">{{ navConnection.connect[1].type }}</div>
               </div>
             </div>
           </mat-expansion-panel>
