@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Http, XHRBackend, RequestOptions, Request, RequestOptionsArgs, Response, Headers } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 
@@ -28,6 +29,8 @@ export class HttpService extends Http {
   private catchAuthError(self: HttpService) {
     return (res: Response) => {
       if (res.status === 401 || res.status === 403) {
+        localStorage.removeItem('token');
+        location.replace('login');
         console.error(res);
       }
       return Observable.throw(res);
