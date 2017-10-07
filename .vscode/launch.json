@@ -7,6 +7,7 @@
         "name": "Attach",
         "address": "localhost",
         "protocol": "inspector",
+        "sourceMaps": true,
         "port": 9229
       }
     ]

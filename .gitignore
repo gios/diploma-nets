@@ -45,8 +45,5 @@ Thumbs.db
 backend/dist
 backend/public
 
-#VSCode
-.vscode
-
 # dotenv environment variables file
 .env
