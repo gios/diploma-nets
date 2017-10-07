@@ -19,3 +19,15 @@ export async function getNetConnections(ctx: Context) {
 export async function getNet(ctx: Context) {
   ctx.body = await netService.getNetAttributes(ctx);
 }
+
+export async function putNetTransition(ctx: Context) {
+  ctx.body = await netService.putNetTransition(ctx);
+}
+
+export async function putNetPinnacle(ctx: Context) {
+  ctx.body = await netService.putNetPinnacle(ctx);
+}
+
+export async function putNetConnection(ctx: Context) {
+  ctx.body = await netService.putNetConnection(ctx);
+}

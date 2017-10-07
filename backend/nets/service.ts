@@ -10,13 +10,29 @@ export class NetService {
 
   async getNetTransitions(ctx: Context): Promise<ITransition[]> {
     const user = ctx.state.user;
-    const transitions = await knex.select('*').from('transitions').where('user_id', user.id);
+    const transitions = await knex.select(
+      'id',
+      'name',
+      'time',
+      'x',
+      'y',
+      'created_at',
+      'updated_at'
+    ).from('transitions').where('user_id', user.id);
     return this.transformResponse(transitions);
   }
 
   async getNetPinnacles(ctx: Context): Promise<IPinnacle[]> {
     const user = ctx.state.user;
-    const pinnacles = await knex.select('*').from('pinnacles').where('user_id', user.id);
+    const pinnacles = await knex.select(
+      'id',
+      'name',
+      'value',
+      'x',
+      'y',
+      'created_at',
+      'updated_at'
+    ).from('pinnacles').where('user_id', user.id);
     return this.transformResponse(pinnacles);
   }
 
@@ -44,6 +60,66 @@ export class NetService {
       pinnacles: await this.getNetPinnacles(ctx),
       connections: await this.getNetConnections(ctx)
     };
+  }
+
+  async putNetTransition(ctx: Context) {
+    const user = ctx.state.user;
+    const {
+      id,
+      name,
+      time,
+      x,
+      y,
+    } = ctx.request.body;
+
+    return await knex('transitions')
+      .returning([
+        'id',
+        'name',
+        'time',
+        'x',
+        'y',
+        'created_at',
+        'updated_at'])
+      .where('user_id', user.id)
+      .andWhere('id', id)
+      .update({
+        name,
+        time,
+        x,
+        y,
+        updated_at: new Date()
+      });
+  }
+
+  async putNetPinnacle(ctx: Context) {
+    const user = ctx.state.user;
+    const {
+      id,
+      name,
+      value,
+      x,
+      y,
+    } = ctx.request.body;
+
+    return await knex('pinnacles')
+      .returning([
+        'id',
+        'name',
+        'value',
+        'x',
+        'y',
+        'created_at',
+        'updated_at'])
+      .where('user_id', user.id)
+      .andWhere('id', id)
+      .update({
+        name,
+        value,
+        x,
+        y,
+        updated_at: new Date()
+      });
   }
 
   private transformResponse(data: any[]): any[] {
