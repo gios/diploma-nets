@@ -1,5 +1,5 @@
 import { Component, SimpleChanges, OnInit } from '@angular/core';
-import { Http } from '@angular/http';
+import { HttpService } from '../http.service';
 
 import { IInputButtons } from '../shared/toolbar/toolbar';
 import { INetAttributes } from '../shared/net/net.interface';
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit {
   ];
 
   constructor(
-    private http: Http
+    private http: HttpService
   ) { }
 
   ngOnInit() {
