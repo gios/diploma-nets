@@ -1,15 +1,15 @@
-<md-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container">
 
-  <md-sidenav #sidenav>
+  <mat-sidenav #sidenav>
     <app-sidenav></app-sidenav>
-  </md-sidenav>
+  </mat-sidenav>
 
   <div class="sidenav-action">
-    <md-icon (click)="sidenav.open()">keyboard_arrow_right</md-icon>
+    <mat-icon (click)="sidenav.open()">keyboard_arrow_right</mat-icon>
   </div>
 
   <div class="root">
     <router-outlet></router-outlet>
   </div>
 
-</md-sidenav-container>
+</mat-sidenav-container>

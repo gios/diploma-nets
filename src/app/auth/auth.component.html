@@ -1,0 +1,20 @@
+<mat-card>
+  <h2 class="title">Login</h2>
+  <form class="login-container" [formGroup]="authForm" (ngSubmit)="onSubmit()" novalidate>
+    <div>
+      <mat-form-field hintLabel="Username is case sensitive">
+        <input matInput #input placeholder="Enter your username" formControlName="username">
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <input matInput placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'" formControlName="password">
+        <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <button mat-button color="primary" type="submit" [disabled]="authForm.invalid">Advance</button>
+    <mat-spinner mat-diameter="5"></mat-spinner>
+  </form>
+</mat-card>

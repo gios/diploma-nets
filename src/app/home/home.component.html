@@ -1,11 +1,11 @@
-<md-sidenav-container class="sidenav-container">
+<mat-sidenav-container class="sidenav-container">
 
-  <md-sidenav #constructSidenav position="end">
+  <mat-sidenav #constructSidenav position="end">
     <app-construct-sidenav [data]="netData"></app-construct-sidenav>
-  </md-sidenav>
+  </mat-sidenav>
 
   <div class="sidenav-action end">
-    <md-icon (click)="constructSidenav.open()">keyboard_arrow_right</md-icon>
+    <mat-icon (click)="constructSidenav.open()">keyboard_arrow_right</mat-icon>
   </div>
 
   <app-toolbar [buttons]="toolbarButtons"></app-toolbar>
@@ -14,4 +14,4 @@
       [transitionState]="transitionState"
       (transitionStopped)="transitionStopped($event)"></app-net>
   </div>
-</md-sidenav-container>
+</mat-sidenav-container>

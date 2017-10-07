@@ -15,7 +15,7 @@
       transform: rotate(180deg);
       right: 0;
 
-      > md-icon {
+      > mat-icon {
         color: #3f51b5;
 
         &:hover {
@@ -24,7 +24,7 @@
       }
     }
 
-    > md-icon {
+    > mat-icon {
       font-size: 42px;
       color: #f5552a;
       display: flex;

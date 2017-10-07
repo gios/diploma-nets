@@ -1,0 +1,18 @@
+mat-card {
+  margin-top: 15vh;
+}
+
+.title {
+  text-align: center;
+}
+
+.login-container {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  > div {
+    margin: 1em;
+  }
+}

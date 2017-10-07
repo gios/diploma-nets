@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
-  MdSidenavModule, MdButtonModule, MdIconModule, MdToolbarModule, MdTabsModule, MdExpansionModule,
-  MdInputModule
+  MatSidenavModule, MatButtonModule, MatIconModule, MatToolbarModule, MatTabsModule, MatExpansionModule,
+  MatInputModule
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 
@@ -14,13 +14,13 @@ import { ConstructSidenavComponent } from './construct-sidenav/construct-sidenav
 @NgModule({
   imports: [
     CommonModule,
-    MdSidenavModule,
-    MdButtonModule,
-    MdIconModule,
-    MdToolbarModule,
-    MdTabsModule,
-    MdExpansionModule,
-    MdInputModule,
+    MatSidenavModule,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatTabsModule,
+    MatExpansionModule,
+    MatInputModule,
     RouterModule
   ],
   declarations: [

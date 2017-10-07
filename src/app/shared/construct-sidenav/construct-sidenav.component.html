@@ -1,98 +1,98 @@
-<md-tab-group [(selectedIndex)]="selectedTabIndex">
+<mat-tab-group [(selectedIndex)]="selectedTabIndex">
 
-  <md-tab label="Pinnacles">
+  <mat-tab label="Pinnacles">
     <div class="adjuster"></div>
     <div>
-      <md-accordion class="headers-align">
+      <mat-accordion class="headers-align">
         <div *ngFor="let navPinnacle of navPinnacles">
-          <md-expansion-panel>
-            <md-expansion-panel-header>
-              <md-panel-title>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
                 {{ navPinnacle.get('baseName') }}
-              </md-panel-title>
-              <md-panel-description>
+              </mat-panel-title>
+              <mat-panel-description>
                 Edit pinnacle name, value and position
-              </md-panel-description>
-              <md-icon>apps</md-icon>
-            </md-expansion-panel-header>
+              </mat-panel-description>
+              <mat-icon>apps</mat-icon>
+            </mat-expansion-panel-header>
 
             <div class="expansion-form">
-              <md-form-field>
-                <input mdInput placeholder="Name" [value]="navPinnacle.get('baseName')">
-              </md-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Name" [value]="navPinnacle.get('baseName')">
+              </mat-form-field>
 
-              <md-form-field>
-                <input mdInput placeholder="Value" [value]="navPinnacle.get('tokens')">
-              </md-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Value" [value]="navPinnacle.get('tokens')">
+              </mat-form-field>
 
-              <md-form-field>
-                <input mdInput placeholder="Position X" [value]="navPinnacle.get('position').x">
-              </md-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Position X" [value]="navPinnacle.get('position').x">
+              </mat-form-field>
 
-              <md-form-field>
-                <input mdInput placeholder="Position Y" [value]="navPinnacle.get('position').y">
-              </md-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Position Y" [value]="navPinnacle.get('position').y">
+              </mat-form-field>
             </div>
-          </md-expansion-panel>
+          </mat-expansion-panel>
         </div>
-      </md-accordion>
+      </mat-accordion>
     </div>
-  </md-tab>
+  </mat-tab>
 
-  <md-tab label="Transitions">
+  <mat-tab label="Transitions">
     <div class="adjuster"></div>
     <div *ngIf="selectedTabIndex == 1">
-      <md-accordion class="headers-align">
+      <mat-accordion class="headers-align">
         <div *ngFor="let navTransition of navTransitions">
-          <md-expansion-panel>
-            <md-expansion-panel-header>
-              <md-panel-title>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
                 {{ navTransition.get('baseName') }}
-              </md-panel-title>
-              <md-panel-description>
+              </mat-panel-title>
+              <mat-panel-description>
                 Edit transition name, time and position
-              </md-panel-description>
-              <md-icon>apps</md-icon>
-            </md-expansion-panel-header>
+              </mat-panel-description>
+              <mat-icon>apps</mat-icon>
+            </mat-expansion-panel-header>
 
             <div class="expansion-form">
-              <md-form-field>
-                <input mdInput placeholder="Name" [value]="navTransition.get('baseName')">
-              </md-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Name" [value]="navTransition.get('baseName')">
+              </mat-form-field>
 
-              <md-form-field>
-                <input mdInput placeholder="Time" [value]="navTransition.attr('.label-time/text').split(' ')[2]">
-              </md-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Time" [value]="navTransition.attr('.label-time/text').split(' ')[2]">
+              </mat-form-field>
 
-              <md-form-field>
-                <input mdInput placeholder="Position X" [value]="navTransition.get('position').x">
-              </md-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Position X" [value]="navTransition.get('position').x">
+              </mat-form-field>
 
-              <md-form-field>
-                <input mdInput placeholder="Position Y" [value]="navTransition.get('position').y">
-              </md-form-field>
+              <mat-form-field>
+                <input matInput placeholder="Position Y" [value]="navTransition.get('position').y">
+              </mat-form-field>
             </div>
-          </md-expansion-panel>
+          </mat-expansion-panel>
         </div>
-      </md-accordion>
+      </mat-accordion>
     </div>
-  </md-tab>
+  </mat-tab>
 
-  <md-tab label="Connections">
+  <mat-tab label="Connections">
     <div class="adjuster"></div>
     <div *ngIf="selectedTabIndex == 2">
-      <md-accordion class="headers-align">
+      <mat-accordion class="headers-align">
         <div *ngFor="let navConnection of navConnections">
-          <md-expansion-panel>
-            <md-expansion-panel-header>
-              <md-panel-title>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
                 {{ navConnection.get('sourceItem').get('baseName') }}
-              </md-panel-title>
-              <md-panel-description>
+              </mat-panel-title>
+              <mat-panel-description>
                 Connection information
-              </md-panel-description>
-              <md-icon>apps</md-icon>
-            </md-expansion-panel-header>
+              </mat-panel-description>
+              <mat-icon>apps</mat-icon>
+            </mat-expansion-panel-header>
 
             <div class="connections-body">
               <div>
@@ -100,16 +100,16 @@
                 <div class="type">{{ navConnection.get('sourceItem').get('type') }}</div>
               </div>
               <div>
-                <md-icon>arrow_forward</md-icon>
+                <mat-icon>arrow_forward</mat-icon>
               </div>
               <div>
                 <div>{{ navConnection.get('targetItem').get('baseName') }}</div>
                 <div class="type">{{ navConnection.get('targetItem').get('type') }}</div>
               </div>
             </div>
-          </md-expansion-panel>
+          </mat-expansion-panel>
         </div>
-      </md-accordion>
+      </mat-accordion>
     </div>
-  </md-tab>
-</md-tab-group>
+  </mat-tab>
+</mat-tab-group>

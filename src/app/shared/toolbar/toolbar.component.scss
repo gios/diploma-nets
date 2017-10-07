@@ -1,13 +1,13 @@
 :host {
 
-  > md-toolbar {
+  > mat-toolbar {
 
     button {
       margin: 0 1em;
 
       &:disabled {
 
-        md-icon {
+        mat-icon {
           animation: circle 2s infinite;
         }
       }

@@ -20,7 +20,7 @@
       align-items: center;
     }
 
-    md-icon {
+    mat-icon {
       transform: translateX(-1em);
     }
   }
@@ -31,7 +31,7 @@
     justify-content: center;
     width: 40em;
 
-    > md-form-field {
+    > mat-form-field {
       margin: 0 2em;
     }
   }

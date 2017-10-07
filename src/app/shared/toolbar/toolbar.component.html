@@ -1,11 +1,11 @@
-<md-toolbar>
+<mat-toolbar>
   <div *ngFor="let button of buttons">
-    <button md-raised-button [color]="button.type"
+    <button mat-raised-button [color]="button.type"
       (click)="button.click()"
       [disabled]="button.disabled">
-    {{ button.text }} <md-icon *ngIf="button.icon">{{ button.icon }}</md-icon>
+    {{ button.text }} <mat-icon *ngIf="button.icon">{{ button.icon }}</mat-icon>
     </button>
   </div>
   <span class="fill-remaining-space"></span>
   <span>Developed by: Pavlo Blazhchuk</span>
-</md-toolbar>
+</mat-toolbar>
