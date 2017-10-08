@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs/Rx';
 import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from '../net/net.interface';
 import { NetService } from '../net/net.service';
 import { PinnacleModalComponent } from './modals/pinnacle-modal/pinnacle-modal.component';
+import { TransitionModalComponent } from './modals/transition-modal/transition-modal.component';
 
 @Component({
   selector: 'app-construct-sidenav',
@@ -22,6 +23,7 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   navTransitions: ITransition[] = [];
   navConnections: ILinkConnection[] = [];
   private pinnacleModal$: Subscription;
+  private transitionModal$: Subscription;
   @Input() data: INetAttributes;
   @Output() changeNet = new EventEmitter<INetAttributes>();
 
@@ -58,7 +60,14 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
           });
         break;
       case 'transition':
-        console.log('transition create');
+        this.transitionModal$ = this.dialog.open(TransitionModalComponent)
+          .afterClosed().subscribe(result => {
+            if (result) {
+              this.navTransitions.push(result);
+              this.changeDetectorRef.markForCheck();
+              this.updateNet();
+            }
+          });
         break;
       case 'connection':
         console.log('connection create');

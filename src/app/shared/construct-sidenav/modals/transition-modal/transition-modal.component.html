@@ -1,0 +1,22 @@
+<h2 class="title">Create Transition</h2>
+
+<form [formGroup]="transitionForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput placeholder="Name" type="text" formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Time" type="number" formControlName="time">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Position X" type="number" formControlName="positionX">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Position Y" type="number" formControlName="positionY">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="transitionForm.invalid">Create</button>
+  <mat-spinner [diameter]="40" *ngIf="spinner"></mat-spinner>
+</form>

@@ -12,6 +12,7 @@ import { SidenavComponent } from './sidenav/sidenav.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ConstructSidenavComponent } from './construct-sidenav/construct-sidenav.component';
 import { PinnacleModalComponent } from './construct-sidenav/modals/pinnacle-modal/pinnacle-modal.component';
+import { TransitionModalComponent } from './construct-sidenav/modals/transition-modal/transition-modal.component';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import { PinnacleModalComponent } from './construct-sidenav/modals/pinnacle-moda
     SidenavComponent,
     ToolbarComponent,
     ConstructSidenavComponent,
-    PinnacleModalComponent
+    PinnacleModalComponent,
+    TransitionModalComponent
   ],
   exports: [
     NetComponent,
@@ -41,6 +43,9 @@ import { PinnacleModalComponent } from './construct-sidenav/modals/pinnacle-moda
     ToolbarComponent,
     ConstructSidenavComponent
   ],
-  entryComponents: [PinnacleModalComponent]
+  entryComponents: [
+    PinnacleModalComponent,
+    TransitionModalComponent
+  ]
 })
 export class SharedModule { }
