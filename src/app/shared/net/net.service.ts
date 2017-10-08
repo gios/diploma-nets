@@ -11,19 +11,10 @@ export class NetService {
 
   constructor() { }
 
-  generateNet(elementRef: ElementRef, graph: joint.dia.Graph, data: INetAttributes) {
+  generateNet(paper: joint.dia.Paper, graph: joint.dia.Graph, data: INetAttributes) {
     const generatedPinnacles = generatePinnacles(data.pinnacles);
     const generatedTransitions = generateTransitions(data.transitions);
     const generatedLinkedConnections = generateConnections(generatedPinnacles, generatedTransitions, data.connections);
-    const paper = new joint.dia.Paper({
-      el: elementRef.nativeElement,
-      width: 2000,
-      height: 1200,
-      gridSize: 1,
-      perpendicularLinks: true,
-      interactive: false,
-      model: graph
-    });
 
     graph.addCell([
       ...generatedPinnacles,
@@ -31,8 +22,9 @@ export class NetService {
       ...generatedLinkedConnections
     ]);
 
+    paper.fitToContent({ padding: 50 });
+
     return {
-      paper,
       pinnacles: generatedPinnacles,
       transitions: generatedTransitions
     };

@@ -1,6 +1,6 @@
 import {
   Component, ViewChild, ElementRef, OnDestroy, ChangeDetectionStrategy, Input, OnChanges, SimpleChanges,
-  Output, EventEmitter
+  Output, EventEmitter, OnInit
 } from '@angular/core';
 import * as joint from 'jointjs';
 import { invokeMap } from 'lodash';
@@ -16,7 +16,7 @@ import { INetAttributes } from './net.interface';
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [NetService]
 })
-export class NetComponent implements OnDestroy, OnChanges {
+export class NetComponent implements OnDestroy, OnChanges, OnInit {
   transitions: joint.dia.Cell[];
   graph = new joint.dia.Graph();
   paper: joint.dia.Paper;
@@ -31,14 +31,25 @@ export class NetComponent implements OnDestroy, OnChanges {
     private netService: NetService
   ) { }
 
+  ngOnInit() {
+    this.paper = new joint.dia.Paper({
+      el: this.netSelector.nativeElement,
+      width: 1,
+      height: 1,
+      gridSize: 1,
+      perpendicularLinks: true,
+      interactive: false,
+      model: this.graph
+    });
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data && changes.data.currentValue) {
       if (this.graph) {
         this.graph.clear();
       }
       const netData = changes.data.currentValue;
-      const { paper, transitions } = this.netService.generateNet(this.netSelector, this.graph, netData);
-      this.paper = paper;
+      const { transitions } = this.netService.generateNet(this.paper, this.graph, netData);
       this.transitions = transitions;
     }
 
