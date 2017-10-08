@@ -45,7 +45,9 @@ export class NetService {
       'link_connections.created_at',
       'link_connections.updated_at',
       'pinnacles.name as pinnacle_name',
-      'transitions.name as transition_name'
+      'transitions.name as transition_name',
+      'pinnacles.id as pinnacle_id',
+      'transitions.id as transition_id'
     )
       .from('link_connections')
       .where('link_connections.user_id', user.id)
@@ -72,7 +74,13 @@ export class NetService {
       y,
     } = ctx.request.body;
 
-    return await knex('transitions')
+    const transitionExist = await knex('transitions').first('id').where('name', name);
+
+    if (transitionExist) {
+      ctx.throw('Transition should be unique', 409);
+    }
+
+    const response = await knex('transitions')
       .returning([
         'id',
         'name',
@@ -90,6 +98,8 @@ export class NetService {
         y,
         updated_at: new Date()
       });
+
+    return this.transformResponse(response);
   }
 
   async putNetPinnacle(ctx: Context) {
@@ -102,7 +112,13 @@ export class NetService {
       y,
     } = ctx.request.body;
 
-    return await knex('pinnacles')
+    const pinnacleExist = await knex('pinnacles').first('id').where('name', name);
+
+    if (pinnacleExist) {
+      ctx.throw('Pinnacle should be unique', 409);
+    }
+
+    const response = await knex('pinnacles')
       .returning([
         'id',
         'name',
@@ -120,6 +136,57 @@ export class NetService {
         y,
         updated_at: new Date()
       });
+    return this.transformResponse(response);
+  }
+
+  async putNetConnection(ctx: Context) {
+    const user = ctx.state.user;
+    const {
+      id,
+      value,
+      connect
+    } = ctx.request.body;
+
+    let transitionId;
+    let pinnacleId;
+    const from = connect[0].type === 'transition' ? 2 : 1;
+
+    connect.forEach(item => {
+      if (item.type === 'transition') {
+        transitionId = item.id;
+      } else {
+        pinnacleId = item.id;
+      }
+    });
+
+    await knex('link_connections')
+      .where('user_id', user.id)
+      .andWhere('id', id)
+      .update({
+        value,
+        from,
+        pinnacle_id: pinnacleId,
+        transition_id: transitionId,
+        updated_at: new Date()
+      });
+
+    const connection = await knex.select(
+      'link_connections.id',
+      'link_connections.from',
+      'link_connections.value',
+      'link_connections.created_at',
+      'link_connections.updated_at',
+      'pinnacles.name as pinnacle_name',
+      'transitions.name as transition_name',
+      'pinnacles.id as pinnacle_id',
+      'transitions.id as transition_id'
+    )
+      .from('link_connections')
+      .where('link_connections.user_id', user.id)
+      .andWhere('link_connections.id', id)
+      .leftJoin('pinnacles', 'link_connections.pinnacle_id', 'pinnacles.id')
+      .leftJoin('transitions', 'link_connections.transition_id', 'transitions.id');
+    return this.transformLinkConnections(this.transformResponse(connection));
   }
 
   private transformResponse(data: any[]): any[] {
@@ -130,17 +197,19 @@ export class NetService {
     return data.map((item) => {
       if (item.from - 1) {
         item.connect = [
-          { type: 'transition', name: item.transitionName },
-          { type: 'pinnacle', name: item.pinnacleName }
+          { type: 'transition', name: item.transitionName, id: item.transitionId },
+          { type: 'pinnacle', name: item.pinnacleName, id: item.pinnacleId }
         ];
       } else {
         item.connect = [
-          { type: 'pinnacle', name: item.pinnacleName },
-          { type: 'transition', name: item.transitionName }
+          { type: 'pinnacle', name: item.pinnacleName, id: item.pinnacleId },
+          { type: 'transition', name: item.transitionName, id: item.transitionId }
         ];
       }
       delete item.pinnacleName;
       delete item.transitionName;
+      delete item.pinnacleId;
+      delete item.transitionId;
       delete item.from;
       return item;
     });

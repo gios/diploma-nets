@@ -6,6 +6,7 @@ interface ITimestamps {
 interface IConnect {
   type: 'transition' | 'pinnacle';
   name: string;
+  id: number;
 }
 
 export interface ITransition extends ITimestamps {

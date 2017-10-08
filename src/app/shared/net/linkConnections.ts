@@ -70,9 +70,9 @@ export function generateConnections(
     const connectedItems = connectionItem.connect.map((item) => {
       let foundItem: joint.dia.Cell;
       if (item.type === 'pinnacle') {
-        foundItem = find(pinnacles, ['attributes.baseName', item.name]);
+        foundItem = find(pinnacles, ['attributes.baseId', item.id]);
       } else {
-        foundItem = find(transitions, ['attributes.baseName', item.name]);
+        foundItem = find(transitions, ['attributes.baseId', item.id]);
       }
       foundItem.set('connectionType', item.type);
       return foundItem;
