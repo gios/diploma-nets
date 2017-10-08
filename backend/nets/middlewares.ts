@@ -31,3 +31,27 @@ export async function putNetPinnacle(ctx: Context) {
 export async function putNetConnection(ctx: Context) {
   ctx.body = await netService.putNetConnection(ctx);
 }
+
+export async function postNetTransition(ctx: Context) {
+  ctx.body = await netService.postNetTransition(ctx);
+}
+
+export async function postNetPinnacle(ctx: Context) {
+  ctx.body = await netService.postNetPinnacle(ctx);
+}
+
+export async function postNetConnection(ctx: Context) {
+  ctx.body = await netService.postNetConnection(ctx);
+}
+
+export async function deleteNetTransition(ctx: Context) {
+  ctx.body = await netService.deleteNetTransition(ctx);
+}
+
+export async function deleteNetPinnacle(ctx: Context) {
+  ctx.body = await netService.deleteNetPinnacle(ctx);
+}
+
+export async function deleteNetConnection(ctx: Context) {
+  ctx.body = await netService.deleteNetConnection(ctx);
+}
