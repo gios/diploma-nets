@@ -25,6 +25,7 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   navPinnacles: IPinnacle[] = [];
   navTransitions: ITransition[] = [];
   navConnections: ILinkConnection[] = [];
+  selectedTabIndex: number;
   private pinnacleModal$: Subscription;
   private transitionModal$: Subscription;
   private connectionModal$: Subscription;

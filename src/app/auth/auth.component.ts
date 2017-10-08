@@ -15,7 +15,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   spinner = false;
   hidePassword = true;
   authForm: FormGroup;
-  private registrationState = false;
+  registrationState = false;
   private loginState$: Subscription;
   private auth$: Subscription;
 
