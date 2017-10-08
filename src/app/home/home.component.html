@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
 
   <mat-sidenav #constructSidenav position="end">
-    <app-construct-sidenav [data]="netData"></app-construct-sidenav>
+    <app-construct-sidenav [data]="netData" (changeNet)="netData = $event"></app-construct-sidenav>
   </mat-sidenav>
 
   <div class="sidenav-action end">

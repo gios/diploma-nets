@@ -58,8 +58,8 @@ export class NetService {
 
   async getNetAttributes(ctx: Context): Promise<INetAttributes> {
     return {
-      transitions: await this.getNetTransitions(ctx),
       pinnacles: await this.getNetPinnacles(ctx),
+      transitions: await this.getNetTransitions(ctx),
       connections: await this.getNetConnections(ctx)
     };
   }

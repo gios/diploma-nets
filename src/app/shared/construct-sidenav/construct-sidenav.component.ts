@@ -1,7 +1,9 @@
-import { Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import {
+  Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef,
+  Output, EventEmitter
+} from '@angular/core';
 import { MatDialog } from '@angular/material';
 import * as joint from 'jointjs';
-import { find } from 'lodash';
 import { Subscription } from 'rxjs/Rx';
 
 import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from '../net/net.interface';
@@ -21,10 +23,12 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   navConnections: ILinkConnection[] = [];
   private pinnacleModal$: Subscription;
   @Input() data: INetAttributes;
+  @Output() changeNet = new EventEmitter<INetAttributes>();
 
   constructor(
     private netService: NetService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private changeDetectorRef: ChangeDetectorRef
   ) { }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -46,8 +50,11 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
       case 'pinnacle':
         this.pinnacleModal$ = this.dialog.open(PinnacleModalComponent)
           .afterClosed().subscribe(result => {
-            this.navPinnacles.push(result);
-            console.log('The dialog was closed', result);
+            if (result) {
+              this.navPinnacles.push(result);
+              this.changeDetectorRef.markForCheck();
+              this.updateNet();
+            }
           });
         break;
       case 'transition':
@@ -80,5 +87,13 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
         console.log('default delete', id);
         break;
     }
+  }
+
+  private updateNet() {
+    this.changeNet.emit({
+      pinnacles: this.navPinnacles,
+      transitions: this.navTransitions,
+      connections: this.navConnections
+    });
   }
 }

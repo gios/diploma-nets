@@ -33,6 +33,9 @@ export class NetComponent implements OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data && changes.data.currentValue) {
+      if (this.graph) {
+        this.graph.clear();
+      }
       const netData = changes.data.currentValue;
       const { paper, transitions } = this.netService.generateNet(this.netSelector, this.graph, netData);
       this.paper = paper;
