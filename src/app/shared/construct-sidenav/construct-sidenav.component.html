@@ -16,7 +16,7 @@
               <mat-panel-description>
                 Edit pinnacle name, value and position
               </mat-panel-description>
-              <mat-icon>apps</mat-icon>
+              <mat-icon (click)="delete($event, 'pinnacle', navPinnacle.id)">delete</mat-icon>
             </mat-expansion-panel-header>
 
             <div class="expansion-form">
@@ -58,7 +58,7 @@
               <mat-panel-description>
                 Edit transition name, time and position
               </mat-panel-description>
-              <mat-icon>apps</mat-icon>
+              <mat-icon (click)="delete($event, 'transition', navTransition.id)">delete</mat-icon>
             </mat-expansion-panel-header>
 
             <div class="expansion-form">
@@ -100,7 +100,7 @@
               <mat-panel-description>
                 Connection information
               </mat-panel-description>
-              <mat-icon>apps</mat-icon>
+              <mat-icon (click)="delete($event, 'connection', navConnection.id)">delete</mat-icon>
             </mat-expansion-panel-header>
 
             <div class="connections-body">

@@ -1,0 +1,18 @@
+.title {
+  text-align: center;
+}
+
+mat-spinner {
+  margin-top: 2em;
+}
+
+form {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+
+  > mat-form-field {
+    margin: 0.5em;
+  }
+}

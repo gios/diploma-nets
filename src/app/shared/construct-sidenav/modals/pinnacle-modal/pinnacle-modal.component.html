@@ -1,0 +1,22 @@
+<h2 class="title">Create Pinnacle</h2>
+
+<form [formGroup]="pinnacleForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput placeholder="Name" type="text" formControlName="name">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Value" type="number" formControlName="value">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Position X" type="number" formControlName="positionX">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Position Y" type="number" formControlName="positionY">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="pinnacleForm.invalid">Create</button>
+  <mat-spinner [diameter]="40" *ngIf="spinner"></mat-spinner>
+</form>

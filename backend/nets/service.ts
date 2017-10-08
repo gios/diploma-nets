@@ -1,5 +1,5 @@
 import * as knexInstance from 'knex';
-import { camelCase, mapKeys } from 'lodash';
+import { camelCase, mapKeys, first } from 'lodash';
 import { Context } from 'koa';
 
 import * as knexConfig from '../knexfile';
@@ -99,7 +99,7 @@ export class NetService {
         updated_at: new Date()
       });
 
-    return this.transformResponse(response);
+    return this.transformResponse(response, true);
   }
 
   async putNetPinnacle(ctx: Context) {
@@ -136,7 +136,7 @@ export class NetService {
         y,
         updated_at: new Date()
       });
-    return this.transformResponse(response);
+    return this.transformResponse(response, true);
   }
 
   async putNetConnection(ctx: Context) {
@@ -186,7 +186,7 @@ export class NetService {
       .andWhere('link_connections.id', id)
       .leftJoin('pinnacles', 'link_connections.pinnacle_id', 'pinnacles.id')
       .leftJoin('transitions', 'link_connections.transition_id', 'transitions.id');
-    return this.transformLinkConnections(this.transformResponse(connection));
+    return this.transformLinkConnections(this.transformResponse(connection, true));
   }
 
   async postNetTransition(ctx: Context) {
@@ -221,7 +221,7 @@ export class NetService {
         user_id: user.id
       });
 
-    return this.transformResponse(response);
+    return this.transformResponse(response, true);
   }
 
   async postNetPinnacle(ctx: Context) {
@@ -255,7 +255,7 @@ export class NetService {
         y,
         user_id: user.id
       });
-    return this.transformResponse(response);
+    return this.transformResponse(response, true);
   }
 
   async postNetConnection(ctx: Context) {
@@ -302,7 +302,7 @@ export class NetService {
       .andWhere('link_connections.id', linkId[0])
       .leftJoin('pinnacles', 'link_connections.pinnacle_id', 'pinnacles.id')
       .leftJoin('transitions', 'link_connections.transition_id', 'transitions.id');
-    return this.transformLinkConnections(this.transformResponse(connection));
+    return this.transformLinkConnections(this.transformResponse(connection, true));
   }
 
   async deleteNetTransition(ctx: Context) {
@@ -335,8 +335,13 @@ export class NetService {
     return { message: 'Connection has deleted' };
   }
 
-  private transformResponse(data: any[]): any[] {
-    return data.map(item => mapKeys(item, (_, key: string) => camelCase(key)));
+  private transformResponse(data: any[], single = false): any[] {
+    const transformed: any[] = data.map(item => mapKeys(item, (_, key: string) => camelCase(key)));
+    if (single) {
+      return first(transformed);
+    } else {
+      return transformed;
+    }
   }
 
   private transformLinkConnections(data: ILinkConnection[]) {
