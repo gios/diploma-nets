@@ -98,8 +98,6 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   private openSnackBar(message: string) {
-    this.snackBar.open(message, 'Close', {
-      duration: 2000,
-    });
+    this.snackBar.open(message, 'Close');
   }
 }

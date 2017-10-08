@@ -2,12 +2,14 @@ import {
   Component, Input, OnChanges, SimpleChanges, ChangeDetectionStrategy, OnDestroy, ChangeDetectorRef,
   Output, EventEmitter
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import * as joint from 'jointjs';
 import { Subscription } from 'rxjs/Rx';
+import { remove } from 'lodash';
 
 import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from '../net/net.interface';
 import { NetService } from '../net/net.service';
+import { HttpService } from '../../http.service';
 import { PinnacleModalComponent } from './modals/pinnacle-modal/pinnacle-modal.component';
 import { TransitionModalComponent } from './modals/transition-modal/transition-modal.component';
 import { ConnectionModalComponent } from './modals/connection-modal/connection-modal.component';
@@ -26,12 +28,17 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   private pinnacleModal$: Subscription;
   private transitionModal$: Subscription;
   private connectionModal$: Subscription;
+  private deletePinnacle$: Subscription;
+  private deleteTransition$: Subscription;
+  private deleteConnection$: Subscription;
   @Input() data: INetAttributes;
   @Output() changeNet = new EventEmitter<INetAttributes>();
 
   constructor(
     private netService: NetService,
     private dialog: MatDialog,
+    private http: HttpService,
+    private snackBar: MatSnackBar,
     private changeDetectorRef: ChangeDetectorRef
   ) { }
 
@@ -55,6 +62,18 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
     if (this.connectionModal$) {
       this.connectionModal$.unsubscribe();
     }
+
+    if (this.deletePinnacle$) {
+      this.deletePinnacle$.unsubscribe();
+    }
+
+    if (this.deleteTransition$) {
+      this.deleteTransition$.unsubscribe();
+    }
+
+    if (this.deleteConnection$) {
+      this.deleteConnection$.unsubscribe();
+    }
   }
 
   create(type: string) {
@@ -69,6 +88,9 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
               this.changeDetectorRef.markForCheck();
               this.updateNet();
             }
+          }, (err) => {
+            const errData = err.json();
+            this.openSnackBar(errData.message);
           });
         break;
       case 'transition':
@@ -81,6 +103,9 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
               this.changeDetectorRef.markForCheck();
               this.updateNet();
             }
+          }, (err) => {
+            const errData = err.json();
+            this.openSnackBar(errData.message);
           });
         break;
       case 'connection':
@@ -94,6 +119,9 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
               this.changeDetectorRef.markForCheck();
               this.updateNet();
             }
+          }, (err) => {
+            const errData = err.json();
+            this.openSnackBar(errData.message);
           });
         break;
 
@@ -107,13 +135,43 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
     event.stopPropagation();
     switch (type) {
       case 'pinnacle':
-        console.log('pinnacle delete', id);
+        this.deletePinnacle$ = this.http.delete(`api/net/pinnacle/${id}`)
+          .subscribe(data => {
+            const response = data.json();
+            remove(this.navPinnacles, item => item.id === id);
+            this.changeDetectorRef.markForCheck();
+            this.updateNet();
+            this.openSnackBar(response.message);
+          }, (err) => {
+            const errData = err.json();
+            this.openSnackBar(errData.message);
+          });
         break;
       case 'transition':
-        console.log('transition delete', id);
+        this.deleteTransition$ = this.http.delete(`api/net/transition/${id}`)
+          .subscribe(data => {
+            const response = data.json();
+            remove(this.navTransitions, item => item.id === id);
+            this.changeDetectorRef.markForCheck();
+            this.updateNet();
+            this.openSnackBar(response.message);
+          }, (err) => {
+            const errData = err.json();
+            this.openSnackBar(errData.message);
+          });
         break;
       case 'connection':
-        console.log('connection delete', id);
+        this.deleteConnection$ = this.http.delete(`api/net/connection/${id}`)
+          .subscribe(data => {
+            const response = data.json();
+            remove(this.navConnections, item => item.id === id);
+            this.changeDetectorRef.markForCheck();
+            this.updateNet();
+            this.openSnackBar(response.message);
+          }, (err) => {
+            const errData = err.json();
+            this.openSnackBar(errData.message);
+          });
         break;
 
       default:
@@ -128,5 +186,9 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
       transitions: this.navTransitions,
       connections: this.navConnections
     });
+  }
+
+  private openSnackBar(message: string) {
+    this.snackBar.open(message, 'Close');
   }
 }
