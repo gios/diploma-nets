@@ -17,7 +17,7 @@ export class TransitionModalComponent implements OnDestroy {
   private createTransition$: Subscription;
 
   constructor(
-    public dialogRef: MatDialogRef<TransitionModalComponent>,
+    private dialogRef: MatDialogRef<TransitionModalComponent>,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private http: HttpService
@@ -49,7 +49,8 @@ export class TransitionModalComponent implements OnDestroy {
         const response = result.json();
         this.openSnackBar(`Transition ${response.name} has created`);
         this.dialogRef.close(response);
-      });
+        this.spinner = false;
+      }, () => this.spinner = false);
   }
 
   private createForm() {

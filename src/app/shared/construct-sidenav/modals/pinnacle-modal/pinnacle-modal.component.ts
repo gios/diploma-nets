@@ -17,7 +17,7 @@ export class PinnacleModalComponent implements OnDestroy {
   private createPinnacle$: Subscription;
 
   constructor(
-    public dialogRef: MatDialogRef<PinnacleModalComponent>,
+    private dialogRef: MatDialogRef<PinnacleModalComponent>,
     private fb: FormBuilder,
     private snackBar: MatSnackBar,
     private http: HttpService
@@ -49,7 +49,8 @@ export class PinnacleModalComponent implements OnDestroy {
         const response = result.json();
         this.openSnackBar(`Pinnacle ${response.name} has created`);
         this.dialogRef.close(response);
-      });
+        this.spinner = false;
+      }, () => this.spinner = false);
   }
 
   private createForm() {

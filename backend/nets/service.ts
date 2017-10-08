@@ -186,7 +186,7 @@ export class NetService {
       .andWhere('link_connections.id', id)
       .leftJoin('pinnacles', 'link_connections.pinnacle_id', 'pinnacles.id')
       .leftJoin('transitions', 'link_connections.transition_id', 'transitions.id');
-    return this.transformLinkConnections(this.transformResponse(connection, true));
+    return first(this.transformLinkConnections(this.transformResponse(connection)));
   }
 
   async postNetTransition(ctx: Context) {
@@ -283,7 +283,8 @@ export class NetService {
         value,
         from,
         pinnacle_id: pinnacleId,
-        transition_id: transitionId
+        transition_id: transitionId,
+        user_id: user.id
       });
 
     const connection = await knex.select(
@@ -302,7 +303,7 @@ export class NetService {
       .andWhere('link_connections.id', linkId[0])
       .leftJoin('pinnacles', 'link_connections.pinnacle_id', 'pinnacles.id')
       .leftJoin('transitions', 'link_connections.transition_id', 'transitions.id');
-    return this.transformLinkConnections(this.transformResponse(connection, true));
+    return first(this.transformLinkConnections(this.transformResponse(connection)));
   }
 
   async deleteNetTransition(ctx: Context) {

@@ -1,0 +1,33 @@
+<h2 class="title">Create Connection</h2>
+
+<mat-autocomplete #autocompleteFrom>
+  <mat-option *ngFor="let entity of filteredEntitiesFrom | async" [value]="entity.name">
+    <span>{{ entity.name }} | </span>
+    <small>{{ entity.time !== undefined ? 'transition' : 'pinnacle' }}</small>
+  </mat-option>
+</mat-autocomplete>
+
+<mat-autocomplete #autocompleteTo>
+  <mat-option *ngFor="let entity of filteredEntitiesTo | async" [value]="entity.name">
+    <span>{{ entity.name }} | </span>
+    <small>{{ entity.time !== undefined ? 'transition' : 'pinnacle' }}</small>
+  </mat-option>
+</mat-autocomplete>
+
+<form [formGroup]="connectionForm" (ngSubmit)="onSubmit()" novalidate>
+  <mat-form-field>
+    <input matInput placeholder="From" [matAutocomplete]="autocompleteFrom" formControlName="from">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="Value" type="number" formControlName="value">
+    <mat-icon matSuffix>arrow_forward</mat-icon>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput placeholder="To" [matAutocomplete]="autocompleteTo" formControlName="to">
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="connectionForm.invalid">Create</button>
+  <mat-spinner [diameter]="40" *ngIf="spinner"></mat-spinner>
+</form>

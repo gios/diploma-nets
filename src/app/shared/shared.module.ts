@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
   MatSidenavModule, MatButtonModule, MatIconModule, MatToolbarModule, MatTabsModule, MatExpansionModule,
-  MatInputModule, MatDialogModule, MatProgressSpinnerModule
+  MatInputModule, MatDialogModule, MatProgressSpinnerModule, MatAutocompleteModule
 } from '@angular/material';
 import { RouterModule } from '@angular/router';
 
@@ -13,6 +13,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ConstructSidenavComponent } from './construct-sidenav/construct-sidenav.component';
 import { PinnacleModalComponent } from './construct-sidenav/modals/pinnacle-modal/pinnacle-modal.component';
 import { TransitionModalComponent } from './construct-sidenav/modals/transition-modal/transition-modal.component';
+import { ConnectionModalComponent } from './construct-sidenav/modals/connection-modal/connection-modal.component';
 
 @NgModule({
   imports: [
@@ -25,6 +26,7 @@ import { TransitionModalComponent } from './construct-sidenav/modals/transition-
     MatExpansionModule,
     MatInputModule,
     MatDialogModule,
+    MatAutocompleteModule,
     MatProgressSpinnerModule,
     RouterModule,
     ReactiveFormsModule
@@ -35,7 +37,8 @@ import { TransitionModalComponent } from './construct-sidenav/modals/transition-
     ToolbarComponent,
     ConstructSidenavComponent,
     PinnacleModalComponent,
-    TransitionModalComponent
+    TransitionModalComponent,
+    ConnectionModalComponent
   ],
   exports: [
     NetComponent,
@@ -45,7 +48,8 @@ import { TransitionModalComponent } from './construct-sidenav/modals/transition-
   ],
   entryComponents: [
     PinnacleModalComponent,
-    TransitionModalComponent
+    TransitionModalComponent,
+    ConnectionModalComponent
   ]
 })
 export class SharedModule { }

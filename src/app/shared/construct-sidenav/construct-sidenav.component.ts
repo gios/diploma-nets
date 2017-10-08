@@ -10,6 +10,7 @@ import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from '../net/
 import { NetService } from '../net/net.service';
 import { PinnacleModalComponent } from './modals/pinnacle-modal/pinnacle-modal.component';
 import { TransitionModalComponent } from './modals/transition-modal/transition-modal.component';
+import { ConnectionModalComponent } from './modals/connection-modal/connection-modal.component';
 
 @Component({
   selector: 'app-construct-sidenav',
@@ -24,6 +25,7 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   navConnections: ILinkConnection[] = [];
   private pinnacleModal$: Subscription;
   private transitionModal$: Subscription;
+  private connectionModal$: Subscription;
   @Input() data: INetAttributes;
   @Output() changeNet = new EventEmitter<INetAttributes>();
 
@@ -45,12 +47,22 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
     if (this.pinnacleModal$) {
       this.pinnacleModal$.unsubscribe();
     }
+
+    if (this.transitionModal$) {
+      this.transitionModal$.unsubscribe();
+    }
+
+    if (this.connectionModal$) {
+      this.connectionModal$.unsubscribe();
+    }
   }
 
   create(type: string) {
     switch (type) {
       case 'pinnacle':
-        this.pinnacleModal$ = this.dialog.open(PinnacleModalComponent)
+        this.pinnacleModal$ = this.dialog.open(PinnacleModalComponent, {
+          width: '400px'
+        })
           .afterClosed().subscribe(result => {
             if (result) {
               this.navPinnacles.push(result);
@@ -60,7 +72,9 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
           });
         break;
       case 'transition':
-        this.transitionModal$ = this.dialog.open(TransitionModalComponent)
+        this.transitionModal$ = this.dialog.open(TransitionModalComponent, {
+          width: '400px'
+        })
           .afterClosed().subscribe(result => {
             if (result) {
               this.navTransitions.push(result);
@@ -70,7 +84,17 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
           });
         break;
       case 'connection':
-        console.log('connection create');
+        this.connectionModal$ = this.dialog.open(ConnectionModalComponent, {
+          width: '400px',
+          data: { entities: this.navPinnacles.concat(this.navTransitions as any) }
+        })
+          .afterClosed().subscribe(result => {
+            if (result) {
+              this.navConnections.push(result);
+              this.changeDetectorRef.markForCheck();
+              this.updateNet();
+            }
+          });
         break;
 
       default:
