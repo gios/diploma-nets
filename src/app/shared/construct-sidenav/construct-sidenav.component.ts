@@ -40,6 +40,8 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   private pinnacleChanged$: Subscription;
   private transitionChanged: Subject<ITransition> = new Subject();
   private transitionChanged$: Subscription;
+  private connectionChanged: Subject<ILinkConnection> = new Subject();
+  private connectionChanged$: Subscription;
   @Input() data: INetAttributes;
   @Output() changeNet = new EventEmitter<INetAttributes>();
 
@@ -104,6 +106,10 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
 
     if (this.transitionChanged$) {
       this.transitionChanged$.unsubscribe();
+    }
+
+    if (this.connectionChanged$) {
+      this.connectionChanged$.unsubscribe();
     }
   }
 
@@ -222,6 +228,8 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
         this.transitionChanged.next(entity as ITransition);
         break;
       case 'connection':
+        this.buttonsDisabled = true;
+        this.connectionChanged.next(entity as ILinkConnection);
         break;
 
       default:
@@ -263,6 +271,24 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
             const errData = err.json();
             this.openSnackBar(errData.message);
           });
+      });
+
+    this.connectionChanged$ = this.connectionChanged
+      .debounceTime(1200)
+      .subscribe((entity) => {
+        console.log(entity);
+        // this.putConnection$ = this.http.put(`api/net/connection/${entity.id}`, entity)
+        //   .subscribe(data => {
+        //     this.buttonsDisabled = false;
+        //     const response = data.json();
+        //     this.changeDetectorRef.markForCheck();
+        //     this.updateNet();
+        //     this.openSnackBar(`Connection has been updated.`);
+        //   }, (err) => {
+        //     this.buttonsDisabled = false;
+        //     const errData = err.json();
+        //     this.openSnackBar(errData.message);
+        //   });
       });
   }
 
