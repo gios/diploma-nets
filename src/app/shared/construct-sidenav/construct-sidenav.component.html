@@ -21,22 +21,22 @@
 
             <div class="expansion-form">
               <mat-form-field>
-                <input matInput placeholder="Name" type="text" [disabled]="buttonsDisabled"
+                <input matInput placeholder="Name" type="text"
                   [(ngModel)]="navPinnacle.name" (ngModelChange)="update('pinnacle', navPinnacle)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Value" type="number" [disabled]="buttonsDisabled"
+                <input matInput placeholder="Value" type="number"
                   [(ngModel)]="navPinnacle.value" (ngModelChange)="update('pinnacle', navPinnacle)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position X" type="number" [disabled]="buttonsDisabled"
+                <input matInput placeholder="Position X" type="number"
                   [(ngModel)]="navPinnacle.x" (ngModelChange)="update('pinnacle', navPinnacle)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position Y" type="number" [disabled]="buttonsDisabled"
+                <input matInput placeholder="Position Y" type="number"
                   [(ngModel)]="navPinnacle.y" (ngModelChange)="update('pinnacle', navPinnacle)">
               </mat-form-field>
             </div>

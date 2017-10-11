@@ -4,7 +4,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import * as joint from 'jointjs';
-import { Subscription } from 'rxjs/Rx';
+import { Subscription, Subject } from 'rxjs/Rx';
 import { remove } from 'lodash';
 
 import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from '../net/net.interface';
@@ -36,6 +36,8 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   private putPinnacle$: Subscription;
   private putTransition$: Subscription;
   private putConnection$: Subscription;
+  private pinnacleChanged: Subject<IPinnacle | ITransition | ILinkConnection> = new Subject();
+  private pinnacleChanged$: Subscription;
   @Input() data: INetAttributes;
   @Output() changeNet = new EventEmitter<INetAttributes>();
 
@@ -45,7 +47,9 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
     private http: HttpService,
     private snackBar: MatSnackBar,
     private changeDetectorRef: ChangeDetectorRef
-  ) { }
+  ) {
+    this.subjectSubscribers();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data && changes.data.currentValue) {
@@ -90,6 +94,10 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
 
     if (this.putConnection$) {
       this.putConnection$.unsubscribe();
+    }
+
+    if (this.pinnacleChanged$) {
+      this.pinnacleChanged$.unsubscribe();
     }
   }
 
@@ -201,6 +209,23 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
     switch (type) {
       case 'pinnacle':
         this.buttonsDisabled = true;
+        this.pinnacleChanged.next(entity);
+        break;
+      case 'transition':
+        break;
+      case 'connection':
+        break;
+
+      default:
+        console.log('default update');
+        break;
+    }
+  }
+
+  private subjectSubscribers() {
+    this.pinnacleChanged$ = this.pinnacleChanged
+      .debounceTime(1200)
+      .subscribe((entity) => {
         this.putPinnacle$ = this.http.put(`api/net/pinnacle/${entity.id}`, entity)
           .subscribe(data => {
             this.buttonsDisabled = false;
@@ -213,16 +238,7 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
             const errData = err.json();
             this.openSnackBar(errData.message);
           });
-        break;
-      case 'transition':
-        break;
-      case 'connection':
-        break;
-
-      default:
-        console.log('default update');
-        break;
-    }
+      });
   }
 
   private updateNet() {
