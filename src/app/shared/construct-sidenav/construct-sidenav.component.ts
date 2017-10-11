@@ -36,8 +36,10 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   private putPinnacle$: Subscription;
   private putTransition$: Subscription;
   private putConnection$: Subscription;
-  private pinnacleChanged: Subject<IPinnacle | ITransition | ILinkConnection> = new Subject();
+  private pinnacleChanged: Subject<IPinnacle> = new Subject();
   private pinnacleChanged$: Subscription;
+  private transitionChanged: Subject<ITransition> = new Subject();
+  private transitionChanged$: Subscription;
   @Input() data: INetAttributes;
   @Output() changeNet = new EventEmitter<INetAttributes>();
 
@@ -98,6 +100,10 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
 
     if (this.pinnacleChanged$) {
       this.pinnacleChanged$.unsubscribe();
+    }
+
+    if (this.transitionChanged$) {
+      this.transitionChanged$.unsubscribe();
     }
   }
 
@@ -209,9 +215,11 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
     switch (type) {
       case 'pinnacle':
         this.buttonsDisabled = true;
-        this.pinnacleChanged.next(entity);
+        this.pinnacleChanged.next(entity as IPinnacle);
         break;
       case 'transition':
+        this.buttonsDisabled = true;
+        this.transitionChanged.next(entity as ITransition);
         break;
       case 'connection':
         break;
@@ -232,7 +240,24 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
             const response = data.json();
             this.changeDetectorRef.markForCheck();
             this.updateNet();
-            this.openSnackBar(`Pinnacle ${(entity as IPinnacle).name} has been updated.`);
+            this.openSnackBar(`Pinnacle ${entity.name} has been updated.`);
+          }, (err) => {
+            this.buttonsDisabled = false;
+            const errData = err.json();
+            this.openSnackBar(errData.message);
+          });
+      });
+
+    this.transitionChanged$ = this.transitionChanged
+      .debounceTime(1200)
+      .subscribe((entity) => {
+        this.putTransition$ = this.http.put(`api/net/transition/${entity.id}`, entity)
+          .subscribe(data => {
+            this.buttonsDisabled = false;
+            const response = data.json();
+            this.changeDetectorRef.markForCheck();
+            this.updateNet();
+            this.openSnackBar(`Transition ${entity.name} has been updated.`);
           }, (err) => {
             this.buttonsDisabled = false;
             const errData = err.json();

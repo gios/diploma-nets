@@ -67,19 +67,23 @@
 
             <div class="expansion-form">
               <mat-form-field>
-                <input matInput placeholder="Name" type="text" [value]="navTransition.name">
+                <input matInput placeholder="Name" type="text"
+                  [(ngModel)]="navTransition.name" (ngModelChange)="update('transition', navTransition)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Time" type="number" [value]="navTransition.time">
+                <input matInput placeholder="Time" type="number"
+                  [(ngModel)]="navTransition.time" (ngModelChange)="update('transition', navTransition)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position X" type="number" [value]="navTransition.x">
+                <input matInput placeholder="Position X" type="number"
+                  [(ngModel)]="navTransition.x" (ngModelChange)="update('transition', navTransition)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position Y" type="number" [value]="navTransition.y">
+                <input matInput placeholder="Position Y" type="number"
+                  [(ngModel)]="navTransition.y" (ngModelChange)="update('transition', navTransition)">
               </mat-form-field>
             </div>
           </mat-expansion-panel>
