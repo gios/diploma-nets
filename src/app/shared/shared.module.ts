@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {
   MatSidenavModule, MatButtonModule, MatIconModule, MatToolbarModule, MatTabsModule, MatExpansionModule,
   MatInputModule, MatDialogModule, MatProgressSpinnerModule, MatAutocompleteModule
@@ -29,7 +29,8 @@ import { ConnectionModalComponent } from './construct-sidenav/modals/connection-
     MatAutocompleteModule,
     MatProgressSpinnerModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   declarations: [
     NetComponent,

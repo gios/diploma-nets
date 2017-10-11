@@ -1,6 +1,6 @@
 <mat-tab-group [(selectedIndex)]="selectedTabIndex">
 
-  <mat-tab label="Pinnacles">
+  <mat-tab label="Pinnacles" [disabled]="buttonsDisabled">
     <div class="adjuster"></div>
     <div class="action-buttons">
       <button mat-raised-button color="primary" (click)="create('pinnacle')">Create</button>
@@ -21,19 +21,23 @@
 
             <div class="expansion-form">
               <mat-form-field>
-                <input matInput placeholder="Name" type="text" [value]="navPinnacle.name">
+                <input matInput placeholder="Name" type="text" [disabled]="buttonsDisabled"
+                  [(ngModel)]="navPinnacle.name" (ngModelChange)="update('pinnacle', navPinnacle)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Value" type="number" [value]="navPinnacle.value">
+                <input matInput placeholder="Value" type="number" [disabled]="buttonsDisabled"
+                  [(ngModel)]="navPinnacle.value" (ngModelChange)="update('pinnacle', navPinnacle)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position X" type="number" [value]="navPinnacle.x">
+                <input matInput placeholder="Position X" type="number" [disabled]="buttonsDisabled"
+                  [(ngModel)]="navPinnacle.x" (ngModelChange)="update('pinnacle', navPinnacle)">
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="Position Y" type="number" [value]="navPinnacle.y">
+                <input matInput placeholder="Position Y" type="number" [disabled]="buttonsDisabled"
+                  [(ngModel)]="navPinnacle.y" (ngModelChange)="update('pinnacle', navPinnacle)">
               </mat-form-field>
             </div>
           </mat-expansion-panel>
@@ -42,7 +46,7 @@
     </div>
   </mat-tab>
 
-  <mat-tab label="Transitions">
+  <mat-tab label="Transitions" [disabled]="buttonsDisabled">
     <div class="adjuster"></div>
     <div class="action-buttons">
       <button mat-raised-button color="primary" (click)="create('transition')">Create</button>
@@ -84,7 +88,7 @@
     </div>
   </mat-tab>
 
-  <mat-tab label="Connections">
+  <mat-tab label="Connections" [disabled]="buttonsDisabled">
     <div class="adjuster"></div>
     <div class="action-buttons">
       <button mat-raised-button color="primary" (click)="create('connection')">Create</button>

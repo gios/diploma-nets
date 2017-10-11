@@ -26,12 +26,16 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   navTransitions: ITransition[] = [];
   navConnections: ILinkConnection[] = [];
   selectedTabIndex: number;
+  buttonsDisabled = false;
   private pinnacleModal$: Subscription;
   private transitionModal$: Subscription;
   private connectionModal$: Subscription;
   private deletePinnacle$: Subscription;
   private deleteTransition$: Subscription;
   private deleteConnection$: Subscription;
+  private putPinnacle$: Subscription;
+  private putTransition$: Subscription;
+  private putConnection$: Subscription;
   @Input() data: INetAttributes;
   @Output() changeNet = new EventEmitter<INetAttributes>();
 
@@ -74,6 +78,18 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
 
     if (this.deleteConnection$) {
       this.deleteConnection$.unsubscribe();
+    }
+
+    if (this.putPinnacle$) {
+      this.putPinnacle$.unsubscribe();
+    }
+
+    if (this.putTransition$) {
+      this.putTransition$.unsubscribe();
+    }
+
+    if (this.putConnection$) {
+      this.putConnection$.unsubscribe();
     }
   }
 
@@ -177,6 +193,34 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
 
       default:
         console.log('default delete', id);
+        break;
+    }
+  }
+
+  update(type: string, entity: IPinnacle | ITransition | ILinkConnection) {
+    switch (type) {
+      case 'pinnacle':
+        this.buttonsDisabled = true;
+        this.putPinnacle$ = this.http.put(`api/net/pinnacle/${entity.id}`, entity)
+          .subscribe(data => {
+            this.buttonsDisabled = false;
+            const response = data.json();
+            this.changeDetectorRef.markForCheck();
+            this.updateNet();
+            this.openSnackBar(`Pinnacle ${(entity as IPinnacle).name} has been updated.`);
+          }, (err) => {
+            this.buttonsDisabled = false;
+            const errData = err.json();
+            this.openSnackBar(errData.message);
+          });
+        break;
+      case 'transition':
+        break;
+      case 'connection':
+        break;
+
+      default:
+        console.log('default update');
         break;
     }
   }

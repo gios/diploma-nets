@@ -16,9 +16,9 @@ router.get('/connections', getNetConnections);
 router.get('/transitions', getNetTransitions);
 router.get('/pinnacles', getNetPinnacles);
 
-router.put('/connection', putNetConnection);
-router.put('/transition', putNetTransition);
-router.put('/pinnacle', putNetPinnacle);
+router.put('/connection/:id', putNetConnection);
+router.put('/transition/:id', putNetTransition);
+router.put('/pinnacle/:id', putNetPinnacle);
 
 router.post('/connection', postNetConnection);
 router.post('/transition', postNetTransition);

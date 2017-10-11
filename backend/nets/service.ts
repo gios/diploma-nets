@@ -65,9 +65,9 @@ export class NetService {
   }
 
   async putNetTransition(ctx: Context) {
+    const id = ctx.params.id;
     const user = ctx.state.user;
     const {
-      id,
       name,
       time,
       x,
@@ -103,9 +103,9 @@ export class NetService {
   }
 
   async putNetPinnacle(ctx: Context) {
+    const id = ctx.params.id;
     const user = ctx.state.user;
     const {
-      id,
       name,
       value,
       x,
@@ -140,9 +140,9 @@ export class NetService {
   }
 
   async putNetConnection(ctx: Context) {
+    const id = ctx.params.id;
     const user = ctx.state.user;
     const {
-      id,
       value,
       connect
     } = ctx.request.body;
