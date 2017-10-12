@@ -276,19 +276,18 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
     this.connectionChanged$ = this.connectionChanged
       .debounceTime(1200)
       .subscribe((entity) => {
-        console.log(entity);
-        // this.putConnection$ = this.http.put(`api/net/connection/${entity.id}`, entity)
-        //   .subscribe(data => {
-        //     this.buttonsDisabled = false;
-        //     const response = data.json();
-        //     this.changeDetectorRef.markForCheck();
-        //     this.updateNet();
-        //     this.openSnackBar(`Connection has been updated.`);
-        //   }, (err) => {
-        //     this.buttonsDisabled = false;
-        //     const errData = err.json();
-        //     this.openSnackBar(errData.message);
-        //   });
+        this.putConnection$ = this.http.put(`api/net/connection/${entity.id}`, entity)
+          .subscribe(data => {
+            this.buttonsDisabled = false;
+            const response = data.json();
+            this.changeDetectorRef.markForCheck();
+            this.updateNet();
+            this.openSnackBar(`Connection has been updated.`);
+          }, (err) => {
+            this.buttonsDisabled = false;
+            const errData = err.json();
+            this.openSnackBar(errData.message);
+          });
       });
   }
 
