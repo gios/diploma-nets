@@ -119,8 +119,8 @@
               <div>
                 <mat-icon>arrow_forward</mat-icon>
                 <div class="connection-value">
-                  <input matInput placeholder="Connection value" type="number"
-                    [(ngModel)]="navConnection.value" (ngModelChange)="update('connection', navConnection)">
+                  <input matInput type="number" min="1" [(ngModel)]="navConnection.value"
+                    (ngModelChange)="update('connection', navConnection)">
                 </div>
               </div>
               <div>
