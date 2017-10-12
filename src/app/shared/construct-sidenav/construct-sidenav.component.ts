@@ -5,7 +5,7 @@ import {
 import { MatDialog, MatSnackBar } from '@angular/material';
 import * as joint from 'jointjs';
 import { Subscription, Subject } from 'rxjs/Rx';
-import { remove } from 'lodash';
+import { remove, sortBy } from 'lodash';
 
 import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from '../net/net.interface';
 import { NetService } from '../net/net.service';
@@ -57,9 +57,9 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data && changes.data.currentValue) {
-      this.navPinnacles = changes.data.currentValue.pinnacles as IPinnacle[];
-      this.navTransitions = changes.data.currentValue.transitions as ITransition[];
-      this.navConnections = changes.data.currentValue.connections as ILinkConnection[];
+      this.navPinnacles = sortBy(changes.data.currentValue.pinnacles as IPinnacle[], ['name']);
+      this.navTransitions = sortBy(changes.data.currentValue.transitions as ITransition[], ['name']);
+      this.navConnections = sortBy(changes.data.currentValue.connections as ILinkConnection[], ['connect[0].name']);
     }
   }
 
