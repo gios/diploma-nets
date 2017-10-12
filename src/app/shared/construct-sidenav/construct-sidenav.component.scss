@@ -53,6 +53,14 @@
     justify-content: space-around;
     text-align: center;
 
+    .connection-value {
+
+      > input {
+        text-align: center;
+        padding-left: 0.5em;
+      }
+    }
+
     mat-icon {
       cursor: pointer;
     }
