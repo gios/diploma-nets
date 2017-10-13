@@ -3,15 +3,16 @@ import { each, map, uniq, find, defer, invokeMap, min, isEmpty } from 'lodash';
 
 import { getLinkValue } from './linkConnections';
 import { getTimeTransition } from './transitions';
+import { ISaveRecordData } from './net.interface';
 
 export function fireTransition(
   graph: joint.dia.Graph,
   paper: joint.dia.Paper,
   transitions: joint.dia.Cell[],
-  callback) {
+  callback: (savedData: ISaveRecordData) => void) {
   each(transitions, (transition) => {
-    fireTransitionOnce(graph, paper, transition, getTimeTransition(transition), (name: string) => {
-      callback(name);
+    fireTransitionOnce(graph, paper, transition, getTimeTransition(transition), (savedData: ISaveRecordData) => {
+      callback(savedData);
     });
   });
 }
@@ -21,7 +22,7 @@ function fireTransitionOnce(
   paper: joint.dia.Paper,
   transition: joint.dia.Cell,
   sec: number,
-  callback) {
+  callback: (savedData: ISaveRecordData) => void) {
   const inbound = graph.getConnectedLinks(transition, { inbound: true });
   const outbound = graph.getConnectedLinks(transition, { outbound: true });
 
@@ -99,7 +100,11 @@ function fireTransitionOnce(
 
       ++placesAfterCountSuccess;
       if (placesAfterCount === placesAfterCountSuccess) {
-        callback(transition.attr('.label/text'));
+        const entities = placesBefore.concat(placesAfter);
+        callback({
+          ids: invokeMap(entities, 'get', 'baseId') as number[],
+          values: invokeMap(entities, 'get', 'tokens') as number[]
+        });
       }
     });
   });

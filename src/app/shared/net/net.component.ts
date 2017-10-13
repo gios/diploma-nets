@@ -71,7 +71,7 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   simulation() {
-    fireTransition(this.graph, this.paper, this.transitions, () => {
+    fireTransition(this.graph, this.paper, this.transitions, (saveData) => {
       const firedCount = invokeMap(this.transitions, 'get', 'firing').filter(item => !!item);
       if (!firedCount.length) {
         this.transitionStopped.emit(true);
@@ -80,6 +80,7 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
       if (this.pendingStopTransitions) {
         return;
       }
+      console.log(saveData);
       setTimeout(() => this.simulation(), 10);
     });
   }
