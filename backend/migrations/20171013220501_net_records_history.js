@@ -7,6 +7,6 @@ exports.up = async (knex) => {
   });
 };
 
-exports.down = async(knex) => {
+exports.down = async (knex) => {
   await knex.schema.dropTableIfExists("net_records_history");
 };
