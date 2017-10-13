@@ -77,6 +77,6 @@ exports.up = async (knex) => {
   ]);
 };
 
-exports.down = async(knex) => {
+exports.down = async (knex) => {
   await knex.schema.dropTableIfExists("link_connections");
 };
