@@ -375,10 +375,10 @@ export class NetService {
   async getHistory(ctx: Context) {
     const user = ctx.state.user;
     const historyId = ctx.params.id;
-    const pinnacleId = ctx.request.query ? ctx.request.query.pinnacleId : null;
+    const pinnacleIds = ctx.request.query ? ctx.request.query.pinnacleIds : null;
     let response;
 
-    if (pinnacleId) {
+    if (pinnacleIds) {
       response = await knex('net_records')
         .select(
         'net_records.id',
@@ -390,7 +390,7 @@ export class NetService {
         )
         .where('net_records.net_record_history_id', historyId)
         .andWhere('net_records.user_id', user.id)
-        .andWhere('net_records.pinnacle_id', pinnacleId)
+        .whereIn('net_records.pinnacle_id', pinnacleIds.split(','))
         .leftJoin('pinnacles', 'net_records.pinnacle_id', 'pinnacles.id');
     } else {
       response = await knex('net_records')
