@@ -63,3 +63,7 @@ export async function startHistory(ctx: Context) {
 export async function postHistory(ctx: Context) {
   ctx.body = await netService.postHistory(ctx);
 }
+
+export async function getHistory(ctx: Context) {
+  ctx.body = await netService.getHistory(ctx);
+}
