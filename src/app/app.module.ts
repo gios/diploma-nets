@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import {
   MatSidenavModule, MatIconModule, MatFormFieldModule, MatInputModule, MatCardModule, MatButtonModule,
-  MatProgressSpinnerModule, MatSnackBarModule, MatSlideToggleModule
+  MatProgressSpinnerModule, MatSnackBarModule, MatSlideToggleModule, MatSelectModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -42,7 +42,9 @@ export function httpLambdaFactory(backend: XHRBackend, options: RequestOptions) 
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatSlideToggleModule,
+    MatSelectModule,
     ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     SharedModule
   ],
