@@ -20,6 +20,8 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
   transitions: joint.dia.Cell[];
   graph = new joint.dia.Graph();
   paper: joint.dia.Paper;
+  startInterval: number;
+  lastIntervalTime: number;
   pendingStopTransitions = false;
 
   @Input() data: INetAttributes;
@@ -54,6 +56,7 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
     }
 
     if (changes.transitionState && changes.transitionState.currentValue) {
+      this.startInterval = +new Date();
       this.pendingStopTransitions = false;
       this.startInfinityTransition();
     } else {
@@ -72,15 +75,21 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
 
   simulation() {
     fireTransition(this.graph, this.paper, this.transitions, (saveData) => {
+      const endInterval = +new Date();
+      const time = Math.round((endInterval - this.startInterval) / 1000);
+      Object.assign(saveData, {
+        time: this.lastIntervalTime ? time + this.lastIntervalTime : time
+      });
+      console.log(saveData);
       const firedCount = invokeMap(this.transitions, 'get', 'firing').filter(item => !!item);
       if (!firedCount.length) {
         this.transitionStopped.emit(true);
+        this.lastIntervalTime = time;
       }
 
       if (this.pendingStopTransitions) {
         return;
       }
-      console.log(saveData);
       setTimeout(() => this.simulation(), 10);
     });
   }
