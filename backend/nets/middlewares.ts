@@ -67,3 +67,7 @@ export async function postHistory(ctx: Context) {
 export async function getHistory(ctx: Context) {
   ctx.body = await netService.getHistory(ctx);
 }
+
+export async function getHistorySessions(ctx: Context) {
+  ctx.body = await netService.getHistorySessions(ctx);
+}

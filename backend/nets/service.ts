@@ -409,6 +409,18 @@ export class NetService {
     return this.transformResponse(response);
   }
 
+  async getHistorySessions(ctx: Context) {
+    const user = ctx.state.user;
+    const response = await knex('net_records_history')
+      .select(
+        'id',
+        'created_at',
+        'updated_at'
+      )
+      .where('user_id', user.id);
+    return this.transformResponse(response);
+  }
+
   private transformResponse(data: any[], single = false): any[] {
     const transformed: any[] = data.map(item => mapKeys(item, (_, key: string) => camelCase(key)));
     if (single) {
