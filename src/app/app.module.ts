@@ -15,6 +15,7 @@ import { SharedModule } from './shared/shared.module';
 import { AboutComponent } from './about/about.component';
 import { HttpService } from './http.service';
 import { AuthComponent } from './auth/auth.component';
+import { VisualizationComponent } from './visualization/visualization.component';
 
 export function httpLambdaFactory(backend: XHRBackend, options: RequestOptions) {
   return new HttpService(backend, options);
@@ -25,7 +26,8 @@ export function httpLambdaFactory(backend: XHRBackend, options: RequestOptions) 
     AppComponent,
     HomeComponent,
     AboutComponent,
-    AuthComponent
+    AuthComponent,
+    VisualizationComponent
   ],
   imports: [
     BrowserModule,

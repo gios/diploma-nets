@@ -372,6 +372,43 @@ export class NetService {
     return { message: `${pinnacleNames.map(item => item.name)} state has saved` };
   }
 
+  async getHistory(ctx: Context) {
+    const user = ctx.state.user;
+    const historyId = ctx.params.id;
+    const pinnacleId = ctx.request.query ? ctx.request.query.pinnacleId : null;
+    let response;
+
+    if (pinnacleId) {
+      response = await knex('net_records')
+        .select(
+        'net_records.id',
+        'net_records.time',
+        'net_records.value',
+        'net_records.created_at',
+        'net_records.updated_at',
+        'pinnacles.name'
+        )
+        .where('net_records.net_record_history_id', historyId)
+        .andWhere('net_records.user_id', user.id)
+        .andWhere('net_records.pinnacle_id', pinnacleId)
+        .leftJoin('pinnacles', 'net_records.pinnacle_id', 'pinnacles.id');
+    } else {
+      response = await knex('net_records')
+        .select(
+        'net_records.id',
+        'net_records.time',
+        'net_records.value',
+        'net_records.created_at',
+        'net_records.updated_at',
+        'pinnacles.name'
+        )
+        .where('net_records.net_record_history_id', historyId)
+        .andWhere('net_records.user_id', user.id)
+        .leftJoin('pinnacles', 'net_records.pinnacle_id', 'pinnacles.id');
+    }
+    return this.transformResponse(response);
+  }
+
   private transformResponse(data: any[], single = false): any[] {
     const transformed: any[] = data.map(item => mapKeys(item, (_, key: string) => camelCase(key)));
     if (single) {

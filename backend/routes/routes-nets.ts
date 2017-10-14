@@ -5,7 +5,7 @@ import {
   putNetConnection, putNetPinnacle, putNetTransition,
   postNetConnection, postNetTransition, postNetPinnacle,
   deleteNetConnection, deleteNetTransition, deleteNetPinnacle,
-  startHistory, postHistory
+  startHistory, postHistory, getHistory
 } from '../nets/middlewares';
 
 export const router = new Router({
@@ -31,3 +31,4 @@ router.del('/pinnacle/:id', deleteNetPinnacle);
 
 router.post('/history-start', startHistory);
 router.post('/history', postHistory);
+router.get('/history/:id', getHistory);
