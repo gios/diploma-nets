@@ -7,7 +7,7 @@ import { invokeMap } from 'lodash';
 
 import { NetService } from './net.service';
 import { fireTransition } from './transitionAnimation';
-import { INetAttributes } from './net.interface';
+import { INetAttributes, ISaveHistory } from './net.interface';
 
 @Component({
   selector: 'app-net',
@@ -27,6 +27,7 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
   @Input() data: INetAttributes;
   @Input() transitionState: boolean;
   @Output() transitionStopped = new EventEmitter<boolean>();
+  @Output() setHistory = new EventEmitter<ISaveHistory>();
   @ViewChild('netSelector') netSelector: ElementRef;
 
   constructor(
@@ -49,6 +50,7 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
     if (changes.data && changes.data.currentValue) {
       if (this.graph) {
         this.graph.clear();
+        this.lastIntervalTime = null;
       }
       const netData = changes.data.currentValue;
       const { transitions } = this.netService.generateNet(this.paper, this.graph, netData);
@@ -80,11 +82,11 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
       Object.assign(saveData, {
         time: this.lastIntervalTime ? time + this.lastIntervalTime : time
       });
-      console.log(saveData);
+      this.setHistory.emit(saveData as ISaveHistory);
       const firedCount = invokeMap(this.transitions, 'get', 'firing').filter(item => !!item);
       if (!firedCount.length) {
-        this.transitionStopped.emit(true);
         this.lastIntervalTime = time;
+        this.transitionStopped.emit(true);
       }
 
       if (this.pendingStopTransitions) {

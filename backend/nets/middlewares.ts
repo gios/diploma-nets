@@ -55,3 +55,11 @@ export async function deleteNetPinnacle(ctx: Context) {
 export async function deleteNetConnection(ctx: Context) {
   ctx.body = await netService.deleteNetConnection(ctx);
 }
+
+export async function startHistory(ctx: Context) {
+  ctx.body = await netService.startHistory(ctx);
+}
+
+export async function postHistory(ctx: Context) {
+  ctx.body = await netService.postHistory(ctx);
+}
