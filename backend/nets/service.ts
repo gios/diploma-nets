@@ -336,6 +336,42 @@ export class NetService {
     return { message: 'Connection has deleted' };
   }
 
+  async startHistory(ctx: Context) {
+    const user = ctx.state.user;
+
+    const response = await knex('net_records_history')
+      .returning(['id'])
+      .insert({
+        user_id: user.id
+      });
+    return first(response);
+  }
+
+  async postHistory(ctx: Context) {
+    const user = ctx.state.user;
+    const {
+      historyId,
+      time,
+      ids,
+      values
+    } = ctx.request.body;
+
+    const saveObj = ids.map((id, index) => {
+      return {
+        time,
+        pinnacle_id: id,
+        value: values[index],
+        net_record_history_id: historyId,
+        user_id: user.id
+      };
+    });
+
+    const pinnacleNames = await knex('pinnacles').select('name').whereIn('id', ids);
+    await knex('net_records').insert(saveObj);
+
+    return { message: `${pinnacleNames.map(item => item.name)} state has saved` };
+  }
+
   private transformResponse(data: any[], single = false): any[] {
     const transformed: any[] = data.map(item => mapKeys(item, (_, key: string) => camelCase(key)));
     if (single) {

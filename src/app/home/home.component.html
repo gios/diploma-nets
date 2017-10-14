@@ -13,6 +13,7 @@
     <mat-spinner *ngIf="spinner" class="spinner"></mat-spinner>
     <app-net [data]="netData"
       [transitionState]="transitionState"
+      (setHistory)="setHistory($event)"
       (transitionStopped)="transitionStopped()"></app-net>
   </div>
 </mat-sidenav-container>
