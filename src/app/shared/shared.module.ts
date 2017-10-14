@@ -14,6 +14,7 @@ import { ConstructSidenavComponent } from './construct-sidenav/construct-sidenav
 import { PinnacleModalComponent } from './construct-sidenav/modals/pinnacle-modal/pinnacle-modal.component';
 import { TransitionModalComponent } from './construct-sidenav/modals/transition-modal/transition-modal.component';
 import { ConnectionModalComponent } from './construct-sidenav/modals/connection-modal/connection-modal.component';
+import { ChartComponent } from './chart/chart.component';
 
 @NgModule({
   imports: [
@@ -39,13 +40,15 @@ import { ConnectionModalComponent } from './construct-sidenav/modals/connection-
     ConstructSidenavComponent,
     PinnacleModalComponent,
     TransitionModalComponent,
-    ConnectionModalComponent
+    ConnectionModalComponent,
+    ChartComponent
   ],
   exports: [
     NetComponent,
     SidenavComponent,
     ToolbarComponent,
-    ConstructSidenavComponent
+    ConstructSidenavComponent,
+    ChartComponent
   ],
   entryComponents: [
     PinnacleModalComponent,

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
 import { AboutComponent } from './about/about.component';
+import { VisualizationComponent } from './visualization/visualization.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home' },
@@ -18,6 +19,10 @@ const routes: Routes = [
   {
     component: AboutComponent,
     path: 'about'
+  },
+  {
+    component: VisualizationComponent,
+    path: 'visualization'
   },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
