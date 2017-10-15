@@ -74,12 +74,6 @@ export class NetService {
       y,
     } = ctx.request.body;
 
-    const transitionExist = await knex('transitions').first('id').where('name', name);
-
-    if (transitionExist) {
-      ctx.throw('Transition should be unique', 409);
-    }
-
     const response = await knex('transitions')
       .returning([
         'id',
@@ -111,12 +105,6 @@ export class NetService {
       x,
       y,
     } = ctx.request.body;
-
-    const pinnacleExist = await knex('pinnacles').first('id').where('name', name);
-
-    if (pinnacleExist) {
-      ctx.throw('Pinnacle should be unique', 409);
-    }
 
     const response = await knex('pinnacles')
       .returning([
@@ -198,12 +186,6 @@ export class NetService {
       y,
     } = ctx.request.body;
 
-    const transitionExist = await knex('transitions').first('id').where('name', name);
-
-    if (transitionExist) {
-      ctx.throw('Transition should be unique', 409);
-    }
-
     const response = await knex('transitions')
       .returning([
         'id',
@@ -232,12 +214,6 @@ export class NetService {
       x,
       y,
     } = ctx.request.body;
-
-    const pinnacleExist = await knex('pinnacles').first('id').where('name', name);
-
-    if (pinnacleExist) {
-      ctx.throw('Pinnacle should be unique', 409);
-    }
 
     const response = await knex('pinnacles')
       .returning([
