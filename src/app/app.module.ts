@@ -1,11 +1,11 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import {
   MatSidenavModule, MatIconModule, MatFormFieldModule, MatInputModule, MatCardModule, MatButtonModule,
-  MatProgressSpinnerModule, MatSnackBarModule, MatSlideToggleModule
+  MatProgressSpinnerModule, MatSnackBarModule, MatSlideToggleModule, MatSelectModule, MatTooltipModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,7 @@ import { SharedModule } from './shared/shared.module';
 import { AboutComponent } from './about/about.component';
 import { HttpService } from './http.service';
 import { AuthComponent } from './auth/auth.component';
+import { VisualizationComponent } from './visualization/visualization.component';
 
 export function httpLambdaFactory(backend: XHRBackend, options: RequestOptions) {
   return new HttpService(backend, options);
@@ -25,7 +26,8 @@ export function httpLambdaFactory(backend: XHRBackend, options: RequestOptions) 
     AppComponent,
     HomeComponent,
     AboutComponent,
-    AuthComponent
+    AuthComponent,
+    VisualizationComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +42,10 @@ export function httpLambdaFactory(backend: XHRBackend, options: RequestOptions) 
     MatProgressSpinnerModule,
     MatSnackBarModule,
     MatSlideToggleModule,
+    MatSelectModule,
+    MatTooltipModule,
     ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     SharedModule
   ],

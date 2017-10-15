@@ -74,12 +74,6 @@ export class NetService {
       y,
     } = ctx.request.body;
 
-    const transitionExist = await knex('transitions').first('id').where('name', name);
-
-    if (transitionExist) {
-      ctx.throw('Transition should be unique', 409);
-    }
-
     const response = await knex('transitions')
       .returning([
         'id',
@@ -111,12 +105,6 @@ export class NetService {
       x,
       y,
     } = ctx.request.body;
-
-    const pinnacleExist = await knex('pinnacles').first('id').where('name', name);
-
-    if (pinnacleExist) {
-      ctx.throw('Pinnacle should be unique', 409);
-    }
 
     const response = await knex('pinnacles')
       .returning([
@@ -198,12 +186,6 @@ export class NetService {
       y,
     } = ctx.request.body;
 
-    const transitionExist = await knex('transitions').first('id').where('name', name);
-
-    if (transitionExist) {
-      ctx.throw('Transition should be unique', 409);
-    }
-
     const response = await knex('transitions')
       .returning([
         'id',
@@ -232,12 +214,6 @@ export class NetService {
       x,
       y,
     } = ctx.request.body;
-
-    const pinnacleExist = await knex('pinnacles').first('id').where('name', name);
-
-    if (pinnacleExist) {
-      ctx.throw('Pinnacle should be unique', 409);
-    }
 
     const response = await knex('pinnacles')
       .returning([
@@ -308,32 +284,134 @@ export class NetService {
 
   async deleteNetTransition(ctx: Context) {
     const id = ctx.params.id;
+    const user = ctx.state.user;
 
     if (!id) {
       ctx.throw('id should be specified.', 406);
     }
-    await knex('transitions').where('id', id).del();
+    await knex('transitions').where('id', id).andWhere('user_id', user.id).del();
     return { message: 'Transition has deleted' };
   }
 
   async deleteNetPinnacle(ctx: Context) {
     const id = ctx.params.id;
+    const user = ctx.state.user;
 
     if (!id) {
       ctx.throw('id should be specified.', 406);
     }
-    await knex('pinnacles').where('id', id).del();
+    await knex('pinnacles').where('id', id).andWhere('user_id', user.id).del();
     return { message: 'Pinnacle has deleted' };
   }
 
   async deleteNetConnection(ctx: Context) {
     const id = ctx.params.id;
+    const user = ctx.state.user;
 
     if (!id) {
       ctx.throw('id should be specified.', 406);
     }
-    await knex('link_connections').where('id', id).del();
+    await knex('link_connections').where('id', id).andWhere('user_id', user.id).del();
     return { message: 'Connection has deleted' };
+  }
+
+  async startHistory(ctx: Context) {
+    const user = ctx.state.user;
+
+    const response = await knex('net_records_history')
+      .returning(['id'])
+      .insert({
+        user_id: user.id
+      });
+    return first(response);
+  }
+
+  async postHistory(ctx: Context) {
+    const user = ctx.state.user;
+    const {
+      historyId,
+      time,
+      ids,
+      values
+    } = ctx.request.body;
+
+    const saveObj = ids.map((id, index) => {
+      return {
+        time,
+        pinnacle_id: id,
+        value: values[index],
+        net_record_history_id: historyId,
+        user_id: user.id
+      };
+    });
+
+    const pinnacleNames = await knex('pinnacles').select('name').whereIn('id', ids);
+    await knex('net_records').insert(saveObj);
+
+    return { message: `${pinnacleNames.map(item => item.name)} state has saved` };
+  }
+
+  async getHistory(ctx: Context) {
+    const user = ctx.state.user;
+    const historyId = ctx.params.id;
+    const pinnacleIds = ctx.request.query ? ctx.request.query.pinnacleIds : null;
+    let response;
+
+    if (pinnacleIds) {
+      response = await knex('net_records')
+        .select(
+        'net_records.id',
+        'pinnacles.id as pinnacle_id',
+        'net_records.time',
+        'net_records.value',
+        'net_records.created_at',
+        'net_records.updated_at',
+        'pinnacles.name'
+        )
+        .where('net_records.net_record_history_id', historyId)
+        .andWhere('net_records.user_id', user.id)
+        .whereIn('net_records.pinnacle_id', pinnacleIds.split(','))
+        .leftJoin('pinnacles', 'net_records.pinnacle_id', 'pinnacles.id');
+    } else {
+      response = await knex('net_records')
+        .select(
+        'net_records.id',
+        'pinnacles.id as pinnacle_id',
+        'net_records.time',
+        'net_records.value',
+        'net_records.created_at',
+        'net_records.updated_at',
+        'pinnacles.name'
+        )
+        .where('net_records.net_record_history_id', historyId)
+        .andWhere('net_records.user_id', user.id)
+        .leftJoin('pinnacles', 'net_records.pinnacle_id', 'pinnacles.id');
+    }
+    return this.transformResponse(response);
+  }
+
+  async getHistorySessions(ctx: Context) {
+    const user = ctx.state.user;
+    const response = await knex('net_records_history')
+      .select(
+        'id',
+        'created_at',
+        'updated_at'
+      )
+      .where('user_id', user.id);
+    return this.transformResponse(response);
+  }
+
+  async deleteHistory(ctx: Context) {
+    const user = ctx.state.user;
+    const id = ctx.params.id;
+
+    if (!id) {
+      ctx.throw('id should be specified.', 406);
+    }
+    await knex('net_records').where('net_record_history_id', id).andWhere('user_id', user.id).del();
+    await knex('net_records_history').where('id', id).andWhere('user_id', user.id).del();
+    return { message: 'Session has been deleted' };
   }
 
   private transformResponse(data: any[], single = false): any[] {

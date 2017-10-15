@@ -7,7 +7,7 @@ import { invokeMap } from 'lodash';
 
 import { NetService } from './net.service';
 import { fireTransition } from './transitionAnimation';
-import { INetAttributes } from './net.interface';
+import { INetAttributes, ISaveHistory } from './net.interface';
 
 @Component({
   selector: 'app-net',
@@ -20,11 +20,14 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
   transitions: joint.dia.Cell[];
   graph = new joint.dia.Graph();
   paper: joint.dia.Paper;
+  startInterval: number;
+  lastIntervalTime: number;
   pendingStopTransitions = false;
 
   @Input() data: INetAttributes;
   @Input() transitionState: boolean;
   @Output() transitionStopped = new EventEmitter<boolean>();
+  @Output() setHistory = new EventEmitter<ISaveHistory>();
   @ViewChild('netSelector') netSelector: ElementRef;
 
   constructor(
@@ -47,6 +50,7 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
     if (changes.data && changes.data.currentValue) {
       if (this.graph) {
         this.graph.clear();
+        this.lastIntervalTime = null;
       }
       const netData = changes.data.currentValue;
       const { transitions } = this.netService.generateNet(this.paper, this.graph, netData);
@@ -54,6 +58,7 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
     }
 
     if (changes.transitionState && changes.transitionState.currentValue) {
+      this.startInterval = +new Date();
       this.pendingStopTransitions = false;
       this.startInfinityTransition();
     } else {
@@ -71,9 +76,16 @@ export class NetComponent implements OnDestroy, OnChanges, OnInit {
   }
 
   simulation() {
-    fireTransition(this.graph, this.paper, this.transitions, () => {
+    fireTransition(this.graph, this.paper, this.transitions, (saveData) => {
+      const endInterval = +new Date();
+      const time = Math.round((endInterval - this.startInterval) / 1000);
+      Object.assign(saveData, {
+        time: this.lastIntervalTime ? time + this.lastIntervalTime : time
+      });
+      this.setHistory.emit(saveData as ISaveHistory);
       const firedCount = invokeMap(this.transitions, 'get', 'firing').filter(item => !!item);
       if (!firedCount.length) {
+        this.lastIntervalTime = time;
         this.transitionStopped.emit(true);
       }
 

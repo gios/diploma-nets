@@ -5,7 +5,7 @@ import {
 import { MatDialog, MatSnackBar } from '@angular/material';
 import * as joint from 'jointjs';
 import { Subscription, Subject } from 'rxjs/Rx';
-import { remove } from 'lodash';
+import { remove, sortBy } from 'lodash';
 
 import { INetAttributes, IPinnacle, ITransition, ILinkConnection } from '../net/net.interface';
 import { NetService } from '../net/net.service';
@@ -40,6 +40,8 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
   private pinnacleChanged$: Subscription;
   private transitionChanged: Subject<ITransition> = new Subject();
   private transitionChanged$: Subscription;
+  private connectionChanged: Subject<ILinkConnection> = new Subject();
+  private connectionChanged$: Subscription;
   @Input() data: INetAttributes;
   @Output() changeNet = new EventEmitter<INetAttributes>();
 
@@ -55,9 +57,9 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.data && changes.data.currentValue) {
-      this.navPinnacles = changes.data.currentValue.pinnacles as IPinnacle[];
-      this.navTransitions = changes.data.currentValue.transitions as ITransition[];
-      this.navConnections = changes.data.currentValue.connections as ILinkConnection[];
+      this.navPinnacles = sortBy(changes.data.currentValue.pinnacles as IPinnacle[], ['name']);
+      this.navTransitions = sortBy(changes.data.currentValue.transitions as ITransition[], ['name']);
+      this.navConnections = sortBy(changes.data.currentValue.connections as ILinkConnection[], ['connect[0].name']);
     }
   }
 
@@ -104,6 +106,10 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
 
     if (this.transitionChanged$) {
       this.transitionChanged$.unsubscribe();
+    }
+
+    if (this.connectionChanged$) {
+      this.connectionChanged$.unsubscribe();
     }
   }
 
@@ -222,6 +228,8 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
         this.transitionChanged.next(entity as ITransition);
         break;
       case 'connection':
+        this.buttonsDisabled = true;
+        this.connectionChanged.next(entity as ILinkConnection);
         break;
 
       default:
@@ -258,6 +266,23 @@ export class ConstructSidenavComponent implements OnChanges, OnDestroy {
             this.changeDetectorRef.markForCheck();
             this.updateNet();
             this.openSnackBar(`Transition ${entity.name} has been updated.`);
+          }, (err) => {
+            this.buttonsDisabled = false;
+            const errData = err.json();
+            this.openSnackBar(errData.message);
+          });
+      });
+
+    this.connectionChanged$ = this.connectionChanged
+      .debounceTime(1200)
+      .subscribe((entity) => {
+        this.putConnection$ = this.http.put(`api/net/connection/${entity.id}`, entity)
+          .subscribe(data => {
+            this.buttonsDisabled = false;
+            const response = data.json();
+            this.changeDetectorRef.markForCheck();
+            this.updateNet();
+            this.openSnackBar(`Connection has been updated.`);
           }, (err) => {
             this.buttonsDisabled = false;
             const errData = err.json();

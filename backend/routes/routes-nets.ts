@@ -4,7 +4,9 @@ import {
   getNet, getNetPinnacles, getNetTransitions, getNetConnections,
   putNetConnection, putNetPinnacle, putNetTransition,
   postNetConnection, postNetTransition, postNetPinnacle,
-  deleteNetConnection, deleteNetTransition, deleteNetPinnacle
+  deleteNetConnection, deleteNetTransition, deleteNetPinnacle,
+  startHistory, postHistory, getHistory, getHistorySessions,
+  deleteHistory
 } from '../nets/middlewares';
 
 export const router = new Router({
@@ -27,3 +29,9 @@ router.post('/pinnacle', postNetPinnacle);
 router.del('/connection/:id', deleteNetConnection);
 router.del('/transition/:id', deleteNetTransition);
 router.del('/pinnacle/:id', deleteNetPinnacle);
+
+router.post('/history-start', startHistory);
+router.post('/history', postHistory);
+router.get('/history/:id', getHistory);
+router.del('/history/:id', deleteHistory);
+router.get('/history-sessions', getHistorySessions);

@@ -1,11 +1,14 @@
 <mat-sidenav-container class="sidenav-container">
 
   <mat-sidenav #constructSidenav position="end">
-    <app-construct-sidenav [data]="netData" (changeNet)="netData = $event"></app-construct-sidenav>
+    <app-construct-sidenav [data]="netData" (changeNet)="changedNet($event)"></app-construct-sidenav>
   </mat-sidenav>
 
   <div class="sidenav-action end">
-    <mat-icon (click)="constructSidenav.open()">keyboard_arrow_right</mat-icon>
+    <mat-icon (click)="!disableContructionMenu && constructSidenav.open()"
+      matTooltip="Please stop transition."
+      [matTooltipDisabled]="!disableContructionMenu"
+      matTooltipPosition="before">keyboard_arrow_right</mat-icon>
   </div>
 
   <app-toolbar [buttons]="toolbarButtons"></app-toolbar>
@@ -13,6 +16,10 @@
     <mat-spinner *ngIf="spinner" class="spinner"></mat-spinner>
     <app-net [data]="netData"
       [transitionState]="transitionState"
+      (setHistory)="setHistory($event)"
       (transitionStopped)="transitionStopped()"></app-net>
+    <mat-card class="no-info" *ngIf="netData && noData">
+      You don't have any items to show, please add them from construction menu. <mat-icon>keyboard_arrow_right</mat-icon>
+    </mat-card>
   </div>
 </mat-sidenav-container>

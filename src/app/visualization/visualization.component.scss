@@ -1,0 +1,21 @@
+mat-card-title {
+  text-align: center;
+}
+
+mat-card-content {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-content: center;
+}
+
+mat-icon {
+  cursor: pointer;
+}
+
+.delete-block {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}

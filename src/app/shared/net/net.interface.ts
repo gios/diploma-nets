@@ -36,3 +36,13 @@ export interface INetAttributes {
   pinnacles: IPinnacle[];
   connections: ILinkConnection[];
 }
+
+export interface ISaveRecordData {
+  ids: number[];
+  values: number[];
+}
+
+export interface ISaveHistory extends ISaveRecordData {
+  historyId?: number;
+  time?: number;
+}

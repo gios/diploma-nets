@@ -1,0 +1,29 @@
+<mat-card>
+  <mat-card-title>
+    Chart Controllers
+  </mat-card-title>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-select placeholder="Session time" [(ngModel)]="selectedSession"
+        (change)="changeSession($event)">
+        <mat-option *ngFor="let session of historySessions" [value]="session.id">
+          {{ session.createdAt | date : 'short' }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <div class="delete-block">
+      Delete session: <mat-icon (click)="deleteSession()">delete</mat-icon>
+    </div>
+    <mat-form-field>
+      <mat-select placeholder="Pinnacles" multiple [(ngModel)]="selectedPinnacles"
+        (change)="changePinnacle($event)">
+        <mat-option *ngFor="let pinnacle of pinnacles" [value]="pinnacle.id">
+          {{ pinnacle.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
+<div>
+  <app-chart [data]="chartData"></app-chart>
+</div>
