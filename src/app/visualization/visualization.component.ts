@@ -2,10 +2,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Subscription, Observable } from 'rxjs/Rx';
 import { MatSnackBar } from '@angular/material';
-import { orderBy, sortBy, first } from 'lodash';
+import { orderBy, sortBy, first, groupBy } from 'lodash';
 
 import { HttpService } from '../http.service';
 import { IPinnacle } from '../shared/net/net.interface';
+import { defaultChartColors } from './visualization.constants';
 
 @Component({
   selector: 'app-visualization',
@@ -17,6 +18,8 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   pinnacles: IPinnacle[];
   selectedSession: number;
   selectedPinnacles: any;
+  chartData: any[];
+  colorsMap = new Map();
   private getHistorySessionsAndPinnacles$: Subscription;
   private getHistory$: Subscription;
 
@@ -77,7 +80,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     })
     .subscribe(response => {
       const data = response.json();
-      console.log('EMITED DATA ', data);
+      this.chartData = this.transformChartData(data);
     }, (err) => {
       const errData = err.json();
       this.openSnackBar(errData.message);
@@ -86,5 +89,35 @@ export class VisualizationComponent implements OnInit, OnDestroy {
 
   private openSnackBar(message: string) {
     this.snackBar.open(message, 'Close');
+  }
+
+  private transformChartData(data: any[]): any {
+    let colorIndex = 0;
+    const chartData = [];
+    const groupedItems = groupBy(data, 'pinnacleId') as any;
+
+    for (const key in groupedItems) {
+      if (groupedItems.hasOwnProperty(key)) {
+        const element = groupedItems[key];
+        if (element.length) {
+          const color = this.colorsMap.has(key) ? this.colorsMap.get(key) : defaultChartColors[colorIndex];
+          chartData.push({
+            label: element[0].name,
+            borderColor: color,
+            backgroundColor: color.replace(/[^,]+(?=\))/, '0.1'),
+            pointRadius: 0,
+            data: element.map(item => {
+              return {
+                x: item.time,
+                y: item.value
+              };
+            })
+          });
+          this.colorsMap.set(key, color);
+          ++colorIndex;
+        }
+      }
+    }
+    return chartData;
   }
 }
