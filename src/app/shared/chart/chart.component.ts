@@ -1,56 +1,53 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnChanges, ViewChild, ElementRef, SimpleChanges, Input } from '@angular/core';
 import { Chart } from 'chart.js';
+
+import { defaultChartColors } from './chart.constants';
 
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.scss']
 })
-export class ChartComponent implements OnInit {
-  @ViewChild('chartElem') chart: ElementRef;
+export class ChartComponent implements OnChanges {
+  private firstRender = false;
+  private chart: Chart;
+  @ViewChild('chartElem') chartElem: ElementRef;
+  @Input() data;
 
-  ngOnInit() {
-    this.renderChart();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes.data && changes.data.currentValue) {
+      this.renderChart(changes.data.currentValue);
+    }
   }
 
-  private renderChart() {
-    console.log(this.chart.nativeElement);
-    const myChart = new Chart(this.chart.nativeElement, {
-      type: 'bar',
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          label: '# of Votes',
-          data: [12, 19, 3, 5, 2, 3],
-          backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-          ],
-          borderColor: [
-            'rgba(255,99,132,1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        scales: {
-          yAxes: [{
-            ticks: {
-              beginAtZero: true
-            } as any
-          }]
-        }
-      }
+  private renderChart(data) {
+    data.forEach(element => {
+      const randomNumber = Math.random() * (defaultChartColors.length - 1);
+      const randomColor = defaultChartColors[Math.round(randomNumber)];
+      Object.assign(element, {
+        borderColor: randomColor
+      });
     });
-  }
 
+    if (this.chart) {
+      this.chart.data.datasets = data;
+      this.chart.update();
+    } else {
+      this.chart = new Chart(this.chartElem.nativeElement, {
+        type: 'line',
+        data: {
+          datasets: data
+        },
+        options: {
+          maintainAspectRatio: false,
+          scales: {
+            xAxes: [{
+              type: 'linear',
+              position: 'bottom'
+            }]
+          }
+        }
+      });
+    }
+  }
 }

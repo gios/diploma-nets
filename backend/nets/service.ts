@@ -382,6 +382,7 @@ export class NetService {
       response = await knex('net_records')
         .select(
         'net_records.id',
+        'pinnacles.id as pinnacle_id',
         'net_records.time',
         'net_records.value',
         'net_records.created_at',
@@ -396,6 +397,7 @@ export class NetService {
       response = await knex('net_records')
         .select(
         'net_records.id',
+        'pinnacles.id as pinnacle_id',
         'net_records.time',
         'net_records.value',
         'net_records.created_at',
