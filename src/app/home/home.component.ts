@@ -1,5 +1,6 @@
 import { Component, SimpleChanges, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs/Rx';
+import { isEmpty } from 'lodash';
 
 import { HttpService } from '../http.service';
 import { IInputButtons } from '../shared/toolbar/toolbar';
@@ -16,6 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   netData: INetAttributes;
   transitionState: boolean;
   disableContructionMenu = false;
+  noData = false;
   toolbarButtons: IInputButtons[] = [
     {
       text: 'Start Transition',
@@ -47,6 +49,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.defaultNet$ = this.http.get('api/net').subscribe(response => {
       const data = response.json();
       this.netData = data;
+      this.noData = isEmpty(this.netData.pinnacles) && isEmpty(this.netData.transitions) && isEmpty(this.netData.connections);
       this.spinner = false;
     }, (err) => {
       const errData = err.json();
@@ -104,6 +107,12 @@ export class HomeComponent implements OnInit, OnDestroy {
       const errData = err.json();
       this.openSnackBar(errData.message);
     });
+  }
+
+  changedNet(event: INetAttributes) {
+    this.netData = event;
+    this.noData = isEmpty(this.netData.pinnacles) && isEmpty(this.netData.transitions) && isEmpty(this.netData.connections);
+    this.startHistoryId = null;
   }
 
   private startRecordHistory(callback: () => void) {

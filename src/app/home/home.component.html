@@ -1,7 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
 
   <mat-sidenav #constructSidenav position="end">
-    <app-construct-sidenav [data]="netData" (changeNet)="netData = $event"></app-construct-sidenav>
+    <app-construct-sidenav [data]="netData" (changeNet)="changedNet($event)"></app-construct-sidenav>
   </mat-sidenav>
 
   <div class="sidenav-action end">
@@ -18,5 +18,8 @@
       [transitionState]="transitionState"
       (setHistory)="setHistory($event)"
       (transitionStopped)="transitionStopped()"></app-net>
+    <mat-card class="no-info" *ngIf="netData && noData">
+      You don't have any items to show, please add them from construction menu. <mat-icon>keyboard_arrow_right</mat-icon>
+    </mat-card>
   </div>
 </mat-sidenav-container>
