@@ -284,31 +284,34 @@ export class NetService {
 
   async deleteNetTransition(ctx: Context) {
     const id = ctx.params.id;
+    const user = ctx.state.user;
 
     if (!id) {
       ctx.throw('id should be specified.', 406);
     }
-    await knex('transitions').where('id', id).del();
+    await knex('transitions').where('id', id).andWhere('user_id', user.id).del();
     return { message: 'Transition has deleted' };
   }
 
   async deleteNetPinnacle(ctx: Context) {
     const id = ctx.params.id;
+    const user = ctx.state.user;
 
     if (!id) {
       ctx.throw('id should be specified.', 406);
     }
-    await knex('pinnacles').where('id', id).del();
+    await knex('pinnacles').where('id', id).andWhere('user_id', user.id).del();
     return { message: 'Pinnacle has deleted' };
   }
 
   async deleteNetConnection(ctx: Context) {
     const id = ctx.params.id;
+    const user = ctx.state.user;
 
     if (!id) {
       ctx.throw('id should be specified.', 406);
     }
-    await knex('link_connections').where('id', id).del();
+    await knex('link_connections').where('id', id).andWhere('user_id', user.id).del();
     return { message: 'Connection has deleted' };
   }
 
@@ -397,6 +400,18 @@ export class NetService {
       )
       .where('user_id', user.id);
     return this.transformResponse(response);
+  }
+
+  async deleteHistory(ctx: Context) {
+    const user = ctx.state.user;
+    const id = ctx.params.id;
+
+    if (!id) {
+      ctx.throw('id should be specified.', 406);
+    }
+    await knex('net_records').where('net_record_history_id', id).andWhere('user_id', user.id).del();
+    await knex('net_records_history').where('id', id).andWhere('user_id', user.id).del();
+    return { message: 'Session has been deleted' };
   }
 
   private transformResponse(data: any[], single = false): any[] {

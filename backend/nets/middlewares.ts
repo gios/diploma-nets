@@ -71,3 +71,7 @@ export async function getHistory(ctx: Context) {
 export async function getHistorySessions(ctx: Context) {
   ctx.body = await netService.getHistorySessions(ctx);
 }
+
+export async function deleteHistory(ctx: Context) {
+  ctx.body = await netService.deleteHistory(ctx);
+}
