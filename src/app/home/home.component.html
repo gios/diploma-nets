@@ -5,7 +5,10 @@
   </mat-sidenav>
 
   <div class="sidenav-action end">
-    <mat-icon (click)="constructSidenav.open()">keyboard_arrow_right</mat-icon>
+    <mat-icon (click)="!disableContructionMenu && constructSidenav.open()"
+      matTooltip="Please stop transition."
+      [matTooltipDisabled]="!disableContructionMenu"
+      matTooltipPosition="before">keyboard_arrow_right</mat-icon>
   </div>
 
   <app-toolbar [buttons]="toolbarButtons"></app-toolbar>

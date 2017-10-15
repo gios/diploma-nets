@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   spinner = false;
   netData: INetAttributes;
   transitionState: boolean;
+  disableContructionMenu = false;
   toolbarButtons: IInputButtons[] = [
     {
       text: 'Start Transition',
@@ -69,6 +70,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   startTransition() {
+    this.disableContructionMenu = true;
     if (this.startHistoryId) {
       this.transitionState = true;
       this.toolbarButtons[0].disabled = true;
@@ -90,6 +92,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   transitionStopped() {
     this.toolbarButtons[0].disabled = false;
+    this.disableContructionMenu = false;
   }
 
   setHistory(savedData: ISaveHistory) {

@@ -5,7 +5,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule, RequestOptions, XHRBackend } from '@angular/http';
 import {
   MatSidenavModule, MatIconModule, MatFormFieldModule, MatInputModule, MatCardModule, MatButtonModule,
-  MatProgressSpinnerModule, MatSnackBarModule, MatSlideToggleModule, MatSelectModule
+  MatProgressSpinnerModule, MatSnackBarModule, MatSlideToggleModule, MatSelectModule, MatTooltipModule
 } from '@angular/material';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -43,6 +43,7 @@ export function httpLambdaFactory(backend: XHRBackend, options: RequestOptions) 
     MatSnackBarModule,
     MatSlideToggleModule,
     MatSelectModule,
+    MatTooltipModule,
     ReactiveFormsModule,
     FormsModule,
     AppRoutingModule,

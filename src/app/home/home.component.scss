@@ -1,5 +1,9 @@
 :host {
 
+  .disabledMenu {
+    pointer-events: none;
+  }
+
   .spinner {
     margin: 0 auto;
     top: 30%;
