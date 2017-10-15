@@ -113,7 +113,9 @@ export class VisualizationComponent implements OnInit, OnDestroy {
               };
             })
           });
-          this.colorsMap.set(key, color);
+          if (!this.colorsMap.has(key)) {
+            this.colorsMap.set(key, color);
+          }
           ++colorIndex;
         }
       }
