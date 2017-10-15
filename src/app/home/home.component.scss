@@ -1,7 +1,21 @@
 :host {
 
-  .disabledMenu {
-    pointer-events: none;
+  .no-info {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 40em;
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 16px;
+
+    > mat-icon {
+      position: absolute;
+      top: 15px;
+      right: 40px;
+      font-size: 40px;
+    }
   }
 
   .spinner {
