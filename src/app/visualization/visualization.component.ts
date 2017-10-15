@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Subscription, Observable } from 'rxjs/Rx';
 import { MatSnackBar } from '@angular/material';
-import { orderBy, sortBy, first, groupBy, remove } from 'lodash';
+import { orderBy, sortBy, first, groupBy, remove, find } from 'lodash';
 
 import { HttpService } from '../http.service';
 import { IPinnacle } from '../shared/net/net.interface';
@@ -114,6 +114,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     })
     .subscribe(response => {
       const data = response.json();
+      this.pinnacles = this.pinnacles.filter(pinnacle => find(data, ['pinnacleId', pinnacle.id]));
       this.chartData = this.transformChartData(data);
     }, (err) => {
       const errData = err.json();
