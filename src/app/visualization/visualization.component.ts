@@ -37,10 +37,16 @@ export class VisualizationComponent implements OnInit, OnDestroy {
       const historySessions = response[0].json();
       const pinnacles = response[1].json();
       this.historySessions = orderBy(historySessions, ['createdAt'], ['desc']);
-      this.selectedSession = first(this.historySessions).id;
       this.pinnacles = sortBy(pinnacles, ['name']) as IPinnacle[];
-      this.selectedPinnacles = this.pinnacles.map(pinnacle => pinnacle.id);
-      this.getHistory();
+      if (this.historySessions.length) {
+        this.selectedSession = first(this.historySessions).id;
+        this.selectedPinnacles = this.pinnacles.map(pinnacle => pinnacle.id);
+        this.getHistory();
+      } else {
+        this.selectedSession = null;
+        this.selectedPinnacles = [];
+        this.chartData = [];
+      }
     }, (err) => {
       const errData = err.json();
       this.openSnackBar(errData.message);
@@ -70,13 +76,22 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   }
 
   deleteSession() {
+    if (!this.selectedSession) {
+      return;
+    }
     this.deleteHistory$ = this.http.delete(`api/net/history/${this.selectedSession}`)
     .subscribe(response => {
       const data = response.json();
       remove(this.historySessions, item => item.id === this.selectedSession);
-      this.selectedSession = first(this.historySessions).id;
-      this.getHistory();
-      this.openSnackBar(data.message);
+      if (this.historySessions.length) {
+        this.selectedSession = first(this.historySessions).id;
+        this.getHistory();
+        this.openSnackBar(data.message);
+      } else {
+        this.selectedSession = null;
+        this.selectedPinnacles = [];
+        this.chartData = [];
+      }
     }, (err) => {
       const errData = err.json();
       this.openSnackBar(errData.message);
