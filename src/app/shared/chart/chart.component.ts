@@ -1,8 +1,6 @@
 import { Component, OnChanges, ViewChild, ElementRef, SimpleChanges, Input } from '@angular/core';
 import { Chart } from 'chart.js';
 
-import { defaultChartColors } from './chart.constants';
-
 @Component({
   selector: 'app-chart',
   templateUrl: './chart.component.html',
@@ -21,14 +19,6 @@ export class ChartComponent implements OnChanges {
   }
 
   private renderChart(data) {
-    data.forEach(element => {
-      const randomNumber = Math.random() * (defaultChartColors.length - 1);
-      const randomColor = defaultChartColors[Math.round(randomNumber)];
-      Object.assign(element, {
-        borderColor: randomColor
-      });
-    });
-
     if (this.chart) {
       this.chart.data.datasets = data;
       this.chart.update();
@@ -43,7 +33,17 @@ export class ChartComponent implements OnChanges {
           scales: {
             xAxes: [{
               type: 'linear',
-              position: 'bottom'
+              position: 'bottom',
+              scaleLabel: {
+                display: true,
+                labelString: 'Time'
+              }
+            }],
+            yAxes: [{
+              scaleLabel: {
+                display: true,
+                labelString: 'Value'
+              }
             }]
           }
         }

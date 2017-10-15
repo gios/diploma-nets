@@ -6,6 +6,7 @@ import { orderBy, sortBy, first, groupBy } from 'lodash';
 
 import { HttpService } from '../http.service';
 import { IPinnacle } from '../shared/net/net.interface';
+import { defaultChartColors } from './visualization.constants';
 
 @Component({
   selector: 'app-visualization',
@@ -18,6 +19,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   selectedSession: number;
   selectedPinnacles: any;
   chartData: any[];
+  colorsMap = new Map();
   private getHistorySessionsAndPinnacles$: Subscription;
   private getHistory$: Subscription;
 
@@ -90,6 +92,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   }
 
   private transformChartData(data: any[]): any {
+    let colorIndex = 0;
     const chartData = [];
     const groupedItems = groupBy(data, 'pinnacleId') as any;
 
@@ -97,8 +100,12 @@ export class VisualizationComponent implements OnInit, OnDestroy {
       if (groupedItems.hasOwnProperty(key)) {
         const element = groupedItems[key];
         if (element.length) {
+          const color = this.colorsMap.has(key) ? this.colorsMap.get(key) : defaultChartColors[colorIndex];
           chartData.push({
             label: element[0].name,
+            borderColor: color,
+            backgroundColor: color.replace(/[^,]+(?=\))/, '0.1'),
+            pointRadius: 0,
             data: element.map(item => {
               return {
                 x: item.time,
@@ -106,6 +113,8 @@ export class VisualizationComponent implements OnInit, OnDestroy {
               };
             })
           });
+          this.colorsMap.set(key, color);
+          ++colorIndex;
         }
       }
     }
