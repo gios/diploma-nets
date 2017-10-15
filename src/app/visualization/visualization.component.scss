@@ -8,3 +8,14 @@ mat-card-content {
   justify-content: space-around;
   align-content: center;
 }
+
+mat-icon {
+  cursor: pointer;
+}
+
+.delete-block {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}

@@ -11,6 +11,9 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <div class="delete-block">
+      Delete session: <mat-icon (click)="deleteSession()">delete</mat-icon>
+    </div>
     <mat-form-field>
       <mat-select placeholder="Pinnacles" multiple [(ngModel)]="selectedPinnacles"
         (change)="changePinnacle($event)">

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Subscription, Observable } from 'rxjs/Rx';
 import { MatSnackBar } from '@angular/material';
-import { orderBy, sortBy, first, groupBy } from 'lodash';
+import { orderBy, sortBy, first, groupBy, remove } from 'lodash';
 
 import { HttpService } from '../http.service';
 import { IPinnacle } from '../shared/net/net.interface';
@@ -22,6 +22,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   colorsMap = new Map();
   private getHistorySessionsAndPinnacles$: Subscription;
   private getHistory$: Subscription;
+  private deleteHistory$: Subscription;
 
   constructor(
     private http: HttpService,
@@ -54,6 +55,10 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     if (this.getHistory$) {
       this.getHistory$.unsubscribe();
     }
+
+    if (this.deleteHistory$) {
+      this.deleteHistory$.unsubscribe();
+    }
   }
 
   changeSession(event) {
@@ -62,6 +67,20 @@ export class VisualizationComponent implements OnInit, OnDestroy {
 
   changePinnacle(event) {
     this.getHistory();
+  }
+
+  deleteSession() {
+    this.deleteHistory$ = this.http.delete(`api/net/history/${this.selectedSession}`)
+    .subscribe(response => {
+      const data = response.json();
+      remove(this.historySessions, item => item.id === this.selectedSession);
+      this.selectedSession = first(this.historySessions).id;
+      this.getHistory();
+      this.openSnackBar(data.message);
+    }, (err) => {
+      const errData = err.json();
+      this.openSnackBar(errData.message);
+    });
   }
 
   private getHistorySessions() {
