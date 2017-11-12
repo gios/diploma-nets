@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { URLSearchParams } from '@angular/http';
 import { Subscription, Observable } from 'rxjs/Rx';
 import { MatSnackBar } from '@angular/material';
-import { orderBy, sortBy, first, groupBy, remove, find } from 'lodash';
+import { orderBy, sortBy, first, groupBy, remove, find, cloneDeep } from 'lodash';
 
 import { HttpService } from '../http.service';
 import { IPinnacle } from '../shared/net/net.interface';
@@ -20,6 +20,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   selectedPinnacles: any;
   chartData: any[];
   colorsMap = new Map();
+  private staticPinnacles: IPinnacle[];
   private getHistorySessionsAndPinnacles$: Subscription;
   private getHistory$: Subscription;
   private deleteHistory$: Subscription;
@@ -38,6 +39,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
       const pinnacles = response[1].json();
       this.historySessions = orderBy(historySessions, ['createdAt'], ['desc']);
       this.pinnacles = sortBy(pinnacles, ['name']) as IPinnacle[];
+      this.staticPinnacles = cloneDeep(this.pinnacles);
       if (this.historySessions.length) {
         this.selectedSession = first(this.historySessions).id;
         this.selectedPinnacles = this.pinnacles.map(pinnacle => pinnacle.id);
@@ -68,11 +70,12 @@ export class VisualizationComponent implements OnInit, OnDestroy {
   }
 
   changeSession(event) {
+    this.selectedPinnacles = this.staticPinnacles.map(pinnacle => pinnacle.id);
     this.getHistory();
   }
 
   changePinnacle(event) {
-    this.getHistory();
+    this.getHistory(false);
   }
 
   deleteSession() {
@@ -106,7 +109,7 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     return this.http.get('api/net/pinnacles');
   }
 
-  private getHistory() {
+  private getHistory(refreshPinnacles = true) {
     const params: URLSearchParams = new URLSearchParams();
     params.set('pinnacleIds', this.selectedPinnacles);
     this.getHistory$ = this.http.get(`api/net/history/${this.selectedSession}`, {
@@ -114,7 +117,9 @@ export class VisualizationComponent implements OnInit, OnDestroy {
     })
     .subscribe(response => {
       const data = response.json();
-      this.pinnacles = this.pinnacles.filter(pinnacle => find(data, ['pinnacleId', pinnacle.id]));
+      if (refreshPinnacles) {
+        this.pinnacles = this.staticPinnacles.filter(pinnacle => find(data, ['pinnacleId', pinnacle.id]));
+      }
       this.chartData = this.transformChartData(data);
     }, (err) => {
       const errData = err.json();
