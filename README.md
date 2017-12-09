@@ -1,6 +1,10 @@
 # Diploma Nets
 Basic version of diploma project based on Petri Nets.
 
+## Admin Credentials
+username -> vandamme
+password -> 123456
+
 ## Login Page
 ![alt tag](https://github.com/gios/diploma-nets/blob/master/presentation-images/login.png)
 ## Home Page
