@@ -1,7 +1,7 @@
 # Diploma Nets
 Basic version of diploma project based on Petri Nets.
 
-## Admin Credentials
+## Demo Credentials with predefined net
 * username -> vandamme
 * password -> 123456
 
