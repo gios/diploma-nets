@@ -74,14 +74,22 @@ export function generateConnections(
       } else {
         foundItem = find(transitions, ['attributes.baseId', item.id]);
       }
-      foundItem.set('connectionType', item.type);
-      return foundItem;
+
+      if (foundItem) {
+        foundItem.set('connectionType', item.type);
+        return foundItem;
+      } else {
+        return null;
+      }
     });
 
     if (connectionItem.value > 1) {
       options = { label: connectionItem.value.toString() };
     }
-    generatedConnections.push(link(connectionItem.id, connectedItems[0], connectedItems[1], options));
+
+    if (connectionItem.id && connectedItems[0] && connectedItems[1]) {
+      generatedConnections.push(link(connectionItem.id, connectedItems[0], connectedItems[1], options));
+    }
   });
 
   return generatedConnections;
