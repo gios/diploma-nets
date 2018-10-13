@@ -30,3 +30,6 @@ Basic version of project based on Petri Nets.
 * PostgreSQL
 * Chart.js
 * WebToken
+
+## License
+BSD 3-Clause License
